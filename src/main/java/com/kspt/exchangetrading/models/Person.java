@@ -1,25 +1,28 @@
 package com.kspt.exchangetrading.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-/*import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;*/
+import javax.persistence.*;
 
 @Data
-//@Entity
-//@MappedSuperclass
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = {"personType", "hibernateLazyInitializer", "handler"})
 public class Person {
 
-    //@Column(name = "name", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
+    @Column(name = "name", nullable = false)
     protected String name;
-    //@Column(name = "surname", nullable = false)
+    @Column(name = "surname", nullable = false)
     protected String surname;
-    //@Column(name = "personType", nullable = false)
+    @Transient
+    @JsonIgnore
     protected PersonType personType;
-
 }

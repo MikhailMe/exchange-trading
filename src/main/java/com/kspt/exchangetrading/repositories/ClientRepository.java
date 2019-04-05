@@ -1,19 +1,23 @@
 package com.kspt.exchangetrading.repositories;
 
-/*
 import com.kspt.exchangetrading.models.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-*/
+import org.springframework.data.repository.query.Param;
 
-public interface ClientRepository extends /*JpaRepository<Client, Long>,*/ IClientRepository {
+import java.util.Optional;
 
-    String INSERT_QUERY = "INSERT INTO clients VALUES(name, surname)";
+public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    //@Query(nativeQuery =  true, value = INSERT_QUERY)
-    String insertClient();
+    String INSERT_CLIENT = "INSERT INTO client(name, surname) VALUES(:name, :surname)";
 
-    //@Query(nativeQuery =  true, value = "test query")
-    String createNoteForOpenBill();
+    String UPDATE_CLIENT = "UPDATE client SET name";
+
+    @Query(nativeQuery = true, value = UPDATE_CLIENT)
+    Client update(Client client);
+
+    @Query(nativeQuery = true, value = INSERT_CLIENT)
+    Optional<Client> create(@Param("name") String name,
+                            @Param("surname") String surname);
 
 }
