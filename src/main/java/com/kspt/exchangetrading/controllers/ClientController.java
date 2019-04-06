@@ -1,11 +1,9 @@
 package com.kspt.exchangetrading.controllers;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.models.Client;
+import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.repositories.ClientRepository;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping(Constants.CLIENT)
@@ -39,6 +37,7 @@ public class ClientController {
             client.setName("bam");
             return clientRepository.save(client);
         });
+
     }
 
 }

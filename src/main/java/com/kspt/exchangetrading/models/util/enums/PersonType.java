@@ -1,4 +1,4 @@
-package com.kspt.exchangetrading.models;
+package com.kspt.exchangetrading.models.util.enums;
 
 public enum PersonType {
     ADMIN,

@@ -1,6 +1,6 @@
 package com.kspt.exchangetrading.repositories;
 
-import com.kspt.exchangetrading.models.Client;
+import com.kspt.exchangetrading.models.actors.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
