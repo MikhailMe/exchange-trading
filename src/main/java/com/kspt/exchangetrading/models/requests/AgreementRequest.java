@@ -16,7 +16,7 @@ import static com.kspt.exchangetrading.configuration.Constants.REQUEST;
 @Table(name = REQUEST)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class AgreementRequest extends Request {
+public final class AgreementRequest extends Request {
 
     public AgreementRequest(RequestType type) {
         this.requestType = type;

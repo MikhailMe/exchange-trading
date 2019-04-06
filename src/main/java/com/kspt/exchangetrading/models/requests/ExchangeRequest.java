@@ -2,7 +2,6 @@ package com.kspt.exchangetrading.models.requests;
 
 
 import com.kspt.exchangetrading.models.util.enums.RequestType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,9 @@ import static com.kspt.exchangetrading.configuration.Constants.REQUEST;
 @Table(name = REQUEST)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ExchangeRequest extends Request {
+public final class ExchangeRequest extends Request {
+
+
 
     public ExchangeRequest(RequestType type) {
         this.requestType = type;
