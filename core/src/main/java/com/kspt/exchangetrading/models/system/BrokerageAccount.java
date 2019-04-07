@@ -1,5 +1,6 @@
 package com.kspt.exchangetrading.models.system;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kspt.exchangetrading.models.util.enums.Currency;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,8 @@ public final class BrokerageAccount {
     @Column(name = "money")
     private long money;
 
-    @Column(name = "currency")
+    @Transient
+    @JsonIgnore
     private Currency currency;
 
     @Column(name = "creation_time")

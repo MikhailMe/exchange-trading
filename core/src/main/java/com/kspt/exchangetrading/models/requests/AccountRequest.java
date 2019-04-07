@@ -1,5 +1,6 @@
 package com.kspt.exchangetrading.models.requests;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kspt.exchangetrading.models.util.enums.Currency;
 import com.kspt.exchangetrading.models.util.Passport;
 import com.kspt.exchangetrading.models.util.enums.RequestType;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import java.time.Instant;
 
@@ -26,8 +28,12 @@ import static com.kspt.exchangetrading.configuration.Constants.REQUEST;
 @EqualsAndHashCode(callSuper = true)
 public final class AccountRequest extends Request {
 
+    @Transient
+    @JsonIgnore
     private Passport passport;
 
+    @Transient
+    @JsonIgnore
     private Currency currency;
 
     public AccountRequest(@NotNull final String description,
