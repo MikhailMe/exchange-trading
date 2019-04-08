@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BrokerRepository extends JpaRepository<Broker, Long> {
 
+    @Override
+    <S extends Broker> S save(S broker);
 }

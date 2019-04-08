@@ -1,9 +1,5 @@
 package com.kspt.exchangetrading.models.actors;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import com.kspt.exchangetrading.models.util.enums.PersonType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -15,7 +11,6 @@ import javax.persistence.*;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(value = {"personType", "hibernateLazyInitializer", "handler"})
 public class Person {
 
     @Id
@@ -28,13 +23,12 @@ public class Person {
     @Column(name = "surname", nullable = false)
     protected String surname;
 
-    @Transient
-    @JsonIgnore
-    protected PersonType personType;
+    @Column(name = "person_type")
+    protected String personType;
 
     public Person(@NotNull final String name,
                   @NotNull final String surname,
-                  @NotNull final PersonType type) {
+                  @NotNull final String type) {
         this.name = name;
         this.surname = surname;
         this.personType = type;

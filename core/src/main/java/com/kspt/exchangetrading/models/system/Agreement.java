@@ -1,24 +1,32 @@
 package com.kspt.exchangetrading.models.system;
 
-import com.kspt.exchangetrading.models.actors.Broker;
-import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.models.util.enums.Validity;
+import lombok.*;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 
-public class Agreement {
+import static com.kspt.exchangetrading.configuration.Constants.AGREEMENT;
 
+@Data
+@Entity
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = AGREEMENT)
+public final class Agreement implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Client client;
+    @Column(name = "validity")
+    private String validity;
 
-    private Broker broker;
-
-    private Validity validity;
-
+    @Column(name = "start_date")
     private Instant startDate;
 
+    @Column(name = "end_date")
     private Instant endDate;
-
-    private BrokerageAccount brokerageAccount;
 }

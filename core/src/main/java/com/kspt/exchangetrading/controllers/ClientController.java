@@ -1,12 +1,12 @@
 package com.kspt.exchangetrading.controllers;
 
-import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.repositories.ClientRepository;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping(Constants.CLIENT)
+@RequestMapping("client")
 public class ClientController {
 
     private final ClientRepository clientRepository;
@@ -15,15 +15,10 @@ public class ClientController {
         this.clientRepository = clientRepository;
     }
 
-    @RequestMapping("test")
-    public String foo() {
-        return "lol";
-    }
-
     @PostMapping("create")
     @ResponseBody
     public Client create(@RequestBody Client client) {
-        return clientRepository.create(client.getName(), client.getSurname()).get();
+        return clientRepository.save(client);
     }
 
     @PutMapping(value = "update/{id}")
@@ -37,7 +32,6 @@ public class ClientController {
             client.setName("bam");
             return clientRepository.save(client);
         });
-
     }
 
 }

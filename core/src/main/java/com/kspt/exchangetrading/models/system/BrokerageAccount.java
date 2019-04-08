@@ -1,37 +1,40 @@
 package com.kspt.exchangetrading.models.system;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kspt.exchangetrading.models.util.enums.Currency;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @Entity
+@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public final class BrokerageAccount {
+public final class BrokerageAccount implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "number")
     private long number;
 
     @Column(name = "money")
     private long money;
 
-    @Transient
-    @JsonIgnore
-    private Currency currency;
+    @Column(name = "currency")
+    private String currency;
 
-    @Column(name = "creation_time")
-    private Instant creationTime;
+    @Column(name = "creation_date")
+    private Instant creationDate;
+
+    public BrokerageAccount(long number, long money, String currency, Instant creationDate) {
+        this.number = number;
+        this.money = money;
+        this.currency = currency;
+        this.creationDate = creationDate;
+    }
 
 }
