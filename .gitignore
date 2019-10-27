@@ -1,7 +1,7 @@
-/.idea
-.gradle/
-out/
-build/
+/core/.idea
+core/.gradle/
+core/out/
+core/build/
 
 .project
 .classpath
@@ -16,15 +16,16 @@ build/
 
 
 # compiled output
-/dist
-/doc
-/tmp
-/out-tsc
-/dist-server
-/static
-server.js
-prerender.js
+/ui/dist
+/ui/doc
+/ui/tmp
+/ui/out-tsc
+/ui/dist-server
+/ui/static
+/ui/server.js
+/ui/prerender.js
+/ui/e2e
 
 # dependencies
-/node_modules
-package-lock.json
+/ui/node_modules
+/ui/package-lock.json
