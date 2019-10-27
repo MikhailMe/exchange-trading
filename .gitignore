@@ -1,7 +1,30 @@
-*.iws
-*.iml
-*.ipr
-.idea/
+/.idea
 .gradle/
 out/
 build/
+
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.iml
+*.iws
+*.iml
+*.ipr
+
+
+# compiled output
+/dist
+/doc
+/tmp
+/out-tsc
+/dist-server
+/static
+server.js
+prerender.js
+
+# dependencies
+/node_modules
+package-lock.json
