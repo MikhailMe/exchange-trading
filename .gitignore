@@ -1,7 +1,7 @@
-/core/.idea
-core/.gradle/
-core/out/
-core/build/
+*/.idea
+*/.gradle/
+*/out/
+*/build/
 
 .project
 .classpath
