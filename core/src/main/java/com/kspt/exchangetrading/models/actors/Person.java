@@ -26,11 +26,9 @@ public class Person {
     @Column(name = "person_type")
     protected String personType;
 
-    public Person(@NotNull final String name,
-                  @NotNull final String surname,
-                  @NotNull final String type) {
+    Person(@NotNull final String name,
+           @NotNull final String surname) {
         this.name = name;
         this.surname = surname;
-        this.personType = type;
     }
 }

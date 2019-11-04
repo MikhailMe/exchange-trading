@@ -1,5 +1,6 @@
 package com.kspt.exchangetrading.models.system;
 
+import com.kspt.exchangetrading.configuration.Constants;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.time.Instant;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = Constants.BROKERAGE_ACCOUNT)
 public final class BrokerageAccount implements Serializable {
 
     @Id
@@ -29,6 +31,10 @@ public final class BrokerageAccount implements Serializable {
 
     @Column(name = "creation_date")
     private Instant creationDate;
+
+    @JoinColumn(name = "stock_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Stock stock;
 
     public BrokerageAccount(long number, long money, String currency, Instant creationDate) {
         this.number = number;

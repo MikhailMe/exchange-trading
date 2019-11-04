@@ -1,12 +1,12 @@
 package com.kspt.exchangetrading.models.system;
 
+import com.kspt.exchangetrading.configuration.Constants;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-
-import static com.kspt.exchangetrading.configuration.Constants.AGREEMENT;
 
 @Data
 @Entity
@@ -14,7 +14,7 @@ import static com.kspt.exchangetrading.configuration.Constants.AGREEMENT;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = AGREEMENT)
+@Table(name = Constants.AGREEMENT)
 public final class Agreement implements Serializable {
 
     @Id
@@ -27,6 +27,10 @@ public final class Agreement implements Serializable {
     @Column(name = "start_date")
     private Instant startDate;
 
-    @Column(name = "end_date")
-    private Instant endDate;
+    public Agreement(@NotNull final String validity,
+                     @NotNull final Instant startDate) {
+        this.validity = validity;
+        this.startDate = startDate;
+    }
+
 }

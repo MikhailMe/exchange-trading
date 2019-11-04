@@ -1,8 +1,6 @@
 package com.kspt.exchangetrading.services;
 
-import com.kspt.exchangetrading.models.context.client.AccountRequest;
 import com.kspt.exchangetrading.repositories.ClientRepository;
-import lombok.var;
 
 public class  ClientService implements IClientService {
 
@@ -14,7 +12,7 @@ public class  ClientService implements IClientService {
 
     @Override
     public void openBrokerageAccount() {
-        var accountRequest = new AccountRequest();
+
     }
 
     @Override

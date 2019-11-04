@@ -1,8 +1,8 @@
 package com.kspt.exchangetrading.models.actors;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kspt.exchangetrading.models.system.Request;
+import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.models.request.Request;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -14,11 +14,9 @@ import javax.persistence.Transient;
 
 import java.util.List;
 
-import static com.kspt.exchangetrading.configuration.Constants.ADMIN;
-
 @Data
 @Entity
-@Table(name = ADMIN)
+@Table(name = Constants.ADMIN)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends Person {
@@ -33,6 +31,7 @@ public class Admin extends Person {
 
     public Admin(@NotNull final String name,
                  @NotNull final String surname) {
-        super(name, surname, ADMIN);
+        super(name, surname);
     }
 }
+

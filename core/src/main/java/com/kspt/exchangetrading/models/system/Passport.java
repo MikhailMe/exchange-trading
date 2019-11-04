@@ -1,10 +1,9 @@
 package com.kspt.exchangetrading.models.system;
 
+import com.kspt.exchangetrading.configuration.Constants;
 import lombok.*;
 
 import javax.persistence.*;
-
-import static com.kspt.exchangetrading.configuration.Constants.PASSPORT;
 
 @Data
 @Entity
@@ -12,7 +11,7 @@ import static com.kspt.exchangetrading.configuration.Constants.PASSPORT;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = PASSPORT)
+@Table(name = Constants.PASSPORT)
 public final class Passport {
 
     @Id
@@ -24,5 +23,11 @@ public final class Passport {
 
     @Column(name = "number")
     private int number;
+
+    public Passport(final int series,
+                    final int number) {
+        this.series = series;
+        this.number = number;
+    }
 
 }

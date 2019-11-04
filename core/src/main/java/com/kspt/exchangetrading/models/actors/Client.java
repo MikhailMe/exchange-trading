@@ -1,7 +1,9 @@
 package com.kspt.exchangetrading.models.actors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kspt.exchangetrading.models.system.Request;
+import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.request.Request;
 import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.models.system.Passport;
@@ -15,12 +17,10 @@ import javax.persistence.*;
 
 import java.util.List;
 
-import static com.kspt.exchangetrading.configuration.Constants.CLIENT;
-
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = CLIENT)
+@Table(name = Constants.CLIENT)
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
@@ -38,7 +38,7 @@ public class Client extends Person {
 
     @Transient
     @JsonIgnore
-    private List<Request> requests;
+    private List<ClientRequest> requests;
 
     @JoinColumn(name = "brokerage_account_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,7 +46,7 @@ public class Client extends Person {
 
     public Client(@NotNull final String name,
                   @NotNull final String surname) {
-        super(name, surname, CLIENT);
+        super(name, surname);
     }
 
 }
