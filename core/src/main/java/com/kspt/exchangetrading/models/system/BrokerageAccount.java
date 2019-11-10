@@ -1,6 +1,7 @@
 package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.enums.Currency;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public final class BrokerageAccount implements Serializable {
     private long money;
 
     @Column(name = "currency")
-    private String currency;
+    private Currency currency;
 
     @Column(name = "creation_date")
     private Instant creationDate;
@@ -36,7 +37,7 @@ public final class BrokerageAccount implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Stock stock;
 
-    public BrokerageAccount(long number, long money, String currency, Instant creationDate) {
+    public BrokerageAccount(long number, long money, Currency currency, Instant creationDate) {
         this.number = number;
         this.money = money;
         this.currency = currency;

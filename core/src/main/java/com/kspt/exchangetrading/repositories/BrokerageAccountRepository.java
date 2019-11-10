@@ -1,15 +1,17 @@
 package com.kspt.exchangetrading.repositories;
 
+import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface BrokerageAccountRepository extends JpaRepository<BrokerageAccount, Long> {
 
-    Optional<BrokerageAccount> getByNumber(long number);
+    @Override
+    <S extends BrokerageAccount> S save (S entity);
 
     @Override
-    <S extends BrokerageAccount> S save(S brokerageAccount);
+    List<BrokerageAccount> findAll();
 
 }

@@ -29,7 +29,7 @@ public class Client extends Person {
     private Broker broker;
 
     @JoinColumn(name = "passport_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Passport passport;
 
     @JoinColumn(name = "agreement_id")
@@ -41,7 +41,7 @@ public class Client extends Person {
     private List<ClientRequest> requests;
 
     @JoinColumn(name = "brokerage_account_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private BrokerageAccount brokerageAccount;
 
     public Client(@NotNull final String name,

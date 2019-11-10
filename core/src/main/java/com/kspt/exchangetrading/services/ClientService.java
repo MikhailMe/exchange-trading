@@ -1,46 +1,83 @@
 package com.kspt.exchangetrading.services;
 
+import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.enums.Currency;
+import com.kspt.exchangetrading.models.actors.Client;
+import com.kspt.exchangetrading.models.system.BrokerageAccount;
+import com.kspt.exchangetrading.models.system.Passport;
+import com.kspt.exchangetrading.parser.Parser;
+import com.kspt.exchangetrading.repositories.BrokerageAccountRepository;
 import com.kspt.exchangetrading.repositories.ClientRepository;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Service;
 
-public class  ClientService implements IClientService {
+import java.time.Instant;
+import java.util.Map;
+import java.util.Objects;
 
-    private ClientRepository clientRepository;
+@Service
+public class ClientService {
 
-    public ClientService(ClientRepository clientRepository){
+    private final ClientRepository clientRepository;
+    private final BrokerageAccountRepository brokerageAccountRepository;
+
+    public ClientService(@NotNull final ClientRepository clientRepository,
+                         @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
         this.clientRepository = clientRepository;
+        this.brokerageAccountRepository = brokerageAccountRepository;
     }
 
-    @Override
-    public void openBrokerageAccount() {
+    public Client create(Client entity) {
+        return clientRepository.save(entity);
+    }
+
+    public void openBrokerageAccount(@NotNull final Map<String, Object> data) {
+        Passport passport = Parser.parsePassport(data.get(Constants.PASSPORT));
+        Client client = clientRepository.findByPassport(Objects.requireNonNull(passport));
+
+        BrokerageAccount brokerageAccount = new BrokerageAccount();
+        brokerageAccount.setCurrency(Currency.valueOf(data.get(Constants.CURRENCY).toString()));
+        brokerageAccount.setMoney(-100L); // because commission
+        brokerageAccount.setCreationDate(Instant.now());
+
+        client.setBrokerageAccount(brokerageAccount);
+
+        clientRepository.save(client);
+    }
+
+    public void closeBrokerageAccount(@NotNull final Map<String, Object> data) {
+        Passport passport = Parser.parsePassport(data.get(Constants.PASSPORT));
+        Client client = clientRepository.findByPassport(Objects.requireNonNull(passport));
+
+        if (client.getBroker() == null) {
+            BrokerageAccount ba = client.getBrokerageAccount();
+
+            // FIXME: doesn't remove .. :(
+            brokerageAccountRepository.delete(ba);
+            client.setBrokerageAccount(null);
+            clientRepository.save(client);
+        } else {
+            // TODO: broker agreement and broker ..... think about it
+        }
 
     }
 
-    @Override
-    public void closeBrokerageAccount() {
-
-    }
-
-    @Override
     public void makeBrokerAgreement() {
 
     }
 
-    @Override
     public void extendBrokerAgreement() {
 
     }
 
-    @Override
     public void breakBrokerAgreement() {
 
     }
 
-    @Override
     public void exchangeMoneyForStocks() {
 
     }
 
-    @Override
     public void exchangeStocksForMoney() {
 
     }

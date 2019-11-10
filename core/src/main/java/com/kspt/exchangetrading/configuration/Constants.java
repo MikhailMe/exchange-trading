@@ -14,6 +14,7 @@ public class Constants {
     public static final String REQUEST = "request";
     public static final String TRANSFER = "transfer";
     public static final String PASSPORT = "passport";
+    public static final String CURRENCY = "currency";
     public static final String AGREEMENT = "agreement";
     public static final String CREDENTIALS = "credentials";
     public static final String BROKERAGE_ACCOUNT = "brokerage_account";

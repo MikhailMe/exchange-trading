@@ -1,27 +1,41 @@
 package com.kspt.exchangetrading.controllers;
 
 import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.repositories.ClientRepository;
+import com.kspt.exchangetrading.models.system.Passport;
+import com.kspt.exchangetrading.services.ClientService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @RestController
 @RequestMapping("client")
 public class ClientController {
 
-    private final ClientRepository clientRepository;
+    private final ClientService clientService;
 
-    public ClientController(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @PostMapping("create")
-    @ResponseBody
     public Client create(@RequestBody Client client) {
-        return clientRepository.save(client);
+        return clientService.create(client);
     }
 
-    @PutMapping(value = "update/{id}")
+    // contract: passport, currency
+    @PostMapping("openBrokerageAccount")
+    public void openBrokerageAccount(@RequestBody final Map<String, Object> data) {
+        clientService.openBrokerageAccount(data);
+    }
+
+    // contract: passport
+    @PostMapping("closeBrokerageAccount")
+    public void closeBrokerageAccount(@RequestBody final Map<String, Object> data) {
+        clientService.closeBrokerageAccount(data);
+    }
+
+    /*@PutMapping(value = "update/{id}")
     public void update(@PathVariable Long id, @RequestBody Client client) {
         clientRepository.update(client);
     }
@@ -34,4 +48,8 @@ public class ClientController {
         });
     }
 
+    @PostMapping("createBrokerageAccount")
+    public void createBrokerageAccount() {
+
+    }*/
 }
