@@ -16,22 +16,25 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
-public class ClientService {
+public class ClientService extends AbstractService<Client, ClientRepository> {
 
     private final ClientRepository clientRepository;
     private final BrokerageAccountRepository brokerageAccountRepository;
 
     public ClientService(@NotNull final ClientRepository clientRepository,
                          @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
+        super(clientRepository);
         this.clientRepository = clientRepository;
         this.brokerageAccountRepository = brokerageAccountRepository;
     }
 
+/*
     public Client create(Client entity) {
         return clientRepository.save(entity);
     }
+*/
 
-    public void openBrokerageAccount(@NotNull final Map<String, Object> data) {
+    /*public void openBrokerageAccount(@NotNull final Map<String, Object> data) {
         Passport passport = Parser.parsePassport(data.get(Constants.PASSPORT));
         Client client = clientRepository.findByPassport(Objects.requireNonNull(passport));
 
@@ -60,7 +63,7 @@ public class ClientService {
             // TODO: broker agreement and broker ..... think about it
         }
 
-    }
+    }*/
 
     public void makeBrokerAgreement() {
 

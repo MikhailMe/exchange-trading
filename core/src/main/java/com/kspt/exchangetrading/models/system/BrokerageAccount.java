@@ -2,24 +2,19 @@ package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.enums.Currency;
+import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @Entity
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = Constants.BROKERAGE_ACCOUNT)
-public final class BrokerageAccount implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public final class BrokerageAccount extends AbstractEntity {
 
     @Column(name = "number")
     private long number;

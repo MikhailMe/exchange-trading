@@ -14,14 +14,9 @@ import java.time.Instant;
 
 @Data
 @Entity
-@Table(name = Constants.CLIENT_REQUEST)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Table(name = Constants.CLIENT_REQUEST)
 public class ClientRequest extends Request {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
     @JoinColumn(name = "passport_id")
     @OneToOne(fetch = FetchType.LAZY)

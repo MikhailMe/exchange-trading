@@ -1,6 +1,7 @@
 package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.models.AbstractEntity;
 import com.kspt.exchangetrading.models.actors.Admin;
 import com.kspt.exchangetrading.models.actors.Client;
 import lombok.*;
@@ -12,15 +13,9 @@ import java.time.Instant;
 @Data
 @Entity
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = Constants.TRANSFER)
-public final class Transfer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public final class Transfer extends AbstractEntity {
 
     @JoinColumn(name = "client_id")
     @ManyToOne(fetch = FetchType.LAZY)

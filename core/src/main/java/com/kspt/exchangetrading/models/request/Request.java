@@ -1,20 +1,25 @@
 package com.kspt.exchangetrading.models.request;
 
+import com.kspt.exchangetrading.models.AbstractEntity;
 import com.kspt.exchangetrading.models.actors.Person;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class Request {
+@MappedSuperclass
+public class Request extends AbstractEntity {
 
-    private Person to;
+    protected Person to;
 
-    private Person from;
+    protected Person from;
 
-    private Instant date;
+    @DateTimeFormat
+    protected Instant date;
 
     Request(@NotNull final Person from,
             @NotNull final Person to,

@@ -16,9 +16,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = Constants.BROKER)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Table(name = Constants.BROKER)
 public class Broker extends Person {
 
     @Transient

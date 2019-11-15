@@ -1,6 +1,7 @@
 package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,15 +9,9 @@ import javax.persistence.*;
 @Data
 @Entity
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = Constants.PASSPORT)
-public final class Passport {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public final class Passport extends AbstractEntity {
 
     @Column(name = "series")
     private int series;

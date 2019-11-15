@@ -1,5 +1,6 @@
 package com.kspt.exchangetrading.models.actors;
 
+import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -8,14 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.persistence.*;
 
 @Data
-@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@MappedSuperclass
+public class Person extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
     protected String name;

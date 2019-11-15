@@ -3,19 +3,10 @@ package com.kspt.exchangetrading.repositories;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.system.Passport;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
-
-    @Override
-    <S extends Client> S save (S entity);
-
-    @Override
-    List<Client> findAll();
+public interface ClientRepository extends CommonRepository<Client> {
 
     // <S extends Client> S
     Client findByPassport(@NotNull final Passport passport);

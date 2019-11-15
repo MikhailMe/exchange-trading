@@ -3,13 +3,11 @@ package com.kspt.exchangetrading.models.actors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.request.ClientRequest;
-import com.kspt.exchangetrading.models.request.Request;
 import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.models.system.Passport;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +19,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = Constants.CLIENT)
-@EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
     @JoinColumn(name = "broker_id")

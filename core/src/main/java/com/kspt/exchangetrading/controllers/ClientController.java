@@ -1,28 +1,22 @@
 package com.kspt.exchangetrading.controllers;
 
 import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.models.system.Passport;
 import com.kspt.exchangetrading.services.ClientService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
-
 @RestController
 @RequestMapping("client")
-public class ClientController {
-
-    private final ClientService clientService;
+public class ClientController extends AbstractController<Client, ClientService>{
 
     public ClientController(ClientService clientService) {
-        this.clientService = clientService;
+        super(clientService);
     }
 
     @PostMapping("create")
     public Client create(@RequestBody Client client) {
-        return clientService.create(client);
+        return service.save(client);
     }
-
+/*
     // contract: passport, currency
     @PostMapping("openBrokerageAccount")
     public void openBrokerageAccount(@RequestBody final Map<String, Object> data) {
@@ -33,7 +27,7 @@ public class ClientController {
     @PostMapping("closeBrokerageAccount")
     public void closeBrokerageAccount(@RequestBody final Map<String, Object> data) {
         clientService.closeBrokerageAccount(data);
-    }
+    }*/
 
     /*@PutMapping(value = "update/{id}")
     public void update(@PathVariable Long id, @RequestBody Client client) {

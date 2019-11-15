@@ -1,6 +1,7 @@
 package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,15 +10,9 @@ import javax.persistence.*;
 @Data
 @Entity
 @ToString
-@EqualsAndHashCode
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = Constants.CREDENTIALS)
-public final class Credentials {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public final class Credentials extends AbstractEntity {
 
     @Column(name = "login")
     private String login;
