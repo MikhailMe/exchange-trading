@@ -10,6 +10,8 @@ import com.kspt.exchangetrading.models.system.Passport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -18,21 +20,25 @@ import java.util.List;
 
 @Data
 @Entity
+@Embeddable
 @NoArgsConstructor
 @Table(name = Constants.CLIENT)
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
     @JoinColumn(name = "broker_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Broker broker;
 
     @JoinColumn(name = "passport_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Passport passport;
 
     @JoinColumn(name = "agreement_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Agreement agreement;
 
     @Transient

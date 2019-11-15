@@ -11,7 +11,7 @@ public abstract class AbstractService<T extends AbstractEntity, R extends Common
         implements CommonService<T> {
 
     @NotNull
-    protected final R repository;
+    final R repository;
 
     public AbstractService(@NotNull final R repository) {
         this.repository = repository;

@@ -3,6 +3,7 @@ package com.kspt.exchangetrading.models.actors;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.request.BrokerRequest;
+import com.kspt.exchangetrading.models.system.Agreement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Broker extends Person {
 
     @Transient
     @JsonIgnore
-    private List<Client> clients;
+    private List<Agreement> agreements;
 
     @Transient
     @JsonIgnore

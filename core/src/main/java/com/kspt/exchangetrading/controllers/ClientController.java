@@ -1,6 +1,7 @@
 package com.kspt.exchangetrading.controllers;
 
 import com.kspt.exchangetrading.models.actors.Client;
+import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.services.ClientService;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,39 +9,34 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("client")
-public class ClientController extends AbstractController<Client, ClientService>{
+public class ClientController extends AbstractController<Client, ClientService> {
 
     public ClientController(ClientService clientService) {
         super(clientService);
     }
 
-    // contract: passport, currency
+    // contract: clientId, currency
     @PostMapping("openBrokerageAccount")
-    public void openBrokerageAccount(@RequestBody final Map<String, Object> data) {
-        service.openBrokerageAccount(data);
+    public boolean openBrokerageAccount(@RequestBody final Map<String, Object> data) {
+        return service.openBrokerageAccount(data);
     }
 
-    // contract: passport
+    // contract: clientId
     @PostMapping("closeBrokerageAccount")
-    public void closeBrokerageAccount(@RequestBody final Map<String, Object> data) {
-        service.closeBrokerageAccount(data);
+    public boolean closeBrokerageAccount(@RequestBody final Map<String, Object> data) {
+        return service.closeBrokerageAccount(data);
     }
 
-    /*@PutMapping(value = "update/{id}")
-    public void update(@PathVariable Long id, @RequestBody Client client) {
-        clientRepository.update(client);
+    // contract: clientId, brokerageAccountId, money
+    @PostMapping("putMoneyToAccount")
+    public boolean putMoneyToAccount(@RequestBody final Map<String, Object> data) {
+        return service.putMoneyToAccount(data);
     }
 
-    @GetMapping(value = "findById/{id}")
-    public void findById(@PathVariable Long id) {
-        clientRepository.findById(id).map(client -> {
-            client.setName("bam");
-            return clientRepository.save(client);
-        });
+    // contract: clientId, validity
+    @PostMapping("makeBrokerAgreement")
+    public Agreement makeBrokerAgreement(@RequestBody final Map<String, Object> data) {
+        return service.makeBrokerAgreement(data);
     }
 
-    @PostMapping("createBrokerageAccount")
-    public void createBrokerageAccount() {
-
-    }*/
 }

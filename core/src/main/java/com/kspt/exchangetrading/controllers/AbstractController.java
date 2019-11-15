@@ -12,7 +12,7 @@ import java.util.Optional;
 public class AbstractController<T extends AbstractEntity, R extends CommonService<T>>
         implements CommonController<T> {
 
-    protected final R service;
+    final R service;
 
     public AbstractController(@NotNull final R service) {
         this.service = service;
