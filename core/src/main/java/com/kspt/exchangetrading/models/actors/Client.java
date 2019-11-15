@@ -8,6 +8,7 @@ import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.models.system.Passport;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = Constants.CLIENT)
+@EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
     @JoinColumn(name = "broker_id")

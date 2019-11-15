@@ -2,6 +2,7 @@ package com.kspt.exchangetrading.models.actors;
 
 import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@EqualsAndHashCode(callSuper = true)
 public class Person extends AbstractEntity {
 
     @Column(name = "name", nullable = false)

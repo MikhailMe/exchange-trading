@@ -11,6 +11,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @Table(name = Constants.PASSPORT)
+@EqualsAndHashCode(callSuper = true)
 public final class Passport extends AbstractEntity {
 
     @Column(name = "series")

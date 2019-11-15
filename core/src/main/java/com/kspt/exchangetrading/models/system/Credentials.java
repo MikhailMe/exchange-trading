@@ -12,6 +12,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @Table(name = Constants.CREDENTIALS)
+@EqualsAndHashCode(callSuper = true)
 public final class Credentials extends AbstractEntity {
 
     @Column(name = "login")

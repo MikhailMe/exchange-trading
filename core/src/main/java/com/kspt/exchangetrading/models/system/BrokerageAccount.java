@@ -13,6 +13,7 @@ import java.time.Instant;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(name = Constants.BROKERAGE_ACCOUNT)
 public final class BrokerageAccount extends AbstractEntity {
 

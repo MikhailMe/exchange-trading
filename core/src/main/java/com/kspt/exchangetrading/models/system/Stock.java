@@ -12,6 +12,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @Table(name = Constants.STOCKS)
+@EqualsAndHashCode(callSuper = true)
 public final class Stock extends AbstractEntity {
 
     @Column(name = "money")

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.request.Request;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = Constants.ADMIN)
+@EqualsAndHashCode(callSuper = true)
 public class Admin extends Person {
 
     @Transient

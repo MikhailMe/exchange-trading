@@ -2,9 +2,11 @@ package com.kspt.exchangetrading.models.request;
 
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.enums.RequestType;
+import com.kspt.exchangetrading.models.actors.Admin;
+import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.models.actors.Person;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,8 +16,17 @@ import java.time.Instant;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(name = Constants.BROKER_REQUEST)
 public class BrokerRequest extends Request {
+
+    @JoinColumn(name = "admin_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    protected Admin to;
+
+    @JoinColumn(name = "broker_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    protected Broker from;
 
     @JoinColumn(name = "client_id")
     @OneToOne(fetch = FetchType.LAZY)
@@ -27,10 +38,8 @@ public class BrokerRequest extends Request {
     @Column(name = "requestType")
     private RequestType requestType;
 
-    public BrokerRequest(@NotNull final Person from,
-                         @NotNull final Person to,
-                         @NotNull final Instant date) {
-        super(from, to, date);
+    public BrokerRequest(@NotNull final Instant date) {
+        super(date);
     }
 
 }

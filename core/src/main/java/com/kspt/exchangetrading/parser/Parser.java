@@ -6,14 +6,12 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.kspt.exchangetrading.models.system.Passport;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.context.annotation.Primary;
 
 import java.io.IOException;
 
 import static com.fasterxml.jackson.databind.MapperFeature.AUTO_DETECT_GETTERS;
 import static com.fasterxml.jackson.databind.MapperFeature.REQUIRE_SETTERS_FOR_GETTERS;
 
-@Primary
 public class Parser {
 
     private static final ObjectMapper mapper;

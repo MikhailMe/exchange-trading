@@ -13,6 +13,7 @@ import java.time.Instant;
 @ToString
 @NoArgsConstructor
 @Table(name = Constants.AGREEMENT)
+@EqualsAndHashCode(callSuper = true)
 public final class Agreement extends AbstractEntity {
 
     @Column(name = "validity")

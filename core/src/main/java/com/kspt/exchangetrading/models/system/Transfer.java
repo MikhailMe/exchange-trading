@@ -15,6 +15,7 @@ import java.time.Instant;
 @ToString
 @NoArgsConstructor
 @Table(name = Constants.TRANSFER)
+@EqualsAndHashCode(callSuper = true)
 public final class Transfer extends AbstractEntity {
 
     @JoinColumn(name = "client_id")
