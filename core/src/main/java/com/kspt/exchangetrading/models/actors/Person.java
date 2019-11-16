@@ -22,13 +22,13 @@ public class Person extends AbstractEntity {
     @Column(name = "surname", nullable = false)
     protected String surname;
 
-    @Column(name = "person_type", nullable = false)
+    @Column(name = "personType", nullable = false)
     protected String personType;
 
     @Column(name = "authenticated")
     protected Boolean isAuthenticated = false;
 
-    @JoinColumn(name = "credentials_id")
+    @JoinColumn(name = "credentialsId")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Credentials credentials;
 

@@ -20,21 +20,24 @@ import java.time.Instant;
 public final class BrokerageAccount extends AbstractEntity {
 
     @Column(name = "money")
-    private long money;
+    private Long money;
 
     @Column(name = "currency")
-    private Currency currency;
+    private String currency;
 
-    @Column(name = "creation_date")
+    @Column(name = "clientPassportId")
+    private Long clientPassportId;
+
+    @Column(name = "creationDate")
     private Instant creationDate;
 
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stockId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Stock stock;
 
-    public BrokerageAccount(final long money,
-                            @NotNull final Currency currency) {
+    public BrokerageAccount(@NotNull final Long money,
+                            @NotNull final String currency) {
         this.money = money;
         this.currency = currency;
         this.creationDate = Instant.now();

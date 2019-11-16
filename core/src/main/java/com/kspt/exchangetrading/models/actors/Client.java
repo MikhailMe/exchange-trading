@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -23,12 +24,12 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
-    @JoinColumn(name = "passport_id")
+    @JoinColumn(name = "passportId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Passport passport;
 
-    @JoinColumn(name = "agreement_id")
+    @JoinColumn(name = "agreementId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Agreement agreement;
@@ -36,9 +37,16 @@ public class Client extends Person {
     @ElementCollection(fetch = FetchType.LAZY)
     private List<ClientRequest> requests;
 
-    @JoinColumn(name = "brokerage_account_id")
+    @JoinColumn(name = "brokerageAccountId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private BrokerageAccount brokerageAccount;
 
+    public Client(@NotNull final String name,
+                  @NotNull final String surname,
+                  @NotNull final String personType) {
+        this.name = name;
+        this.surname = surname;
+        this.personType = personType;
+    }
 }

@@ -25,7 +25,7 @@ public final class Agreement extends AbstractEntity {
     @Column(name = "validity")
     private String validity;
 
-    @Column(name = "start_date")
+    @Column(name = "startDate")
     private Instant startDate;
 
     public Agreement(@NotNull final String validity,
