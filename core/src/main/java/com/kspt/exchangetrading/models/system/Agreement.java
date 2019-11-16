@@ -10,11 +10,17 @@ import java.time.Instant;
 
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = Constants.AGREEMENT)
 @EqualsAndHashCode(callSuper = true)
 public final class Agreement extends AbstractEntity {
+
+    @Column(name = "clientId")
+    private Long clientId;
+
+    @Column(name = "brokerId")
+    private Long brokerId;
 
     @Column(name = "validity")
     private String validity;

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AggregationService {
@@ -29,17 +30,24 @@ public class AggregationService {
         this.brokerageAccountRepository = brokerageAccountRepository;
     }
 
-    Broker getVacantBroker(final long clientId) {
+    Broker getVacantBroker(final Long clientId) {
         List<Broker> brokers = brokerRepository.findAll();
         Broker vacantBroker = null;
         for (Broker broker : brokers) {
             List<Agreement> brokerAgreements = broker.getAgreements();
-            if (brokerAgreements == null) {
+            if (brokerAgreements == null || brokerAgreements.isEmpty()) {
                 vacantBroker = broker;
                 break;
+            } else {
+                if (!brokerAgreements
+                        .stream()
+                        .map(Agreement::getClientId)
+                        .collect(Collectors.toList())
+                        .contains(clientId)) {
+                    vacantBroker = broker;
+                    break;
+                }
             }
-            // TODO: think about how broker map client by agreement
-            //else if (brokerAgreements.stream().noneMatch(x -> x.getClient().getId() == clientId))
         }
         return vacantBroker;
     }

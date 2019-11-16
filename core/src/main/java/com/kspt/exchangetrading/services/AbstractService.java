@@ -4,6 +4,7 @@ import com.kspt.exchangetrading.models.AbstractEntity;
 import com.kspt.exchangetrading.repositories.CommonRepository;
 import org.jetbrains.annotations.NotNull;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +26,12 @@ public abstract class AbstractService<T extends AbstractEntity, R extends Common
         return repository.save(entity);
     }
 
+    @Transactional
     public void deleteAll() {
         repository.deleteAll();
     }
 
+    @Transactional
     public void deleteById(final Long id) {
         repository.deleteById(id);
     }

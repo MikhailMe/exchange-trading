@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
 @Table(name = Constants.CREDENTIALS)
 @EqualsAndHashCode(callSuper = true)

@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
 @Table(name = Constants.PASSPORT)
 @EqualsAndHashCode(callSuper = true)

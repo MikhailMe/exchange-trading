@@ -2,8 +2,6 @@ package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.AbstractEntity;
-import com.kspt.exchangetrading.models.actors.Admin;
-import com.kspt.exchangetrading.models.actors.Client;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,15 +10,14 @@ import java.time.Instant;
 
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = Constants.TRANSFER)
 @EqualsAndHashCode(callSuper = true)
 public final class Transfer extends AbstractEntity {
 
-    @JoinColumn(name = "client_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Client client;
+    @Column(name = "clientId")
+    private Long clientId;
 
     @Column(name = "money")
     private long money;
@@ -28,18 +25,13 @@ public final class Transfer extends AbstractEntity {
     @Column(name = "date")
     private Instant date;
 
-    @JoinColumn(name = "admin_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Admin approver;
+    @Column(name = "approver")
+    private Long approverId;
 
-    public Transfer(@NotNull final Client client,
-                    final long money,
-                    @NotNull final Instant date,
-                    @NotNull final Admin approver) {
-        this.client = client;
+    public Transfer(final long money,
+                    @NotNull final Instant date) {
         this.money = money;
         this.date = date;
-        this.approver = approver;
     }
 
 }

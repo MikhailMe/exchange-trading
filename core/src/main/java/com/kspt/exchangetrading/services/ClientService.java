@@ -41,14 +41,12 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
     }
 
     public boolean openBrokerageAccount(@NotNull final Map<String, Object> data) {
-        final long clientId = Long.parseLong(data.get("clientId").toString());
+        final Long clientId = Long.parseLong(data.get("clientId").toString());
         Client client = repository.findById(clientId).get();
 
-        if (client.getBrokerageAccount() == null) {
-            BrokerageAccount brokerageAccount = new BrokerageAccount();
-            brokerageAccount.setCurrency(Currency.valueOf(data.get(Constants.CURRENCY).toString()));
-            brokerageAccount.setMoney(-100L); // because commission
-            brokerageAccount.setCreationDate(Instant.now());
+        if (client.getIsAuthenticated() && client.getBrokerageAccount() == null) {
+            BrokerageAccount brokerageAccount =
+                    new BrokerageAccount(-100L, Currency.valueOf(data.get(Constants.CURRENCY).toString()));
 
             client.setBrokerageAccount(brokerageAccount);
             repository.save(client);
@@ -58,10 +56,10 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
     }
 
     public boolean closeBrokerageAccount(@NotNull final Map<String, Object> data) {
-        final long clientId = Long.parseLong(data.get("clientId").toString());
+        final Long clientId = Long.parseLong(data.get("clientId").toString());
         Client client = repository.findById(clientId).get();
 
-        if (client.getBroker() == null && client.getAgreement() == null) {
+        if (client.getIsAuthenticated() && client.getAgreement() == null) {
             BrokerageAccount brokerageAccount = client.getBrokerageAccount();
             if (brokerageAccountRepository.existsById(brokerageAccount.getId())) {
                 brokerageAccountRepository.deleteById(brokerageAccount.getId());
@@ -74,55 +72,54 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
     }
 
     public boolean putMoneyToAccount(@NotNull final Map<String, Object> data) {
-        final long clientId = Long.parseLong(data.get("clientId").toString());
-        final long brokerageAccountId = Long.parseLong(data.get("brokerageAccountId").toString());
+        final Long clientId = Long.parseLong(data.get("clientId").toString());
+        final Long brokerageAccountId = Long.parseLong(data.get("brokerageAccountId").toString());
         final long money = Long.parseLong(data.get("money").toString());
 
-        if (!brokerageAccountRepository.existsById(brokerageAccountId)) {
-            return false;
-        }
-
         Client client = repository.findById(clientId).get();
-        BrokerageAccount brokerageAccount = client.getBrokerageAccount();
-
-        if (brokerageAccount.getId() == brokerageAccountId) {
-            long currentBalance = brokerageAccount.getMoney();
-            brokerageAccount.setMoney(currentBalance + money);
-            client.setBrokerageAccount(brokerageAccount);
-            this.update(clientId, client);
-            return true;
+        if (client.getIsAuthenticated()) {
+            if (!brokerageAccountRepository.existsById(brokerageAccountId)) {
+                return false;
+            }
+            BrokerageAccount brokerageAccount = client.getBrokerageAccount();
+            if (brokerageAccount.getId().equals(brokerageAccountId)) {
+                long currentBalance = brokerageAccount.getMoney();
+                brokerageAccount.setMoney(currentBalance + money);
+                client.setBrokerageAccount(brokerageAccount);
+                this.update(clientId, client);
+                return true;
+            }
         }
+
         return false;
     }
 
     public Agreement makeBrokerAgreement(@NotNull final Map<String, Object> data) {
-        final long clientId = Long.parseLong(data.get("clientId").toString());
+        Agreement agreement = null;
+        final Long clientId = Long.parseLong(data.get("clientId").toString());
         final Validity validity = Validity.valueOf(data.get("validity").toString());
-
-        final Broker vacantBroker = aggregationService.getVacantBroker(clientId);
-
         final Client client = repository.findById(clientId).get();
+        if (client.getIsAuthenticated()) {
+            final Broker vacantBroker = aggregationService.getVacantBroker(clientId);
 
-        // create agreement
-        final Agreement agreement = new Agreement();
-        agreement.setStartDate(Instant.now());
-        agreement.setValidity(validity.toString());
-        agreementRepository.save(agreement);
+            // create agreement
+            agreement = new Agreement(clientId, vacantBroker.getId(), validity.toString(), Instant.now());
+            agreementRepository.save(agreement);
 
-        // update broker
-        List<Agreement> brokerAgreements = vacantBroker.getAgreements();
-        if (brokerAgreements == null) {
-            brokerAgreements = Collections.singletonList(agreement);
-        } else if (!brokerAgreements.contains(agreement)) {
-            brokerAgreements.add(agreement);
+            // update broker
+            List<Agreement> brokerAgreements = vacantBroker.getAgreements();
+            if (brokerAgreements == null) {
+                brokerAgreements = Collections.singletonList(agreement);
+            } else if (!brokerAgreements.contains(agreement)) {
+                brokerAgreements.add(agreement);
+            }
+            vacantBroker.setAgreements(brokerAgreements);
+            brokerRepository.save(vacantBroker);
+
+            // update client
+            client.setAgreement(agreement);
+            repository.save(client);
         }
-        vacantBroker.setAgreements(brokerAgreements);
-        brokerRepository.save(vacantBroker);
-
-        // update client
-        client.setAgreement(agreement);
-        repository.save(client);
-
         return agreement;
     }
 

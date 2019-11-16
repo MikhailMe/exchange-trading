@@ -4,21 +4,20 @@ import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.enums.Currency;
 import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Data
 @Entity
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = Constants.BROKERAGE_ACCOUNT)
 public final class BrokerageAccount extends AbstractEntity {
-
-    @Column(name = "number")
-    private long number;
 
     @Column(name = "money")
     private long money;
@@ -30,14 +29,15 @@ public final class BrokerageAccount extends AbstractEntity {
     private Instant creationDate;
 
     @JoinColumn(name = "stock_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Stock stock;
 
-    public BrokerageAccount(long number, long money, Currency currency, Instant creationDate) {
-        this.number = number;
+    public BrokerageAccount(final long money,
+                            @NotNull final Currency currency) {
         this.money = money;
         this.currency = currency;
-        this.creationDate = creationDate;
+        this.creationDate = Instant.now();
     }
 
 }
