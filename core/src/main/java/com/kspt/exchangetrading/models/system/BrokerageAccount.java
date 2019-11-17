@@ -1,7 +1,6 @@
 package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.enums.Currency;
 import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;

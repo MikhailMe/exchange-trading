@@ -1,7 +1,6 @@
 package com.kspt.exchangetrading.models.request;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.enums.RequestType;
 import com.kspt.exchangetrading.models.actors.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +25,5 @@ public class BrokerRequest extends Request {
 
     @Column(name = "money")
     private long money;
-
-    @Column(name = "requestType")
-    private RequestType requestType;
 
 }

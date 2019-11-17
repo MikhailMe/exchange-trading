@@ -13,7 +13,11 @@ import java.time.Instant;
 @EqualsAndHashCode(callSuper = true)
 public class Request extends AbstractEntity {
 
+    @Column(name = "date")
     protected Instant date;
+
+    @Column(name = "requestType")
+    protected String requestType;
 
 }
 

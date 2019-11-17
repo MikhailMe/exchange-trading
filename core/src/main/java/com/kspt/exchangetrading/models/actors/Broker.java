@@ -6,6 +6,7 @@ import com.kspt.exchangetrading.models.system.Agreement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 
@@ -24,4 +25,11 @@ public class Broker extends Person {
     @ElementCollection(fetch = FetchType.LAZY)
     private List<BrokerRequest> requests;
 
+    public Broker(@NotNull final String name,
+                  @NotNull final String surname,
+                  @NotNull final String personType) {
+        this.name = name;
+        this.surname = surname;
+        this.personType = personType;
+    }
 }
