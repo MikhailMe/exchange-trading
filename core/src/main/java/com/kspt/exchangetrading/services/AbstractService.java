@@ -12,7 +12,7 @@ public abstract class AbstractService<T extends AbstractEntity, R extends Common
         implements CommonService<T> {
 
     @NotNull
-    final R repository;
+    protected final R repository;
 
     public AbstractService(@NotNull final R repository) {
         this.repository = repository;
@@ -26,7 +26,6 @@ public abstract class AbstractService<T extends AbstractEntity, R extends Common
         return repository.save(entity);
     }
 
-    @Transactional
     public void deleteAll() {
         repository.deleteAll();
     }

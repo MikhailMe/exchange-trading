@@ -1,6 +1,7 @@
-package com.kspt.exchangetrading.repositories;
+package com.kspt.exchangetrading.repositories.system;
 
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
+import com.kspt.exchangetrading.repositories.CommonRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

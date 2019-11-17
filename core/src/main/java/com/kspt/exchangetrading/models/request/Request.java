@@ -2,6 +2,7 @@ package com.kspt.exchangetrading.models.request;
 
 import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -19,5 +20,9 @@ public class Request extends AbstractEntity {
     @Column(name = "requestType")
     protected String requestType;
 
+    protected Request(@NotNull final String requestType) {
+        this.date = Instant.now();
+        this.requestType = requestType;
+    }
 }
 

@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = Constants.CLIENT)
+@Table(name = Constants.Actor.CLIENT)
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 

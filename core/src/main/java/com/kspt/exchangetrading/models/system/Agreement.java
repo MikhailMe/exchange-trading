@@ -12,7 +12,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = Constants.AGREEMENT)
+@Table(name = Constants.System.AGREEMENT)
 @EqualsAndHashCode(callSuper = true)
 public final class Agreement extends AbstractEntity {
 

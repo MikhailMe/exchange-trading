@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = Constants.PASSPORT)
+@Table(name = Constants.System.PASSPORT)
 @EqualsAndHashCode(callSuper = true)
 public final class Passport extends AbstractEntity {
 

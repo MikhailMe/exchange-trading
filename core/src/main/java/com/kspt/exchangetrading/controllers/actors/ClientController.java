@@ -1,14 +1,18 @@
-package com.kspt.exchangetrading.controllers;
+package com.kspt.exchangetrading.controllers.actors;
 
+import com.kspt.exchangetrading.configuration.Constants;
+import com.kspt.exchangetrading.controllers.AbstractController;
 import com.kspt.exchangetrading.models.actors.Client;
+import com.kspt.exchangetrading.models.request.ClientRequest;
 import com.kspt.exchangetrading.models.system.Agreement;
-import com.kspt.exchangetrading.services.ClientService;
+import com.kspt.exchangetrading.models.system.BrokerageAccount;
+import com.kspt.exchangetrading.services.actors.ClientService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("client")
+@RequestMapping(Constants.Actor.CLIENT)
 public class ClientController extends AbstractController<Client, ClientService> {
 
     public ClientController(ClientService clientService) {
@@ -17,7 +21,7 @@ public class ClientController extends AbstractController<Client, ClientService> 
 
     // contract: clientId, currency
     @PostMapping("openBrokerageAccount")
-    public boolean openBrokerageAccount(@RequestBody final Map<String, Object> data) {
+    public BrokerageAccount openBrokerageAccount(@RequestBody final Map<String, Object> data) {
         return service.openBrokerageAccount(data);
     }
 
@@ -39,8 +43,27 @@ public class ClientController extends AbstractController<Client, ClientService> 
         return service.makeBrokerAgreement(data);
     }
 
+    // contract: clientId, validity
+    @PostMapping("extendBrokerAgreement")
+    public Agreement extendBrokerAgreement(@RequestBody final Map<String, Object> data) {
+        return service.extendBrokerAgreement(data);
+    }
+
+    // contract: clientId
     @PostMapping("breakBrokerAgreement/{clientId}")
     public boolean breakBrokerAgreement(@PathVariable final Long clientId) {
         return service.breakBrokerAgreement(clientId);
+    }
+
+    // contract: clientId, moneyAmount, stockType(mishcoin, realtyincome, cloudflare)
+    @PostMapping("exchangeMoneyToStocks")
+    public ClientRequest exchangeMoneyForStocks(@RequestBody final Map<String, Object> data) {
+        return service.exchangeMoneyToStocks(data);
+    }
+
+    // contract: clientId, stockAmount, currency(ruble, dollar, euro)
+    @PostMapping("exchangeStocksToMoney")
+    public ClientRequest exchangeStocksToMoney(@RequestBody final Map<String, Object> data) {
+        return service.exchangeStocksToMoney(data);
     }
 }

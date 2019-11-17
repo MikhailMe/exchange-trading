@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = Constants.STOCKS)
+@Table(name = Constants.System.STOCKS)
 @EqualsAndHashCode(callSuper = true)
 public final class Stock extends AbstractEntity {
 
@@ -20,15 +20,15 @@ public final class Stock extends AbstractEntity {
     @Column(name = "course")
     private String course;
 
-    @Column(name = "stockCurrency")
-    private String stockCurrency;
+    @Column(name = "stockType")
+    private String stockType;
 
     public Stock(final long amount,
                  @NotNull final String course,
-                 @NotNull final String stockCurrency) {
+                 @NotNull final String stockType) {
         this.amount = amount;
         this.course = course;
-        this.stockCurrency = stockCurrency;
+        this.stockType = stockType;
     }
 
 }

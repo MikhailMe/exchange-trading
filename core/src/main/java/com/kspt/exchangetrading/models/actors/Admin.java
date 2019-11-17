@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = Constants.ADMIN)
+@Table(name = Constants.Actor.ADMIN)
 @EqualsAndHashCode(callSuper = true)
 public class Admin extends Person {
 

@@ -12,7 +12,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = Constants.TRANSFER)
+@Table(name = Constants.System.TRANSFER)
 @EqualsAndHashCode(callSuper = true)
 public final class Transfer extends AbstractEntity {
 

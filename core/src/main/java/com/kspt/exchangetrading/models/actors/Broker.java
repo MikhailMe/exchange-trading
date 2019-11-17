@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = Constants.BROKER)
+@Table(name = Constants.Actor.BROKER)
 @EqualsAndHashCode(callSuper = true)
 public class Broker extends Person {
 
