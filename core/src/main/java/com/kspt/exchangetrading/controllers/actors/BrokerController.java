@@ -24,6 +24,7 @@ public class BrokerController extends AbstractController<Broker, BrokerService> 
         return service.checkRequests(brokerId);
     }
 
+    // contract: brokerId, clientRequestId
     @PostMapping("validateClientRequest")
     public boolean validateClientRequest(@RequestBody final Map<String, Long> data) {
         return service.validateClientRequest(data);

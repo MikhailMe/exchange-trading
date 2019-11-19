@@ -46,6 +46,7 @@ public class SystemService {
         this.credentialsRepository = credentialsRepository;
     }
 
+    // TODO test it
     public Person signUp(@NotNull final Map<String, Object> data) {
         final String login = data.get("login").toString();
         final String password = data.get("password").toString();
@@ -63,7 +64,17 @@ public class SystemService {
             case Constants.Actor.BROKER:
                 Broker broker = new Broker(name, surname, personType);
                 broker.setCredentials(credentials);
-                return brokerRepository.save(broker);
+                // map admin for broker
+                Broker savedBroker = brokerRepository.save(broker);
+                Admin vacantAdmin = getVacantAdmin(adminRepository.findAll(), savedBroker.getId());
+                savedBroker.setAdminId(vacantAdmin.getId());
+                // TODO: change brokers To brokers ids
+                // update brokers in admin
+                List<Broker> brokers = vacantAdmin.getBrokers();
+                brokers.add(savedBroker);
+                vacantAdmin.setBrokers(brokers);
+                adminRepository.save(vacantAdmin);
+                return brokerRepository.save(savedBroker);
             case Constants.Actor.ADMIN:
                 Admin admin = new Admin(name, surname, personType);
                 admin.setCredentials(credentials);
@@ -150,6 +161,7 @@ public class SystemService {
         int brokerAgreementsSize = Integer.MAX_VALUE;
         for (Broker broker : brokers) {
             if (broker.getAgreements() != null && broker.getAgreements().size() < brokerAgreementsSize) {
+                brokerAgreementsSize = broker.getAgreements().size();
                 minBroker = broker;
             }
         }
@@ -162,6 +174,29 @@ public class SystemService {
         } else {
             brokers.remove(minBroker);
             return getVacantBroker(brokers, clientId);
+        }
+    }
+
+    // TODO test it
+    private Admin getVacantAdmin(@NotNull final List<Admin> admins,
+                                 @NotNull final Long brokerId) {
+        Admin minAdmin = admins.get(0);
+        int brokersSize = Integer.MAX_VALUE;
+        for (Admin admin : admins) {
+            if (admin.getBrokers() != null && admin.getBrokers().size() < brokersSize) {
+                brokersSize = admin.getBrokers().size();
+                minAdmin = admin;
+            }
+        }
+        if (!minAdmin.getBrokers()
+                .stream()
+                .map(Broker::getAdminId)
+                .collect(Collectors.toList())
+                .contains(brokerId)) {
+            return minAdmin;
+        } else {
+            admins.remove(minAdmin);
+            return getVacantAdmin(admins, brokerId);
         }
     }
 
