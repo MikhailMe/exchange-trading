@@ -3,26 +3,18 @@ package com.kspt.exchangetrading.models.system;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.AbstractEntity;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = Constants.System.BROKERAGE_ACCOUNT)
 public final class BrokerageAccount extends AbstractEntity {
-
-    @Column(name = "money")
-    private Long money;
-
-    @Column(name = "currency")
-    private String currency;
 
     @Column(name = "clientPassportId")
     private Long clientPassportId;
@@ -31,14 +23,15 @@ public final class BrokerageAccount extends AbstractEntity {
     private Instant creationDate;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private Set<Stock> stocks;
+    private List<Asset> assets;
 
-    public BrokerageAccount(@NotNull final Long money,
-                            @NotNull final String currency) {
-        this.money = money;
-        this.currency = currency;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<Stock> stocks;
+
+    public BrokerageAccount() {
         this.creationDate = Instant.now();
-        this.stocks = new HashSet<>();
+        this.assets = new ArrayList<>();
+        this.stocks = new ArrayList<>();
     }
 
 }

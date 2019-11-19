@@ -18,7 +18,7 @@ import java.util.List;
 public class Admin extends Person {
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<Broker> brokers;
+    private List<Long> brokers;
 
     public Admin(@NotNull final String name,
                  @NotNull final String surname,

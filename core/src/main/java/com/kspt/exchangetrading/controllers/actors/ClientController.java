@@ -31,9 +31,9 @@ public class ClientController extends AbstractController<Client, ClientService> 
         return service.closeBrokerageAccount(clientId);
     }
 
-    // contract: clientId, brokerageAccountId, money
+    // contract: clientId, brokerageAccountId, money, currency
     @PostMapping("putMoneyToAccount")
-    public boolean putMoneyToAccount(@RequestBody final Map<String, Object> data) {
+    public boolean putMoneyToAccount(@RequestBody final Map<String, String> data) {
         return service.putMoneyToAccount(data);
     }
 

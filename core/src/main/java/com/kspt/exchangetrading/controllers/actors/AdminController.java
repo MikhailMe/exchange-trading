@@ -25,11 +25,13 @@ public class AdminController extends AbstractController<Admin, AdminService> {
         return service.checkApprovedByBrokerRequests(adminId);
     }
 
+    // adminId, clientRequestId
     @PostMapping("approveRequest")
     public AdminRequest approveRequest(@RequestBody final Map<String, String> data) {
         return service.approveRequest(data);
     }
 
+    // adminId, clientRequestId
     @PostMapping("declineRequest")
     public String declineRequest(@RequestBody final Map<String, String> data) {
         return service.declineRequest(data);

@@ -4,10 +4,7 @@ import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.request.ClientRequest;
-import com.kspt.exchangetrading.models.system.Agreement;
-import com.kspt.exchangetrading.models.system.BrokerageAccount;
-import com.kspt.exchangetrading.models.system.Credentials;
-import com.kspt.exchangetrading.models.system.Passport;
+import com.kspt.exchangetrading.models.system.*;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
@@ -20,6 +17,12 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+
+/* TODO write method for update Assets and Stocks
+     ruble 200
+     ruble 130
+     =========
+     ruble 330  */
 
 @Service
 public class ClientService extends AbstractService<Client, ClientRepository> {
@@ -80,10 +83,15 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
             if (client.getIsAuthenticated() && client.getPassport() != null && client.getBrokerageAccount() == null) {
-                brokerageAccount = new BrokerageAccount(-100L, currency);
-                brokerageAccount.setClientPassportId(client.getPassport().getId());
-                client.setBrokerageAccount(brokerageAccount);
-                repository.save(client);
+                brokerageAccount = new BrokerageAccount();
+                List<Asset> assets = brokerageAccount.getAssets();
+                if (assets != null) {
+                    assets.add(new Asset(currency, -100L));
+                    brokerageAccount.setAssets(assets);
+                    brokerageAccount.setClientPassportId(client.getPassport().getId());
+                    client.setBrokerageAccount(brokerageAccount);
+                    repository.save(client);
+                }
             }
         }
         return brokerageAccount;
@@ -105,10 +113,11 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         return false;
     }
 
-    public boolean putMoneyToAccount(@NotNull final Map<String, Object> data) {
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
-        final Long brokerageAccountId = Long.parseLong(data.get("brokerageAccountId").toString());
-        final long money = Long.parseLong(data.get("money").toString());
+    public boolean putMoneyToAccount(@NotNull final Map<String, String> data) {
+        final Long clientId = Long.parseLong(data.get("clientId"));
+        final Long brokerageAccountId = Long.parseLong(data.get("brokerageAccountId"));
+        final long money = Long.parseLong(data.get("money"));
+        final String currency = data.get("currency");
 
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
@@ -118,11 +127,19 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
                 }
                 BrokerageAccount brokerageAccount = client.getBrokerageAccount();
                 if (brokerageAccount.getId().equals(brokerageAccountId)) {
-                    long currentBalance = brokerageAccount.getMoney();
-                    brokerageAccount.setMoney(currentBalance + money);
-                    client.setBrokerageAccount(brokerageAccount);
-                    this.update(clientId, client);
-                    return true;
+                    List<Asset> assets = brokerageAccount.getAssets();
+                    if (assets != null) {
+                        Asset asset = assets.stream().filter(x -> x.getType().equals(currency)).findFirst().orElse(null);
+                        if (asset != null) {
+                            long currentBalance = asset.getQuantity();
+                            asset.setQuantity(currentBalance + money);
+                            assets.add(asset);
+                            brokerageAccount.setAssets(assets);
+                            client.setBrokerageAccount(brokerageAccount);
+                            this.update(clientId, client);
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -212,7 +229,11 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         Client client = repository.findById(clientId).orElse(null);
         if (client != null && checkAgreement(clientId)) {
             final Long brokerId = client.getAgreement().getBrokerId();
-            clientRequest = new ClientRequest(brokerId, clientId, moneyAmount, stockType, Constants.Exchange.MONEY_TO_STOCKS);
+            clientRequest = new ClientRequest(
+                    brokerId,
+                    clientId,
+                    new Asset(stockType, moneyAmount),
+                    Constants.Exchange.MONEY_TO_STOCKS);
             requestService.saveClientRequest(clientRequest);
             List<ClientRequest> clientRequests = client.getRequests();
             clientRequests.add(clientRequest);
@@ -231,7 +252,11 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         Client client = repository.findById(clientId).orElse(null);
         if (client != null && checkAgreement(clientId)) {
             final Long brokerId = client.getAgreement().getBrokerId();
-            clientRequest = new ClientRequest(brokerId, clientId, stockAmount, currency, Constants.Exchange.STOCKS_TO_MONEY);
+            clientRequest = new ClientRequest(
+                    brokerId,
+                    clientId,
+                    new Asset(currency, stockAmount),
+                    Constants.Exchange.STOCKS_TO_MONEY);
             requestService.saveClientRequest(clientRequest);
             List<ClientRequest> clientRequests = client.getRequests();
             clientRequests.add(clientRequest);

@@ -14,20 +14,15 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public final class Stock extends AbstractEntity {
 
-    @Column(name = "money")
-    private long amount;
-
-    @Column(name = "course")
-    private String course;
+    @Column(name = "amount")
+    private Long amount;
 
     @Column(name = "stockType")
     private String stockType;
 
-    public Stock(final long amount,
-                 @NotNull final String course,
+    public Stock(@NotNull final Long amount,
                  @NotNull final String stockType) {
         this.amount = amount;
-        this.course = course;
         this.stockType = stockType;
     }
 

@@ -54,13 +54,15 @@ public class BrokerService extends AbstractService<Broker, BrokerRepository> {
                 if (client != null && client.getBrokerageAccount() != null) {
                     switch (clientRequest.getRequestType()) {
                         case Constants.Exchange.MONEY_TO_STOCKS: {
-                            if (client.getBrokerageAccount().getMoney() >= clientRequest.getAmount()) return true;
+                            if (client.getBrokerageAccount().getAsset().getQuantity() >= clientRequest.getAmount())
+                                return true;
                         }
                         case Constants.Exchange.STOCKS_TO_MONEY: {
                             Set<Stock> clientStocks = client.getBrokerageAccount().getStocks();
                             for (Stock stock : clientStocks)
                                 if (stock.getStockType().equals(clientRequest.getAssetType()))
-                                    if (stock.getAmount() >= clientRequest.getAmount()) return true;
+                                    if (stock.getAmount() >= clientRequest.getAmount())
+                                        return true;
                             break;
                         }
                     }

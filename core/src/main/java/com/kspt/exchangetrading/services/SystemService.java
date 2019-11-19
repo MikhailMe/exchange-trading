@@ -46,7 +46,6 @@ public class SystemService {
         this.credentialsRepository = credentialsRepository;
     }
 
-    // TODO test it
     public Person signUp(@NotNull final Map<String, Object> data) {
         final String login = data.get("login").toString();
         final String password = data.get("password").toString();
@@ -68,10 +67,9 @@ public class SystemService {
                 Broker savedBroker = brokerRepository.save(broker);
                 Admin vacantAdmin = getVacantAdmin(adminRepository.findAll(), savedBroker.getId());
                 savedBroker.setAdminId(vacantAdmin.getId());
-                // TODO: change brokers To brokers ids
                 // update brokers in admin
-                List<Broker> brokers = vacantAdmin.getBrokers();
-                brokers.add(savedBroker);
+                List<Long> brokers = vacantAdmin.getBrokers();
+                brokers.add(savedBroker.getId());
                 vacantAdmin.setBrokers(brokers);
                 adminRepository.save(vacantAdmin);
                 return brokerRepository.save(savedBroker);
@@ -177,7 +175,6 @@ public class SystemService {
         }
     }
 
-    // TODO test it
     private Admin getVacantAdmin(@NotNull final List<Admin> admins,
                                  @NotNull final Long brokerId) {
         Admin minAdmin = admins.get(0);
@@ -188,11 +185,7 @@ public class SystemService {
                 minAdmin = admin;
             }
         }
-        if (!minAdmin.getBrokers()
-                .stream()
-                .map(Broker::getAdminId)
-                .collect(Collectors.toList())
-                .contains(brokerId)) {
+        if (!minAdmin.getBrokers().contains(brokerId)) {
             return minAdmin;
         } else {
             admins.remove(minAdmin);
