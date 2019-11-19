@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -37,6 +38,7 @@ public final class BrokerageAccount extends AbstractEntity {
         this.money = money;
         this.currency = currency;
         this.creationDate = Instant.now();
+        this.stocks = new HashSet<>();
     }
 
 }

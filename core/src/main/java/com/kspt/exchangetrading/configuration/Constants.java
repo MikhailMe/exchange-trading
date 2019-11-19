@@ -22,8 +22,14 @@ public class Constants {
 
     public static class Request {
         public static final String ADMIN_REQUEST = "admin_request";
-        public static final String BROKER_REQUEST = "broker_request";
         public static final String CLIENT_REQUEST = "client_request";
+    }
+
+    public static class ClientRequestStatus {
+        public static final String DECLINED = "declined";
+        public static final String COMPLETED = "completed";
+        public static final String PROCESSING = "processing";
+        public static final String APPROVED_BY_BROKER = "approved by broker";
     }
 
     public static class Exchange {
@@ -39,6 +45,11 @@ public class Constants {
         public static final String AGREEMENT = "agreement";
         public static final String CREDENTIALS = "credentials";
         public static final String BROKERAGE_ACCOUNT = "brokerage_account";
+    }
+
+    public static class Status {
+        public static final String SUCCESS = "success";
+        public static final String FAILURE = "failure";
     }
 
 }

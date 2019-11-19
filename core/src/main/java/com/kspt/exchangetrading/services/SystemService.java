@@ -144,26 +144,25 @@ public class SystemService {
         return false;
     }
 
-    public Broker getVacantBroker(final Long clientId) {
-        List<Broker> brokers = brokerRepository.findAll();
-        Broker vacantBroker = null;
+    public Broker getVacantBroker(@NotNull final List<Broker> brokers,
+                                  @NotNull final Long clientId) {
+        Broker minBroker = brokers.get(0);
+        int brokerAgreementsSize = Integer.MAX_VALUE;
         for (Broker broker : brokers) {
-            List<Agreement> brokerAgreements = broker.getAgreements();
-            if (brokerAgreements == null || brokerAgreements.isEmpty()) {
-                vacantBroker = broker;
-                break;
-            } else {
-                if (!brokerAgreements
-                        .stream()
-                        .map(Agreement::getClientId)
-                        .collect(Collectors.toList())
-                        .contains(clientId)) {
-                    vacantBroker = broker;
-                    break;
-                }
+            if (broker.getAgreements() != null && broker.getAgreements().size() < brokerAgreementsSize) {
+                minBroker = broker;
             }
         }
-        return vacantBroker;
+        if (!minBroker.getAgreements()
+                .stream()
+                .map(Agreement::getClientId)
+                .collect(Collectors.toList())
+                .contains(clientId)) {
+            return minBroker;
+        } else {
+            brokers.remove(minBroker);
+            return getVacantBroker(brokers, clientId);
+        }
     }
 
     public void deletePassport(@NotNull final Passport passport) {

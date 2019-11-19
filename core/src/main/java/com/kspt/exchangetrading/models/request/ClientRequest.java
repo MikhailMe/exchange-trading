@@ -1,7 +1,6 @@
 package com.kspt.exchangetrading.models.request;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,23 +11,29 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = Constants.Request.CLIENT_REQUEST)
 public class ClientRequest extends Request {
 
+    @Column(name = "adminId")
+    private Long adminId;
+
     @Column(name = "brokerId")
-    protected Long to;
+    private Long to;
 
     @Column(name = "clientId")
-    protected Long from;
+    private Long from;
 
     @Column(name = "amount")
-    protected Long amount;
+    private Long amount;
+
+    // processing, approved, declined
+    @Column(name = "status")
+    private String status;
 
     // ruble, dollar, euro or mishcoin, realtyincome, cloudflare
     @Column(name = "assetType")
-    protected String assetType;
+    private String assetType;
 
     public ClientRequest(@NotNull final Long to,
                          @NotNull final Long from,
@@ -39,6 +44,7 @@ public class ClientRequest extends Request {
         this.to = to;
         this.from = from;
         this.amount = amount;
+        this.status = "processing";
         this.assetType = assetType;
     }
 

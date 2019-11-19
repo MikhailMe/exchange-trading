@@ -19,8 +19,8 @@ public final class Transfer extends AbstractEntity {
     @Column(name = "clientId")
     private Long clientId;
 
-    @Column(name = "money")
-    private long money;
+    @Column(name = "assetAmount")
+    private long assetAmount;
 
     @Column(name = "date")
     private Instant date;
@@ -28,9 +28,9 @@ public final class Transfer extends AbstractEntity {
     @Column(name = "approver")
     private Long approverId;
 
-    public Transfer(final long money,
+    public Transfer(@NotNull final Long assetAmount,
                     @NotNull final Instant date) {
-        this.money = money;
+        this.assetAmount = assetAmount;
         this.date = date;
     }
 

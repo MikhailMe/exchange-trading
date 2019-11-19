@@ -18,10 +18,10 @@ import javax.persistence.*;
 public class AdminRequest extends Request {
 
     @Column(name = "brokerId")
-    protected Long to;
+    private Long to;
 
     @Column(name = "adminId")
-    protected Long from;
+    private Long from;
 
     @Column(name = "data")
     private String data;

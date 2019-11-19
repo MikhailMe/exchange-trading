@@ -1,7 +1,6 @@
 package com.kspt.exchangetrading.models.actors;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.models.request.BrokerRequest;
 import com.kspt.exchangetrading.models.system.Agreement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,11 +18,11 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Broker extends Person {
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    private List<Agreement> agreements;
+    @Column(name = "adminId")
+    private Long adminId;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<BrokerRequest> requests;
+    private List<Agreement> agreements;
 
     public Broker(@NotNull final String name,
                   @NotNull final String surname,

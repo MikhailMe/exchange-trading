@@ -136,22 +136,26 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         final Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
             if (client.getIsAuthenticated()) {
-                final Broker vacantBroker = systemService.getVacantBroker(clientId);
-                // create agreement
-                agreement = new Agreement(clientId, vacantBroker.getId(), validity, Instant.now());
-                systemService.saveAgreement(agreement);
-                // update broker
-                List<Agreement> brokerAgreements = vacantBroker.getAgreements();
-                if (brokerAgreements == null) {
-                    brokerAgreements = Collections.singletonList(agreement);
-                } else if (!brokerAgreements.contains(agreement)) {
-                    brokerAgreements.add(agreement);
+                final Broker vacantBroker = brokerRepository.findAll().isEmpty()
+                        ? null
+                        : systemService.getVacantBroker(brokerRepository.findAll(), clientId);
+                if (vacantBroker != null) {
+                    // create agreement
+                    agreement = new Agreement(clientId, vacantBroker.getId(), validity, Instant.now());
+                    systemService.saveAgreement(agreement);
+                    // update broker
+                    List<Agreement> brokerAgreements = vacantBroker.getAgreements();
+                    if (brokerAgreements == null) {
+                        brokerAgreements = Collections.singletonList(agreement);
+                    } else if (!brokerAgreements.contains(agreement)) {
+                        brokerAgreements.add(agreement);
+                    }
+                    vacantBroker.setAgreements(brokerAgreements);
+                    brokerRepository.save(vacantBroker);
+                    // update client
+                    client.setAgreement(agreement);
+                    repository.save(client);
                 }
-                vacantBroker.setAgreements(brokerAgreements);
-                brokerRepository.save(vacantBroker);
-                // update client
-                client.setAgreement(agreement);
-                repository.save(client);
             }
         }
         return agreement;
