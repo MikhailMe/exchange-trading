@@ -9,11 +9,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("system")
-public class SystemController {
+public final class SystemController {
 
     private final SystemService systemService;
 
-    public SystemController(@NotNull final SystemService systemService){
+    public SystemController(@NotNull final SystemService systemService) {
         this.systemService = systemService;
     }
 

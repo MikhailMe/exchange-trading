@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = Constants.Actor.BROKER)
 @EqualsAndHashCode(callSuper = true)
-public class Broker extends Person {
+public final class Broker extends Person {
 
     @Column(name = "adminId")
     private Long adminId;

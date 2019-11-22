@@ -4,39 +4,38 @@ import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.request.ClientRequest;
-import com.kspt.exchangetrading.models.system.Stock;
+import com.kspt.exchangetrading.models.treasury.Asset;
+import com.kspt.exchangetrading.models.treasury.Stock;
+import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
 import com.kspt.exchangetrading.services.AbstractService;
-import com.kspt.exchangetrading.services.RequestService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class BrokerService extends AbstractService<Broker, BrokerRepository> {
 
-    private final RequestService requestService;
-
     private final ClientRepository clientRepository;
+    private final ClientRequestRepository clientRequestRepository;
 
     public BrokerService(@NotNull final BrokerRepository repository,
-                         @NotNull final RequestService requestService,
+                         @NotNull final ClientRequestRepository clientRequestRepository,
                          @NotNull final ClientRepository clientRepository) {
         super(repository);
-        this.requestService = requestService;
+        this.clientRequestRepository = clientRequestRepository;
         this.clientRepository = clientRepository;
     }
 
     public List<ClientRequest> checkRequests(@NotNull final Long brokerId) {
         Broker broker = repository.findById(brokerId).orElse(null);
         return broker != null && broker.getIsAuthenticated()
-                ? requestService
-                .getRequestsByBrokerId(brokerId)
+                ? clientRequestRepository
+                .findByBrokerId(brokerId)
                 .stream()
                 .filter(clientRequest -> clientRequest.getStatus().equals(Constants.ClientRequestStatus.PROCESSING))
                 .collect(Collectors.toList())
@@ -48,22 +47,22 @@ public class BrokerService extends AbstractService<Broker, BrokerRepository> {
         Broker broker = repository.findById(brokerId).orElse(null);
         if (broker != null && broker.getIsAuthenticated()) {
             final long clientRequestId = Long.parseLong(data.get("clientRequestId").toString());
-            ClientRequest clientRequest = requestService.getClientRequest(clientRequestId).orElse(null);
+            ClientRequest clientRequest = clientRequestRepository.findById(clientRequestId).orElse(null);
             if (clientRequest != null) {
-                Client client = clientRepository.findById(clientRequest.getFrom()).orElse(null);
+                Client client = clientRepository.findById(clientRequest.getClientId()).orElse(null);
                 if (client != null && client.getBrokerageAccount() != null) {
                     switch (clientRequest.getRequestType()) {
                         case Constants.Exchange.MONEY_TO_STOCKS: {
-                            if (client.getBrokerageAccount().getAsset().getQuantity() >= clientRequest.getAmount())
-                                return true;
+                            for (Asset asset : client.getBrokerageAccount().getAssets())
+                                if (asset.getType().equals(clientRequest.getFromType())
+                                        && asset.getQuantity() >= clientRequest.getQuantity())
+                                    return true;
                         }
                         case Constants.Exchange.STOCKS_TO_MONEY: {
-                            Set<Stock> clientStocks = client.getBrokerageAccount().getStocks();
-                            for (Stock stock : clientStocks)
-                                if (stock.getStockType().equals(clientRequest.getAssetType()))
-                                    if (stock.getAmount() >= clientRequest.getAmount())
-                                        return true;
-                            break;
+                            for (Stock stock : client.getBrokerageAccount().getStocks())
+                                if (stock.getStockType().equals(clientRequest.getFromType())
+                                        && stock.getQuantity() >= clientRequest.getQuantity())
+                                    return true;
                         }
                     }
                 }
@@ -76,7 +75,7 @@ public class BrokerService extends AbstractService<Broker, BrokerRepository> {
                                                 final boolean isApproved) {
         final long brokerId = Long.parseLong(data.get("brokerId").toString());
         final long clientRequestId = Long.parseLong(data.get("clientRequestId").toString());
-        ClientRequest clientRequest = requestService.getClientRequest(clientRequestId).orElse(null);
+        ClientRequest clientRequest = clientRequestRepository.findById(clientRequestId).orElse(null);
         if (clientRequest != null) {
             if (isApproved) {
                 clientRequest.setStatus(Constants.ClientRequestStatus.APPROVED_BY_BROKER);
@@ -89,7 +88,7 @@ public class BrokerService extends AbstractService<Broker, BrokerRepository> {
             } else {
                 clientRequest.setStatus(Constants.ClientRequestStatus.DECLINED);
             }
-            ClientRequest savedClientRequest = requestService.saveClientRequest(clientRequest);
+            ClientRequest savedClientRequest = clientRequestRepository.save(clientRequest);
             if (savedClientRequest != null) {
                 return Constants.Status.SUCCESS;
             }

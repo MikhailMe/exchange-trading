@@ -2,6 +2,8 @@ package com.kspt.exchangetrading.models.system;
 
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.AbstractEntity;
+import com.kspt.exchangetrading.models.treasury.Asset;
+import com.kspt.exchangetrading.models.treasury.Stock;
 import lombok.*;
 
 import javax.persistence.*;

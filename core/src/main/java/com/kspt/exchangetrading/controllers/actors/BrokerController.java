@@ -19,6 +19,7 @@ public class BrokerController extends AbstractController<Broker, BrokerService> 
         super(service);
     }
 
+    // contract: brokerId
     @GetMapping("{brokerId}/checkRequests")
     public List<ClientRequest> checkRequests(@PathVariable final Long brokerId) {
         return service.checkRequests(brokerId);

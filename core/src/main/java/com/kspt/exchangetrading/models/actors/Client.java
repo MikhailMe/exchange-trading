@@ -6,6 +6,7 @@ import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.models.system.Passport;
 
+import com.kspt.exchangetrading.models.treasury.Transaction;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = Constants.Actor.CLIENT)
 @EqualsAndHashCode(callSuper = true)
-public class Client extends Person {
+public final class Client extends Person {
 
     @JoinColumn(name = "passportId")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -36,6 +37,9 @@ public class Client extends Person {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<ClientRequest> requests;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
     @JoinColumn(name = "brokerageAccountId")
     @OnDelete(action = OnDeleteAction.CASCADE)

@@ -20,7 +20,7 @@ public class Request extends AbstractEntity {
     @Column(name = "requestType")
     protected String requestType;
 
-    protected Request(@NotNull final String requestType) {
+    Request(@NotNull final String requestType) {
         this.date = Instant.now();
         this.requestType = requestType;
     }

@@ -5,42 +5,44 @@ import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.request.ClientRequest;
 import com.kspt.exchangetrading.models.system.*;
+import com.kspt.exchangetrading.models.treasury.Asset;
+import com.kspt.exchangetrading.models.treasury.Transaction;
+import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
+import com.kspt.exchangetrading.repositories.system.AgreementRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
+import com.kspt.exchangetrading.repositories.treasury.TransactionRepository;
 import com.kspt.exchangetrading.services.AbstractService;
-import com.kspt.exchangetrading.services.RequestService;
-import com.kspt.exchangetrading.services.SystemService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-
-/* TODO write method for update Assets and Stocks
-     ruble 200
-     ruble 130
-     =========
-     ruble 330  */
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService extends AbstractService<Client, ClientRepository> {
 
-    private final SystemService systemService;
-    private final RequestService requestService;
     private final BrokerRepository brokerRepository;
+    private final AgreementRepository agreementRepository;
+    private final TransactionRepository transactionRepository;
+    private final ClientRequestRepository clientRequestRepository;
     private final BrokerageAccountRepository brokerageAccountRepository;
 
-    public ClientService(@NotNull final SystemService systemService,
-                         @NotNull final RequestService requestService,
+    public ClientService(
                          @NotNull final ClientRepository clientRepository,
                          @NotNull final BrokerRepository brokerRepository,
+                         @NotNull final AgreementRepository agreementRepository,
+                         @NotNull final TransactionRepository transactionRepository,
+                         @NotNull final ClientRequestRepository clientRequestRepository,
                          @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
         super(clientRepository);
-        this.systemService = systemService;
-        this.requestService = requestService;
         this.brokerRepository = brokerRepository;
+        this.agreementRepository = agreementRepository;
+        this.transactionRepository = transactionRepository;
+        this.clientRequestRepository = clientRequestRepository;
         this.brokerageAccountRepository = brokerageAccountRepository;
     }
 
@@ -56,37 +58,15 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         return null;
     }
 
-    @Override
-    public void deleteById(final Long id) {
-        Client client = repository.findById(id).orElse(null);
-        if (client != null) {
-            Passport passport = client.getPassport();
-            if (passport != null) {
-                client.setPassport(null);
-                repository.save(client);
-                systemService.deletePassport(passport);
-            }
-            Credentials credentials = client.getCredentials();
-            if (credentials != null) {
-                client.setCredentials(null);
-                repository.save(client);
-                systemService.deleteCredentials(credentials);
-            }
-            repository.deleteById(id);
-        }
-    }
-
-    public BrokerageAccount openBrokerageAccount(@NotNull final Map<String, Object> data) {
+    public BrokerageAccount openBrokerageAccount(@NotNull final Long clientId) {
         BrokerageAccount brokerageAccount = null;
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
-        final String currency = data.get(Constants.System.CURRENCY).toString();
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
             if (client.getIsAuthenticated() && client.getPassport() != null && client.getBrokerageAccount() == null) {
                 brokerageAccount = new BrokerageAccount();
                 List<Asset> assets = brokerageAccount.getAssets();
                 if (assets != null) {
-                    assets.add(new Asset(currency, -100L));
+                    assets.add(new Asset(client.getId(), Constants.Currency.RUBLE, -100L));
                     brokerageAccount.setAssets(assets);
                     brokerageAccount.setClientPassportId(client.getPassport().getId());
                     client.setBrokerageAccount(brokerageAccount);
@@ -115,30 +95,29 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
 
     public boolean putMoneyToAccount(@NotNull final Map<String, String> data) {
         final Long clientId = Long.parseLong(data.get("clientId"));
-        final Long brokerageAccountId = Long.parseLong(data.get("brokerageAccountId"));
         final long money = Long.parseLong(data.get("money"));
         final String currency = data.get("currency");
 
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
-            if (client.getIsAuthenticated()) {
+            if (client.getIsAuthenticated() && client.getBrokerageAccount() != null) {
+                BrokerageAccount brokerageAccount = client.getBrokerageAccount();
+                final long brokerageAccountId = brokerageAccount.getId();
                 if (!brokerageAccountRepository.existsById(brokerageAccountId)) {
                     return false;
                 }
-                BrokerageAccount brokerageAccount = client.getBrokerageAccount();
-                if (brokerageAccount.getId().equals(brokerageAccountId)) {
-                    List<Asset> assets = brokerageAccount.getAssets();
-                    if (assets != null) {
-                        Asset asset = assets.stream().filter(x -> x.getType().equals(currency)).findFirst().orElse(null);
-                        if (asset != null) {
-                            long currentBalance = asset.getQuantity();
-                            asset.setQuantity(currentBalance + money);
-                            assets.add(asset);
-                            brokerageAccount.setAssets(assets);
-                            client.setBrokerageAccount(brokerageAccount);
-                            this.update(clientId, client);
-                            return true;
-                        }
+                List<Asset> assets = brokerageAccount.getAssets();
+                if (assets != null) {
+                    Asset asset = assets.stream().filter(x -> x.getType().equals(currency)).findFirst().orElse(null);
+                    if (asset != null) {
+                        assets.remove(asset);
+                        long currentBalance = asset.getQuantity();
+                        asset.setQuantity(currentBalance + money);
+                        assets.add(asset);
+                        brokerageAccount.setAssets(assets);
+                        client.setBrokerageAccount(brokerageAccount);
+                        this.update(clientId, client);
+                        return true;
                     }
                 }
             }
@@ -155,11 +134,11 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
             if (client.getIsAuthenticated()) {
                 final Broker vacantBroker = brokerRepository.findAll().isEmpty()
                         ? null
-                        : systemService.getVacantBroker(brokerRepository.findAll(), clientId);
+                        : getVacantBroker(brokerRepository.findAll(), clientId);
                 if (vacantBroker != null) {
                     // create agreement
                     agreement = new Agreement(clientId, vacantBroker.getId(), validity, Instant.now());
-                    systemService.saveAgreement(agreement);
+                    agreementRepository.save(agreement);
                     // update broker
                     List<Agreement> brokerAgreements = vacantBroker.getAgreements();
                     if (brokerAgreements == null) {
@@ -188,7 +167,7 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
             if (clientAgreement != null) {
                 clientAgreement.setStartDate(Instant.now());
                 clientAgreement.setValidity(newValidity);
-                systemService.saveAgreement(clientAgreement);
+                agreementRepository.save(clientAgreement);
                 newClientAgreement = clientAgreement;
             }
         }
@@ -212,7 +191,7 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
                     client.setAgreement(null);
                     repository.save(client);
                     // remove agreement
-                    systemService.deleteAgreement(agreement);
+                    agreementRepository.delete(agreement);
                     return true;
                 }
             }
@@ -220,21 +199,22 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         return false;
     }
 
-    public ClientRequest exchangeMoneyToStocks(@NotNull final Map<String, Object> data) {
+    public ClientRequest exchange(@NotNull final Map<String, Object> data,
+                                  @NotNull final String requestType) {
         final Long clientId = Long.parseLong(data.get("clientId").toString());
-        final Long moneyAmount = Long.parseLong(data.get("moneyAmount").toString());
-        final String stockType = data.get("stockType").toString();
+        final Long quantity = Long.parseLong(data.get("quantity").toString());
+        final String fromType = data.get("fromType").toString();
+        final String toType = data.get("toType").toString();
 
         ClientRequest clientRequest = null;
         Client client = repository.findById(clientId).orElse(null);
         if (client != null && checkAgreement(clientId)) {
             final Long brokerId = client.getAgreement().getBrokerId();
             clientRequest = new ClientRequest(
-                    brokerId,
-                    clientId,
-                    new Asset(stockType, moneyAmount),
-                    Constants.Exchange.MONEY_TO_STOCKS);
-            requestService.saveClientRequest(clientRequest);
+                    brokerId, clientId,
+                    fromType, toType,
+                    quantity, requestType);
+            clientRequestRepository.save(clientRequest);
             List<ClientRequest> clientRequests = client.getRequests();
             clientRequests.add(clientRequest);
             client.setRequests(clientRequests);
@@ -243,27 +223,8 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
         return clientRequest;
     }
 
-    public ClientRequest exchangeStocksToMoney(@NotNull final Map<String, Object> data) {
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
-        final Long stockAmount = Long.parseLong(data.get("stockAmount").toString());
-        final String currency = data.get("currency").toString();
-
-        ClientRequest clientRequest = null;
-        Client client = repository.findById(clientId).orElse(null);
-        if (client != null && checkAgreement(clientId)) {
-            final Long brokerId = client.getAgreement().getBrokerId();
-            clientRequest = new ClientRequest(
-                    brokerId,
-                    clientId,
-                    new Asset(currency, stockAmount),
-                    Constants.Exchange.STOCKS_TO_MONEY);
-            requestService.saveClientRequest(clientRequest);
-            List<ClientRequest> clientRequests = client.getRequests();
-            clientRequests.add(clientRequest);
-            client.setRequests(clientRequests);
-            repository.save(client);
-        }
-        return clientRequest;
+    public List<Transaction> getTransactions(@NotNull final Long clientId) {
+        return transactionRepository.findByClientId(clientId);
     }
 
     private boolean checkAgreement(@NotNull final Long clientId) {
@@ -289,5 +250,27 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
             }
         }
         return false;
+    }
+
+    private Broker getVacantBroker(@NotNull final List<Broker> brokers,
+                                   @NotNull final Long clientId) {
+        Broker minBroker = brokers.get(0);
+        int brokerAgreementsSize = Integer.MAX_VALUE;
+        for (Broker broker : brokers) {
+            if (broker.getAgreements() != null && broker.getAgreements().size() < brokerAgreementsSize) {
+                brokerAgreementsSize = broker.getAgreements().size();
+                minBroker = broker;
+            }
+        }
+        if (!minBroker.getAgreements()
+                .stream()
+                .map(Agreement::getClientId)
+                .collect(Collectors.toList())
+                .contains(clientId)) {
+            return minBroker;
+        } else {
+            brokers.remove(minBroker);
+            return getVacantBroker(brokers, clientId);
+        }
     }
 }

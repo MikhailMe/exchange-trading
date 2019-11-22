@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = Constants.Actor.ADMIN)
 @EqualsAndHashCode(callSuper = true)
-public class Admin extends Person {
+public final class Admin extends Person {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<Long> brokers;

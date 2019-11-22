@@ -3,8 +3,8 @@ package com.kspt.exchangetrading.controllers.actors;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.controllers.AbstractController;
 import com.kspt.exchangetrading.models.actors.Admin;
-import com.kspt.exchangetrading.models.request.AdminRequest;
 import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.treasury.Transaction;
 import com.kspt.exchangetrading.services.actors.AdminService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +27,13 @@ public class AdminController extends AbstractController<Admin, AdminService> {
 
     // adminId, clientRequestId
     @PostMapping("approveRequest")
-    public AdminRequest approveRequest(@RequestBody final Map<String, String> data) {
+    public Transaction approveRequest(@RequestBody final Map<String, String> data) {
         return service.approveRequest(data);
     }
 
-    // adminId, clientRequestId
+    // clientRequestId
     @PostMapping("declineRequest")
-    public String declineRequest(@RequestBody final Map<String, String> data) {
-        return service.declineRequest(data);
+    public String declineRequest(@RequestBody final Long clientRequestId) {
+        return service.declineRequest(clientRequestId);
     }
 }
