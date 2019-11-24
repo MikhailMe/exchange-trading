@@ -3,7 +3,7 @@ package com.kspt.exchangetrading.controllers.actors;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.controllers.CrudController;
 import com.kspt.exchangetrading.models.actors.Admin;
-import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.treasury.BankRecord;
 import com.kspt.exchangetrading.models.treasury.Rate;
 import com.kspt.exchangetrading.models.treasury.Transaction;
@@ -27,10 +27,11 @@ public final class AdminController extends CrudController<Admin, AdminService> {
         return service.checkApprovedByBrokerRequests(adminId);
     }
 
-    // adminId, clientRequestId
-    @PostMapping("approveRequest")
-    public Transaction approveRequest(@RequestBody final Map<String, String> data) {
-        return service.approveRequest(data);
+    // clientRequestId
+    @PostMapping("{adminId}/approveRequest")
+    public Transaction approveRequest(@PathVariable final Long adminId,
+                                      @RequestBody final Map<String, String> data) {
+        return service.approveRequest(adminId, data);
     }
 
     // clientRequestId
@@ -39,12 +40,12 @@ public final class AdminController extends CrudController<Admin, AdminService> {
         return service.declineRequest(clientRequestId);
     }
 
-    @GetMapping("rates")
+    @GetMapping("getRates")
     public List<Rate> getRates() {
         return service.getRates();
     }
 
-    @GetMapping("bank")
+    @GetMapping("getBankAssets")
     public List<BankRecord> getBankMoney() {
         return service.getBankMoney();
     }

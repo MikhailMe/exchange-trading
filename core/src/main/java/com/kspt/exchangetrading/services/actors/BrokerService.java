@@ -3,7 +3,7 @@ package com.kspt.exchangetrading.services.actors;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.treasury.Asset;
 import com.kspt.exchangetrading.models.treasury.Stock;
 import com.kspt.exchangetrading.repositories.ClientRequestRepository;
@@ -42,8 +42,8 @@ public class BrokerService extends CrudService<Broker, BrokerRepository> {
                 : null;
     }
 
-    public boolean validateClientRequest(@NotNull final Map<String, Long> data) {
-        final long brokerId = Long.parseLong(data.get("brokerId").toString());
+    public boolean validateClientRequest(@NotNull final Long brokerId,
+                                         @NotNull final Map<String, Long> data) {
         Broker broker = repository.findById(brokerId).orElse(null);
         if (broker != null && broker.getIsAuthenticated()) {
             final long clientRequestId = Long.parseLong(data.get("clientRequestId").toString());
@@ -71,9 +71,9 @@ public class BrokerService extends CrudService<Broker, BrokerRepository> {
         return false;
     }
 
-    public String approveOrDeclineClientRequest(@NotNull final Map<String, Long> data,
+    public String approveOrDeclineClientRequest(@NotNull final Long brokerId,
+                                                @NotNull final Map<String, Long> data,
                                                 final boolean isApproved) {
-        final long brokerId = Long.parseLong(data.get("brokerId").toString());
         final long clientRequestId = Long.parseLong(data.get("clientRequestId").toString());
         ClientRequest clientRequest = clientRequestRepository.findById(clientRequestId).orElse(null);
         if (clientRequest != null) {

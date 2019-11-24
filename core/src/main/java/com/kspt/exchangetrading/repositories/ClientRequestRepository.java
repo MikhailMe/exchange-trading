@@ -1,6 +1,6 @@
 package com.kspt.exchangetrading.repositories;
 
-import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.ClientRequest;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 

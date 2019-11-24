@@ -3,7 +3,7 @@ package com.kspt.exchangetrading.controllers.actors;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.controllers.CrudController;
 import com.kspt.exchangetrading.models.actors.Broker;
-import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.services.actors.BrokerService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.*;
@@ -19,28 +19,30 @@ public final class BrokerController extends CrudController<Broker, BrokerService
         super(service);
     }
 
-    // contract: brokerId
     @GetMapping("{brokerId}/checkRequests")
     public List<ClientRequest> checkRequests(@PathVariable final Long brokerId) {
         return service.checkRequests(brokerId);
     }
 
-    // contract: brokerId, clientRequestId
-    @PostMapping("validateClientRequest")
-    public boolean validateClientRequest(@RequestBody final Map<String, Long> data) {
-        return service.validateClientRequest(data);
+    // contract: clientRequestId
+    @PostMapping("{brokerId}/validateClientRequest")
+    public boolean validateClientRequest(@PathVariable final Long brokerId,
+                                         @RequestBody final Map<String, Long> data) {
+        return service.validateClientRequest(brokerId, data);
     }
 
-    // contract: clientRequestId, brokerId
-    @PostMapping("approveClientRequest")
-    public String approveClientRequest(@RequestBody final Map<String, Long> data) {
-        return service.approveOrDeclineClientRequest(data, true);
+    // contract: clientRequestId
+    @PostMapping("{brokerId}/approveClientRequest")
+    public String approveClientRequest(@PathVariable final Long brokerId,
+                                       @RequestBody final Map<String, Long> data) {
+        return service.approveOrDeclineClientRequest(brokerId, data, true);
     }
 
-    // contract: clientRequestId, brokerId
-    @PostMapping("declineClientRequest")
-    public String declineClientRequest(@RequestBody final Map<String, Long> data) {
-        return service.approveOrDeclineClientRequest(data, false);
+    // contract: clientRequestId
+    @PostMapping("{brokerId}/declineClientRequest")
+    public String declineClientRequest(@PathVariable final Long brokerId,
+                                       @RequestBody final Map<String, Long> data) {
+        return service.approveOrDeclineClientRequest(brokerId, data, false);
     }
 
 }

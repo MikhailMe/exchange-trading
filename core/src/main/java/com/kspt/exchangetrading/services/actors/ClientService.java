@@ -3,7 +3,7 @@ package com.kspt.exchangetrading.services.actors;
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
-import com.kspt.exchangetrading.models.request.ClientRequest;
+import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.system.*;
 import com.kspt.exchangetrading.models.treasury.Asset;
 import com.kspt.exchangetrading.models.treasury.Transaction;
@@ -12,6 +12,7 @@ import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
 import com.kspt.exchangetrading.repositories.system.AgreementRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
+import com.kspt.exchangetrading.repositories.system.PassportRepository;
 import com.kspt.exchangetrading.repositories.treasury.AssetRepository;
 import com.kspt.exchangetrading.repositories.treasury.TransactionRepository;
 import com.kspt.exchangetrading.services.CrudService;
@@ -28,6 +29,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
 
     private final AssetRepository assetRepository;
     private final BrokerRepository brokerRepository;
+    private final PassportRepository passportRepository;
     private final AgreementRepository agreementRepository;
     private final TransactionRepository transactionRepository;
     private final ClientRequestRepository clientRequestRepository;
@@ -36,6 +38,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
     public ClientService(@NotNull final AssetRepository assetRepository,
                          @NotNull final BrokerRepository brokerRepository,
                          @NotNull final ClientRepository clientRepository,
+                         @NotNull final PassportRepository passportRepository,
                          @NotNull final AgreementRepository agreementRepository,
                          @NotNull final TransactionRepository transactionRepository,
                          @NotNull final ClientRequestRepository clientRequestRepository,
@@ -43,6 +46,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         super(clientRepository);
         this.assetRepository = assetRepository;
         this.brokerRepository = brokerRepository;
+        this.passportRepository = passportRepository;
         this.agreementRepository = agreementRepository;
         this.transactionRepository = transactionRepository;
         this.clientRequestRepository = clientRequestRepository;
@@ -59,6 +63,19 @@ public class ClientService extends CrudService<Client, ClientRepository> {
             }
         }
         return null;
+    }
+
+    public Client setPassport(@NotNull final Long clientId,
+                              @NotNull final Map<String, String> data) {
+        final int series = Integer.parseInt(data.get("series"));
+        final int number = Integer.parseInt(data.get("number"));
+        final Passport passport = passportRepository.save(new Passport(series, number));
+        Client client = repository.findById(clientId).orElse(null);
+        if (client != null) {
+            client.setPassport(passport);
+            repository.save(client);
+        }
+        return client;
     }
 
     public BrokerageAccount openBrokerageAccount(@NotNull final Long clientId) {
@@ -97,8 +114,8 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return false;
     }
 
-    public boolean putMoneyToAccount(@NotNull final Map<String, String> data) {
-        final Long clientId = Long.parseLong(data.get("clientId"));
+    public boolean putMoneyToAccount(@NotNull final Long clientId,
+                                     @NotNull final Map<String, String> data) {
         final long money = Long.parseLong(data.get("money"));
         final String currency = data.get("currency");
 
@@ -129,9 +146,9 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return false;
     }
 
-    public Agreement makeBrokerAgreement(@NotNull final Map<String, Object> data) {
+    public Agreement makeBrokerAgreement(@NotNull final Long clientId,
+                                         @NotNull final Map<String, Object> data) {
         Agreement agreement = null;
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
         final String validity = data.get("validity").toString();
         final Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
@@ -161,9 +178,9 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return agreement;
     }
 
-    public Agreement extendBrokerAgreement(@NotNull final Map<String, Object> data) {
+    public Agreement extendBrokerAgreement(@NotNull final Long clientId,
+                                           @NotNull final Map<String, Object> data) {
         Agreement newClientAgreement = null;
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
         final String newValidity = data.get("validity").toString();
         final Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
@@ -203,9 +220,9 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return false;
     }
 
-    public ClientRequest exchange(@NotNull final Map<String, Object> data,
+    public ClientRequest exchange(@NotNull final Long clientId,
+                                  @NotNull final Map<String, Object> data,
                                   @NotNull final String requestType) {
-        final Long clientId = Long.parseLong(data.get("clientId").toString());
         final Double quantity = Double.parseDouble(data.get("quantity").toString());
         final String fromType = data.get("fromType").toString();
         final String toType = data.get("toType").toString();

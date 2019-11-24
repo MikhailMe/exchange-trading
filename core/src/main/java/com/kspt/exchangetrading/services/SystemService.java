@@ -166,6 +166,7 @@ public class SystemService {
         return treasuryService.setRates();
     }
 
+    @NotNull
     private Admin getVacantAdmin(@NotNull final List<Admin> admins,
                                  @NotNull final Long brokerId) {
         Admin minAdmin = admins.get(0);

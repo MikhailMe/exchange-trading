@@ -13,10 +13,9 @@ import java.util.List;
 public class TreasuryService {
 
     private final RateRepository rateRepository;
-    private final BankRecordRepository bankRecordRepository;
-
     public final AssetRepository assetRepository;
     public final StockRepository stockRepository;
+    private final BankRecordRepository bankRecordRepository;
     public final TransactionRepository transactionRepository;
 
     public TreasuryService(@NotNull final RateRepository rateRepository,
@@ -39,35 +38,44 @@ public class TreasuryService {
             Stock stock = transaction.getStock();
             switch (requestType) {
                 case Constants.Exchange.MONEY_TO_STOCKS: {
+                    int counter = 0;
                     for (BankRecord record : bankRecords) {
+                        if (counter == 2) {
+                            break;
+                        }
                         final Double currentBalance = record.getQuantity();
                         if (record.getType().equals(asset.getType())) {
                             final Double exchangeBalance = asset.getQuantity();
                             final Double newBalance = currentBalance + exchangeBalance;
                             record.setQuantity(newBalance);
                             bankRecordRepository.save(record);
+                            counter++;
                         } else if (record.getType().equals(stock.getStockType())) {
-                            final Double exchangeBalance = exchangeMoneyToStocks(asset, stock);
-                            final Double newBalance = currentBalance - exchangeBalance;
+                            final Double newBalance = currentBalance + stock.getQuantity();
                             record.setQuantity(newBalance);
                             bankRecordRepository.save(record);
+                            counter++;
                         }
                     }
                     break;
                 }
                 case Constants.Exchange.STOCKS_TO_MONEY: {
+                    int counter = 0;
                     for (BankRecord record : bankRecords) {
+                        if (counter == 2) {
+                            break;
+                        }
                         final Double currentBalance = record.getQuantity();
                         if (record.getType().equals(stock.getStockType())) {
-                            final Double exchangeBalance = exchangeStocksToMoney(asset, stock);
-                            final Double newBalance = currentBalance + exchangeBalance;
+                            final Double newBalance = currentBalance + stock.getQuantity();
                             record.setQuantity(newBalance);
                             bankRecordRepository.save(record);
+                            counter++;
                         } else if (record.getType().equals(asset.getType())) {
-                            final Double exchangeBalance = asset.getQuantity();
-                            final Double newBalance = currentBalance - exchangeBalance;
+                            final Double newBalance = currentBalance + asset.getQuantity();
                             record.setQuantity(newBalance);
                             bankRecordRepository.save(record);
+                            counter++;
                         }
                     }
                     break;
@@ -76,34 +84,39 @@ public class TreasuryService {
         }
     }
 
+    @NotNull
     public Double exchangeMoneyToStocks(@NotNull final Asset asset,
-                                      @NotNull final Stock stock) {
+                                        @NotNull final Stock stock) {
         List<Rate> rates = rateRepository.findAll();
         double stockQuantity = 0d;
         if (rates != null) {
-            for (Rate rate : rates)
+            for (Rate rate : rates) {
                 if (rate.getFromType().equals(asset.getType()) && rate.getToType().equals(stock.getStockType())) {
-                    stockQuantity = asset.getQuantity() / rate.getRate();
+                    stockQuantity = Math.abs(asset.getQuantity()) / Math.abs(rate.getRate());
                     break;
                 }
+            }
         }
         return stockQuantity;
     }
 
+    @NotNull
     public Double exchangeStocksToMoney(@NotNull final Asset asset,
-                                      @NotNull final Stock stock) {
+                                        @NotNull final Stock stock) {
         List<Rate> rates = rateRepository.findAll();
-        double assetQuantity = 0L;
+        double assetQuantity = 0d;
         if (rates != null) {
-            for (Rate rate : rates)
+            for (Rate rate : rates) {
                 if (rate.getFromType().equals(stock.getStockType()) && rate.getToType().equals(asset.getType())) {
-                    assetQuantity = stock.getQuantity() / rate.getRate();
+                    assetQuantity = Math.abs(stock.getQuantity()) / Math.abs(rate.getRate());
                     break;
                 }
+            }
         }
         return assetQuantity;
     }
 
+    @NotNull
     List<Rate> setRates() {
         List<Rate> rates = new ArrayList<>();
 
@@ -161,6 +174,7 @@ public class TreasuryService {
         return rates;
     }
 
+    @NotNull
     List<BankRecord> setBank() {
         List<BankRecord> bankRecords = new ArrayList<>();
 
@@ -179,10 +193,12 @@ public class TreasuryService {
         return bankRecords;
     }
 
+    @NotNull
     public List<Rate> getRates() {
         return rateRepository.findAll();
     }
 
+    @NotNull
     public List<BankRecord> getBankMoney() {
         return bankRecordRepository.findAll();
     }
