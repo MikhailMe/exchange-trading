@@ -8,13 +8,13 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractService<T extends AbstractEntity, R extends CommonRepository<T>>
+public abstract class CrudService<T extends AbstractEntity, R extends CommonRepository<T>>
         implements CommonService<T> {
 
     @NotNull
     protected final R repository;
 
-    public AbstractService(@NotNull final R repository) {
+    public CrudService(@NotNull final R repository) {
         this.repository = repository;
     }
 

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-public class AbstractController<T extends AbstractEntity, R extends CommonService<T>>
+public class CrudController<T extends AbstractEntity, R extends CommonService<T>>
         implements CommonController<T> {
 
     protected final R service;
 
-    public AbstractController(@NotNull final R service) {
+    public CrudController(@NotNull final R service) {
         this.service = service;
     }
 

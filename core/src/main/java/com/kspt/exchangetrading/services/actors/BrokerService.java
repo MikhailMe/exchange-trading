@@ -9,7 +9,7 @@ import com.kspt.exchangetrading.models.treasury.Stock;
 import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
-import com.kspt.exchangetrading.services.AbstractService;
+import com.kspt.exchangetrading.services.CrudService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class BrokerService extends AbstractService<Broker, BrokerRepository> {
+public class BrokerService extends CrudService<Broker, BrokerRepository> {
 
     private final ClientRepository clientRepository;
     private final ClientRequestRepository clientRequestRepository;

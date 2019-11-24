@@ -26,6 +26,6 @@ public final class Asset extends AbstractEntity {
     private String type;
 
     @Column(name = "quantity")
-    private Long quantity;
+    private Double quantity;
 
 }

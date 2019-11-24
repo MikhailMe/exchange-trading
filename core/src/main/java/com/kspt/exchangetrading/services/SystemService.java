@@ -6,6 +6,8 @@ import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.actors.Person;
 import com.kspt.exchangetrading.models.system.Credentials;
+import com.kspt.exchangetrading.models.treasury.BankRecord;
+import com.kspt.exchangetrading.models.treasury.Rate;
 import com.kspt.exchangetrading.repositories.actors.AdminRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
@@ -19,15 +21,18 @@ import java.util.Map;
 @Service
 public class SystemService {
 
+    private final TreasuryService treasuryService;
     private final AdminRepository adminRepository;
     private final ClientRepository clientRepository;
     private final BrokerRepository brokerRepository;
     private final CredentialsRepository credentialsRepository;
 
-    public SystemService(@NotNull final AdminRepository adminRepository,
+    public SystemService(@NotNull final TreasuryService treasuryService,
+                         @NotNull final AdminRepository adminRepository,
                          @NotNull final ClientRepository clientRepository,
                          @NotNull final BrokerRepository brokerRepository,
                          @NotNull final CredentialsRepository credentialsRepository) {
+        this.treasuryService = treasuryService;
         this.adminRepository = adminRepository;
         this.clientRepository = clientRepository;
         this.brokerRepository = brokerRepository;
@@ -151,6 +156,14 @@ public class SystemService {
             }
         }
         return false;
+    }
+
+    public List<BankRecord> setBankAssets() {
+        return treasuryService.setBank();
+    }
+
+    public List<Rate> setRates() {
+        return treasuryService.setRates();
     }
 
     private Admin getVacantAdmin(@NotNull final List<Admin> admins,

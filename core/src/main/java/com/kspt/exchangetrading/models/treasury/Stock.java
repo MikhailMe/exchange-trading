@@ -21,5 +21,5 @@ public final class Stock extends AbstractEntity {
     private String stockType;
 
     @Column(name = "quantity")
-    private Long quantity;
+    private Double quantity;
 }

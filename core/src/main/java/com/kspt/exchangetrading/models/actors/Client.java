@@ -1,12 +1,10 @@
 package com.kspt.exchangetrading.models.actors;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.models.request.ClientRequest;
 import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.models.system.Passport;
 
-import com.kspt.exchangetrading.models.treasury.Transaction;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -36,10 +34,10 @@ public final class Client extends Person {
     private Agreement agreement;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<ClientRequest> requests;
+    private List<Long> requests;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<Transaction> transactions;
+    private List<Long> transactions;
 
     @JoinColumn(name = "brokerageAccountId")
     @OnDelete(action = OnDeleteAction.CASCADE)

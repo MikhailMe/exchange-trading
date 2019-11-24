@@ -12,8 +12,9 @@ import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
 import com.kspt.exchangetrading.repositories.system.AgreementRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
+import com.kspt.exchangetrading.repositories.treasury.AssetRepository;
 import com.kspt.exchangetrading.repositories.treasury.TransactionRepository;
-import com.kspt.exchangetrading.services.AbstractService;
+import com.kspt.exchangetrading.services.CrudService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +24,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ClientService extends AbstractService<Client, ClientRepository> {
+public class ClientService extends CrudService<Client, ClientRepository> {
 
+    private final AssetRepository assetRepository;
     private final BrokerRepository brokerRepository;
     private final AgreementRepository agreementRepository;
     private final TransactionRepository transactionRepository;
     private final ClientRequestRepository clientRequestRepository;
     private final BrokerageAccountRepository brokerageAccountRepository;
 
-    public ClientService(
-                         @NotNull final ClientRepository clientRepository,
+    public ClientService(@NotNull final AssetRepository assetRepository,
                          @NotNull final BrokerRepository brokerRepository,
+                         @NotNull final ClientRepository clientRepository,
                          @NotNull final AgreementRepository agreementRepository,
                          @NotNull final TransactionRepository transactionRepository,
                          @NotNull final ClientRequestRepository clientRequestRepository,
                          @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
         super(clientRepository);
+        this.assetRepository = assetRepository;
         this.brokerRepository = brokerRepository;
         this.agreementRepository = agreementRepository;
         this.transactionRepository = transactionRepository;
@@ -66,7 +69,8 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
                 brokerageAccount = new BrokerageAccount();
                 List<Asset> assets = brokerageAccount.getAssets();
                 if (assets != null) {
-                    assets.add(new Asset(client.getId(), Constants.Currency.RUBLE, -100L));
+                    Asset savedAsset = assetRepository.save(new Asset(client.getId(), Constants.Currency.RUBLE, -100d));
+                    assets.add(savedAsset);
                     brokerageAccount.setAssets(assets);
                     brokerageAccount.setClientPassportId(client.getPassport().getId());
                     client.setBrokerageAccount(brokerageAccount);
@@ -111,7 +115,7 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
                     Asset asset = assets.stream().filter(x -> x.getType().equals(currency)).findFirst().orElse(null);
                     if (asset != null) {
                         assets.remove(asset);
-                        long currentBalance = asset.getQuantity();
+                        Double currentBalance = asset.getQuantity();
                         asset.setQuantity(currentBalance + money);
                         assets.add(asset);
                         brokerageAccount.setAssets(assets);
@@ -202,7 +206,7 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
     public ClientRequest exchange(@NotNull final Map<String, Object> data,
                                   @NotNull final String requestType) {
         final Long clientId = Long.parseLong(data.get("clientId").toString());
-        final Long quantity = Long.parseLong(data.get("quantity").toString());
+        final Double quantity = Double.parseDouble(data.get("quantity").toString());
         final String fromType = data.get("fromType").toString();
         final String toType = data.get("toType").toString();
 
@@ -214,9 +218,9 @@ public class ClientService extends AbstractService<Client, ClientRepository> {
                     brokerId, clientId,
                     fromType, toType,
                     quantity, requestType);
-            clientRequestRepository.save(clientRequest);
-            List<ClientRequest> clientRequests = client.getRequests();
-            clientRequests.add(clientRequest);
+            clientRequest = clientRequestRepository.save(clientRequest);
+            List<Long> clientRequests = client.getRequests();
+            clientRequests.add(clientRequest.getId());
             client.setRequests(clientRequests);
             repository.save(client);
         }

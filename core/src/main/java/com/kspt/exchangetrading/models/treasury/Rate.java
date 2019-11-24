@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +31,17 @@ public final class Rate extends AbstractEntity {
     private String fromType;
 
     @Column(name = "rate")
-    private Long rate;
+    private Double rate;
 
     @Column(name = "date")
     private Instant date;
+
+    public Rate(@NotNull final String fromType,
+                @NotNull final String toType,
+                @NotNull final Double rate) {
+        this.fromType = fromType;
+        this.toType = toType;
+        this.rate = rate;
+        this.date = Instant.now();
+    }
 }

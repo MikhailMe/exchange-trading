@@ -28,7 +28,7 @@ public final class ClientRequest extends Request {
     private Long clientId;
 
     @Column(name = "quantity")
-    private Long quantity;
+    private Double quantity;
 
     @Column(name = "fromType")
     private String fromType;
@@ -43,7 +43,7 @@ public final class ClientRequest extends Request {
                          @NotNull final Long clientId,
                          @NotNull final String fromType,
                          @NotNull final String toType,
-                         @NotNull final Long quantity,
+                         @NotNull final Double quantity,
                          @NotNull final String requestType) {
         super(requestType);
         this.brokerId = brokerId;

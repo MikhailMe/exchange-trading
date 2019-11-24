@@ -1,7 +1,7 @@
 package com.kspt.exchangetrading.controllers.actors;
 
 import com.kspt.exchangetrading.configuration.Constants;
-import com.kspt.exchangetrading.controllers.AbstractController;
+import com.kspt.exchangetrading.controllers.CrudController;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.request.ClientRequest;
 import com.kspt.exchangetrading.models.system.Agreement;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(Constants.Actor.CLIENT)
-public class ClientController extends AbstractController<Client, ClientService> {
+public final class ClientController extends CrudController<Client, ClientService> {
 
     public ClientController(ClientService clientService) {
         super(clientService);
