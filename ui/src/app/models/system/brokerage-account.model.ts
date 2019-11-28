@@ -1,9 +1,10 @@
-import {Stock} from "./stock.model";
+import {Entity} from "../entity.model";
+import {Asset} from "../treasury/asset.model";
+import {Stock} from "../treasury/stock.model";
 
-export class BrokerageAccount {
-    number: number;
-    money: number;
-    currency: string;
+export class BrokerageAccount extends Entity {
+    clientPassportId: number;
     creationDate: Date;
-    stock: Stock;
+    assets: Asset[];
+    stocks: Stock[];
 }
