@@ -1,7 +1,12 @@
 <div class="client-transactions-container">
     <h2>Client transactions</h2>
 
-    <p><span>Requests: </span> {{brokerageAccount.transactions}} </p>
+    <tbody>
+		<tr *ngFor="let transaction of brokerageAccount.transactions">
+			<td>{{transaction.id}}</td>
+			<td>{{transaction.type}}</td>
+		</tr>
+	</tbody>
 
     <br>
     <p><button type="submit" class="button">Back</button></p>
