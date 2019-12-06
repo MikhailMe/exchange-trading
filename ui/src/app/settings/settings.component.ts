@@ -1,28 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-
-import {Client} from '../models';
-import {ClientService} from '../services';
+import {DataService} from '../services/data.service';
 
 @Component({
     selector: 'app-settings-page',
     templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements OnInit {
-    user: Client = {} as Client;
 
-    constructor(
-        private router: Router,
-        private userService: ClientService,
-    ) {
+    public requests: any[];
 
+    constructor(private readonly dataService: DataService) {
+        this.requests = dataService.getData();
     }
 
     ngOnInit() {
 
-    }
-
-    logout() {
     }
 
 }

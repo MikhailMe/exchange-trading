@@ -18,6 +18,9 @@ export function createEnv() {
         getAdmin: baseUrl + 'admin/',
         getAdminRequests: baseUrl + 'admin/requests/',
 
+        signIn: baseUrl + 'system/signIn',
+        signUp: baseUrl + 'system/signUp',
+        signOut: baseUrl + 'system/signOut',
     };
 }
 
