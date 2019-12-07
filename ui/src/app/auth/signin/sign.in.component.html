@@ -19,7 +19,7 @@
                    id="password"
                    required>
         </p>
-
+        <br>
         <p>
             <label for="personType">Person type</label>
             <select [(ngModel)]="personType"
@@ -35,10 +35,10 @@
 
     <div class="button-container">
         <p>
-            <button (click)="signIn()" class="button">Sign In</button>
+            <span><button (click)="signIn()"><span>Sign In</span></button></span>
         </p>
         <p>
-            <button class="button">Back</button>
+            <span><button [routerLink]="''"><span>Back</span></button></span>
         </p>
     </div>
 </div>
