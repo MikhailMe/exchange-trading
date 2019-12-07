@@ -1,44 +1,43 @@
+<h2>Sign In</h2>
+
 <div class="signIn-container">
-    <h2>Sign In</h2>
-    <div class="info-container">
-        <p>
-            <label for="login">Login</label>
-            <input [(ngModel)]="login"
-                   type="text"
-                   placeholder="Enter Login"
-                   name="login" id="login"
-                   required>
-        </p>
-
-        <p>
-            <label for="password">Password</label>
-            <input [(ngModel)]="password"
-                   type="password"
-                   placeholder="Enter Password"
-                   name="password"
-                   id="password"
-                   required>
-        </p>
-        <br>
-        <p>
-            <label for="personType">Person type</label>
-            <select [(ngModel)]="personType"
-                    name="personType"
-                    id="personType"
-                    required="">
-                <option value="client">client</option>
-                <option value="broker">broker</option>
-                <option value="admin">admin</option>
-            </select>
-        </p>
+    <div class="centerify">
+        <label for="login">Login</label>
+        <input [(ngModel)]="login"
+               type="text"
+               placeholder="Enter Login"
+               name="login" id="login"
+               required>
     </div>
+    <br>
+    <div class="centerify">
+        <label for="password">Password</label>
+        <input [(ngModel)]="password"
+               type="password"
+               placeholder="Enter Password"
+               name="password"
+               id="password"
+               required>
+    </div>
+    <br>
+    <div class="centerify">
+        <label for="personType">Person type</label>
+        <select class="select-css" [(ngModel)]="personType"
+                name="personType"
+                id="personType"
+                required="">
+            <option value="client">client</option>
+            <option value="broker">broker</option>
+            <option value="admin">admin</option>
+        </select>
+    </div>
+    <br>
 
-    <div class="button-container">
-        <p>
-            <span><button (click)="signIn()"><span>Sign In</span></button></span>
-        </p>
-        <p>
-            <span><button [routerLink]="''"><span>Back</span></button></span>
-        </p>
+    <div class="centerify">
+        <span><button (click)="signIn()"><span>Sign In</span></button></span>
+    </div>
+    <br>
+    <div class="centerify">
+        <span><button [routerLink]="''"><span>Back</span></button></span>
     </div>
 </div>

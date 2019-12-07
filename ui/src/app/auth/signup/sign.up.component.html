@@ -1,6 +1,6 @@
 <div class="signup-container">
     <h2>Sign Up</h2>
-    <div class="info-container">
+    <div class="centerify">
         <label for="login">Login</label>
         <input [(ngModel)]="login"
                type="text"
@@ -8,7 +8,9 @@
                name="login"
                id="login"
                required>
-
+    </div>
+    <br>
+    <div class="centerify">
         <label for="password">Password</label>
         <input [(ngModel)]="password"
                type="password"
@@ -16,7 +18,9 @@
                name="password"
                id="password"
                required>
-
+    </div>
+    <br>
+    <div class="centerify">
         <label for="psw-repeat">Repeat Password</label>
         <input [(ngModel)]="password_repeat"
                type="password"
@@ -24,7 +28,9 @@
                name="psw-repeat"
                id="psw-repeat"
                required>
-
+    </div>
+    <br>
+    <div class="centerify">
         <label for="name">Name</label>
         <input [(ngModel)]="name"
                type="text"
@@ -32,7 +38,9 @@
                name="name"
                id="name"
                required>
-
+    </div>
+    <br>
+    <div class="centerify">
         <label for="surname">Surname</label>
         <input [(ngModel)]="surname"
                type="text"
@@ -40,16 +48,18 @@
                name="surname"
                id="surname"
                required>
-
+    </div>
+    <br>
+    <div class="centerify">
         <label for="personType">Person type</label>
-        <select [(ngModel)]="personType" name="personType" id="personType">
+        <select class="select-css" [(ngModel)]="personType" name="personType" id="personType">
             <option value="client">client</option>
             <option value="broker">broker</option>
             <option value="admin">admin</option>
         </select>
     </div>
-
-    <div class="button-container">
+    <br>
+    <div class="centerify">
         <button (click)="signUp()" name="signup"><span>Sign Up</span></button>
 
         <button [routerLink]="''"><span>Back</span></button>

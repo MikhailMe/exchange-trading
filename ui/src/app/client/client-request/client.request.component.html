@@ -1,0 +1,27 @@
+<h2>Request</h2>
+
+<div class="client-current-request-container">
+
+    <div class="centerify"><span>Type: </span> {{clientRequest.requestType}} </div>
+    <br>
+    <div class="centerify"><span>Date: </span> {{clientRequest.date}} </div>
+    <br>
+    <div class="centerify"><span>Admin id: </span> {{clientRequest.adminId}} </div>
+    <br>
+    <div class="centerify"><span>Broker id: </span> {{clientRequest.brokerId}} </div>
+    <br>
+    <div class="centerify"><span>Client id: </span> {{clientRequest.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Quantity: </span> {{clientRequest.quantity}} </div>
+    <br>
+    <div class="centerify"><span>From: </span> {{clientRequest.fromType}} </div>
+    <br>
+    <div class="centerify"><span>To: </span> {{clientRequest.toType}} </div>
+    <br>
+    <div class="centerify"><span>Status: </span> {{clientRequest.status}} </div>
+    <br>
+
+    <div class="centerify">
+        <button [routerLink]="'/client/requests'"><span>Back</span></button>
+    </div>
+</div>

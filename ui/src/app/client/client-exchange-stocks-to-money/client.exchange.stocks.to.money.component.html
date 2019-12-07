@@ -1,0 +1,32 @@
+<h2>Stocks to money exchange</h2>
+
+<div class="client-exchange-s2m-container">
+
+    <div class="centerify"><label for="fromType">From stock type</label>
+        <select class="select-css" [ngModel]="fromType" name="toCurrency" id="fromType">
+            <option value="mishcoin">mishcoin</option>
+            <option value="realtyincome">realty income</option>
+            <option value="cloudflare">cloud flare</option>
+        </select>
+    </div>
+    <br>
+    <div class="centerify"><label for="toType">To currency</label>
+        <select class="select-css" [ngModel]="toType" name="fromCurrency" id="toType">
+            <option value="ruble">ruble</option>
+            <option value="dollar">dollar</option>
+            <option value="euro">euro</option>
+        </select>
+    </div>
+    <br>
+    <div class="centerify"><label for="quantity">Quatity</label>
+        <input [ngModel]="quantity" type="number" min="0" placeholder="Enter quantity" id="quantity" required>
+    </div>
+    <br>
+    <div class="centerify">
+        <button (click)="sendRequest()"><span>Send request</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/exchange'"><span>Back</span></button>
+    </div>
+</div>

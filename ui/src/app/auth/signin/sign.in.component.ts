@@ -25,7 +25,8 @@ export class SignInComponent implements OnInit {
         if (this.login.length == 0 || this.password.length == 0 || this.personType.length == 0) {
             alert("You must fill all fields")
         }
-        this.authService.signIn(this.login, this.password, this.personType).subscribe(
+        this.router.navigateByUrl('/client/base');
+        /*this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
                 this.person = <Client> data
             }, error => console.error(error));
@@ -33,6 +34,6 @@ export class SignInComponent implements OnInit {
         if (this.person) {
             console.log(this.person.name);
             this.router.navigateByUrl('/client/base');
-        }
+        }*/
     }
 }

@@ -1,0 +1,17 @@
+<h2>Client transactions</h2>
+
+<div class="client-transactions-container">
+
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let transaction of brokerageAccount.transactions" (click)="onTransactionClicked(transaction)">
+            <td>{{transaction.id}}</td>
+            <td>{{transaction.type}}</td>
+        </tr>
+        </tbody>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/base'"><span>Back</span></button>
+    </div>
+</div>

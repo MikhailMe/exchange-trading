@@ -29,7 +29,8 @@ export class SignUpComponent implements OnInit {
         if (this.password != this.password_repeat) {
             alert("passwords don't match");
         } else {
-            this.authService.signUp(this.login, this.password, this.personType, this.name, this.surname).subscribe(
+            this.router.navigateByUrl('/signin');
+            /*this.authService.signUp(this.login, this.password, this.personType, this.name, this.surname).subscribe(
                 data => {
                     if (this.personType == 'client') {
                         this.person = <Client> data;
@@ -39,7 +40,7 @@ export class SignUpComponent implements OnInit {
             if (this.person) {
                 console.log(this.person.name);
                 this.router.navigateByUrl('/signin');
-            }
+            }*/
         }
     }
 

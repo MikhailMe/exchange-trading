@@ -1,0 +1,18 @@
+<h2>Client requests</h2>
+
+<div class="client-requests-container">
+
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let request of brokerageAccount.requests" (click)="onRequestClicked(request)">
+            <td>{{request.id}}</td>
+            <td>{{request.requestType}}</td>
+        </tr>
+        </tbody>
+    </div>
+
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/base'"><span>Back</span></button>
+    </div>
+</div>

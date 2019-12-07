@@ -1,0 +1,20 @@
+<h2>Transaction</h2>
+
+<div class="client-current-transaction-container">
+
+    <div class="centerify"><span>Type: </span> {{clientTransaction.requestType}} </div>
+    <br>
+    <div class="centerify"><span>Date: </span> {{clientTransaction.date}} </div>
+    <br>
+    <div class="centerify"><span>Admin id: </span> {{clientTransaction.adminId}} </div>
+    <br>
+    <div class="centerify"><span>Client id: </span> {{clientTransaction.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Asset: </span> {{clientTransaction.asset}} </div>
+    <br>
+    <div class="centerify"><span>Stock: </span> {{clientTransaction.stock}} </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/transactions'"><span>Back</span></button>
+    </div>
+</div>

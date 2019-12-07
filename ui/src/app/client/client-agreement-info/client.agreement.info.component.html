@@ -1,0 +1,20 @@
+<h2>Client agreement information</h2>
+
+<div class="client-agreement-open-container">
+
+    <div class="info">
+        <p><span>Client id: </span> {{clientAgreement.clientId}}</p>
+        <p><span>Broker id: </span> {{clientAgreement.brokerId}}</p>
+        <p><span>Validity: </span> {{clientAgreement.validity}}</p>
+        <p><span>Start date: </span> {{clientAgreement.startDate}}</p>
+    </div>
+    <br>
+    <div class="centerify">
+        <button (click)="breakBrokerAgreement()"><span>Break broker agreement</span></button>
+        <button (click)="extendBrokerAgreement()"><span>Extend broker agreement</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/base'"><span>Back</span></button>
+    </div>
+</div>

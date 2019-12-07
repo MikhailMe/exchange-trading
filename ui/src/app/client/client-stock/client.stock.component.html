@@ -1,0 +1,14 @@
+<h2>Stock</h2>
+
+<div class="client-current-stock-container">
+
+    <div class="centerify"><span>Client Id: </span> {{stock.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Stock type: </span> {{stock.stockType}} </div>
+    <br>
+    <div class="centerify"><span>Quantity: </span> {{stock.quantity}} </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/stocks'"><span>Back</span></button>
+    </div>
+</div>

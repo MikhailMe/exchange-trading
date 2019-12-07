@@ -1,0 +1,20 @@
+<h2>Extending broker agreement</h2>
+
+<div class="client-agreement-extend-container">
+    <div class="centerify">
+        <label for="validity"><span>Agreement validity</span></label>
+        <select class="select-css" [ngModel]="validity" name="validity" id="validity">
+            <option value="ruble">month</option>
+            <option value="dollar">half year</option>
+            <option value="euro">year</option>
+        </select>
+    </div>
+    <br>
+    <div class="centerify">
+        <button (click)="extendBrokerAgreement()"><span>Extend broker agreement</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/agreement/info'"><span>Back</span></button>
+    </div>
+</div>

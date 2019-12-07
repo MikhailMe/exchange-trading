@@ -1,13 +1,29 @@
+<h2>Client passport</h2>
+
 <div class="client-passports-container">
-    <h2>Client passport</h2>
-
-    <p><label for="series">series</label>
-        <input type="text" placeholder="Enter series" name="series" required></p>
-
-    <p><label for="number">number</label>
-        <input type="text" placeholder="Enter number" name="number" required></p>
-
-    <p><button class="button"><span>Change passport</span></button></p>
+    <div class="centerify">
+        <label for="series">series</label>
+        <input [ngModel]="series"
+               type="text"
+               placeholder="Enter series"
+               id="series"
+               required>
+    </div>
     <br>
-    <p><button [routerLink]="'/client/info'"><span>Back</span></button></p>
+    <div class="centerify">
+        <label for="number">number</label>
+        <input [ngModel]="number"
+               type="text"
+               placeholder="Enter number"
+               id="number"
+               required>
+    </div>
+    <br>
+    <div class="centerify">
+        <button (click)="updatePassport()"><span>Change passport</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/info'"><span>Back</span></button>
+    </div>
 </div>

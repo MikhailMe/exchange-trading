@@ -9,4 +9,5 @@ export interface Transaction extends Entity {
     date: Date;
     asset: Asset;
     stock: Stock;
+    requestType: string;
 }

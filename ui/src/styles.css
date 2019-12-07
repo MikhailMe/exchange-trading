@@ -1,14 +1,11 @@
-.button-container {
+.centerify {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 h2 {
-    padding-top: 100px;
     text-align: center;
 }
-
 button {
     display: inline-block;
     border-radius: 4px;
@@ -48,4 +45,62 @@ button:hover span {
 button:hover span:after {
     opacity: 1;
     right: 0;
+}
+
+.select-css {
+    display: block;
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #FFF;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 15%;
+    text-align-last: center;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #f4511e;
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+.select-css::-ms-expand {
+    display: none;
+}
+.select-css:hover {
+    border-color: #888;
+}
+.select-css:focus {
+    border-color: #FFF;
+    box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+    box-shadow: 0 0 0 3px -moz-mac-focusring;
+    color: #FFF;
+    outline: none;
+}
+.select-css option {
+    font-weight:normal;
+}
+
+input {
+    position: relative;
+    font-size: 1.5em;
+    background: #f4511e;
+    padding: 3px;
+    display: inline-block;
+    border-radius: 8px;
+    color: #FFFFFF;
+}
+
+label {
+    padding-right: 30px;
+}
+
+label:last-child {
+    padding-right: 0;
 }

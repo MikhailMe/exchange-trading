@@ -1,0 +1,27 @@
+<h2>Put money</h2>
+
+<div class="client-put-money-container">
+
+    <div class="centerify"><label for="money">money</label>
+        <input [ngModel]="money"
+               type="number"
+               min="0"
+               id="money"
+               required>
+    </div>
+    <br>
+    <div class="centerify"><label for="currency">Currency</label>
+        <select class="select-css" [ngModel]="currency" name="currency" id="currency">
+            <option value="ruble">ruble</option>
+            <option value="dollar">dollar</option>
+            <option value="euro">euro</option>
+        </select></div>
+    <br>
+    <div class="centerify">
+        <button (click)="putMoneyToBrokerageAccount()"><span>Put money</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/brokerageAccount/info'"><span>Back</span></button>
+    </div>
+</div>

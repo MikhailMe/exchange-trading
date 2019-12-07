@@ -1,24 +1,33 @@
+<h2>Client</h2>
+
 <div class="client-base-container">
-    <h2>Client</h2>
-    <p>
-        <button [routerLink]="'/client/info'"><span>Client information</span></button>
-    </p>
-    <p>
-        <button [routerLink]="'/client/brokerageAccount'"><span>Brokerage account</span></button>
-    </p>
-    <p>
-        <button [routerLink]="'/client/agreement'"><span>Agreement</span></button>
-    </p>
-    <p>
-        <button [routerLink]="'/client/exchange'"><span>Exchange</span></button>
-    </p>
-    <p>
-        <button [routerLink]="'/client/requests'"><span>Requests</span></button>
-    </p>
-    <p>
-        <button [routerLink]="'/client/transactions'"><span>Completed transactions</span></button>
-    </p>
-    <p>
-        <button (click)="signOut()"><span>Sign out</span></button>
-    </p>
+    <div class="buttons">
+        <div class="centerify">
+            <p>
+                <button [routerLink]="'/client/info'"><span>Client information</span></button>
+            </p>
+            <p>
+                <button [routerLink]="'/client/brokerageAccount'"><span>Brokerage account</span></button>
+            </p>
+        </div>
+        <div class="centerify">
+            <p>
+                <button [routerLink]="'/client/agreement'"><span>Agreement</span></button>
+            </p>
+            <p>
+                <button [routerLink]="'/client/exchange'"><span>Exchange</span></button>
+            </p>
+        </div>
+        <div class="centerify">
+            <p>
+                <button [routerLink]="'/client/requests'"><span>Requests</span></button>
+            </p>
+            <p>
+                <button [routerLink]="'/client/transactions'"><span>Completed transactions</span></button>
+            </p>
+        </div>
+        <p>
+            <button [routerLink]="''" (click)="signOut()"><span>Sign out</span></button>
+        </p>
+    </div>
 </div>

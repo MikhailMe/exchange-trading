@@ -1,0 +1,17 @@
+<h2>Client assets</h2>
+
+<div class="client-assets-container">
+
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let asset of brokerageAccount.assets" (click)="onAssetClicked(asset)">
+            <td>{{asset.id}}</td>
+            <td>{{asset.type}}</td>
+        </tr>
+        </tbody>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/client/brokerageAccount'"><span>Back</span></button>
+    </div>
+</div>
