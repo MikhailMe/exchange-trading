@@ -4,7 +4,7 @@
 
     <div class="centerify">
         <tbody>
-        <tr *ngFor="let transaction of brokerageAccount.transactions" (click)="onTransactionClicked(transaction)">
+        <tr *ngFor="let transaction of client.transactions" (click)="onTransactionClicked(transaction)">
             <td>{{transaction.id}}</td>
             <td>{{transaction.type}}</td>
         </tr>

@@ -4,7 +4,7 @@
 
     <div class="centerify">
         <tbody>
-        <tr *ngFor="let request of brokerageAccount.requests" (click)="onRequestClicked(request)">
+        <tr *ngFor="let request of client.requests" (click)="onRequestClicked(request)">
             <td>{{request.id}}</td>
             <td>{{request.requestType}}</td>
         </tr>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BrokerageAccount, ClientRequest} from "../../models";
+import {Client, ClientRequest} from "../../models";
 import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
 
@@ -7,11 +7,23 @@ import {Router} from "@angular/router";
     templateUrl: './client.requests.component.html'
 })
 export class ClientRequestsComponent implements OnInit {
-    protected brokerageAccount: BrokerageAccount;
+    protected client: Client;
 
     constructor(private dataService: DataService, private router: Router) {
-        this.brokerageAccount = new BrokerageAccount();
-        this.brokerageAccount.requests = dataService.getRequests();
+        this.client = new class implements Client {
+            agreement: null;
+            brokerageAccount: null;
+            credentials: null;
+            id: number;
+            isAuthenticated: boolean;
+            name: string;
+            passport: null;
+            personType: string;
+            requests: null;
+            surname: string;
+            transactions: null[];
+        };
+        this.client.requests = dataService.getRequests();
     }
 
     ngOnInit() {

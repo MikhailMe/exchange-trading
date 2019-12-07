@@ -8,7 +8,6 @@ export class ClientStockComponent implements OnInit {
     protected stock: Stock;
 
     constructor() {
-
     }
 
     ngOnInit() {

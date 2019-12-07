@@ -1,10 +1,10 @@
 import {Person} from "./person.model";
-import {Agreement, BrokerageAccount, Passport} from "..";
+import {Agreement, BrokerageAccount, ClientRequest, Passport, Transaction} from "..";
 
 export interface Client extends Person {
     passport: Passport;
     agreement: Agreement;
-    requests: number[];
-    transactions: number[];
+    requests: ClientRequest[];
+    transactions: Transaction[];
     brokerageAccount: BrokerageAccount;
 }

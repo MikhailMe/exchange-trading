@@ -8,7 +8,6 @@ export class ClientTransactionComponent implements OnInit {
     protected clientTransaction: Transaction;
 
     constructor() {
-
     }
 
     ngOnInit() {
