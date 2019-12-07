@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Component({
-    templateUrl: './client.passport.component.html',
-    styleUrls: ['./client.passport.component.css']
+    templateUrl: './client.passport.component.html'
 })
 export class ClientPassportComponent implements OnInit {
     protected series: number;

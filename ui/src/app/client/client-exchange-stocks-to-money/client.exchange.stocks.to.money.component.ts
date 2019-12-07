@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 
 @Component({
-    templateUrl: './client.exchange.stocks.to.money.component.html',
-    styleUrls: ['./client.exchange.stocks.to.money.component.css']
+    templateUrl: './client.exchange.stocks.to.money.component.html'
 })
 export class ClientExchangeStocksToMoneyComponent implements OnInit {
     protected fromType: string;

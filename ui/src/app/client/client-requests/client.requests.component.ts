@@ -4,8 +4,7 @@ import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
 
 @Component({
-    templateUrl: './client.requests.component.html',
-    styleUrls: ['./client.requests.component.css']
+    templateUrl: './client.requests.component.html'
 })
 export class ClientRequestsComponent implements OnInit {
     protected brokerageAccount: BrokerageAccount;

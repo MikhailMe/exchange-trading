@@ -4,8 +4,7 @@ import {Client, Person} from "../../models";
 import {Router} from "@angular/router";
 
 @Component({
-    templateUrl: './sign.in.component.html',
-    styleUrls: ['./sign.in.component.css']
+    templateUrl: './sign.in.component.html'
 })
 export class SignInComponent implements OnInit {
     public login: string;
