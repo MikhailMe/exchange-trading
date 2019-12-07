@@ -36,15 +36,15 @@ export class DataService {
 
     getTransactions(): Transaction[] {
         return [
-            {clientId: 1, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type1'},
-            {clientId: 2, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type2'},
-            {clientId: 3, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type3'},
-            {clientId: 4, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type4'},
-            {clientId: 5, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type5'},
-            {clientId: 6, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type6'},
-            {clientId: 7, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type7'},
-            {clientId: 8, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type8'},
-            {clientId: 9, requestType: null, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type9'},
+            {clientId: 1, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type1'},
+            {clientId: 2, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type2'},
+            {clientId: 3, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type3'},
+            {clientId: 4, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type4'},
+            {clientId: 5, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type5'},
+            {clientId: 6, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type6'},
+            {clientId: 7, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type7'},
+            {clientId: 8, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type8'},
+            {clientId: 9, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type9'},
         ];
     }
 }

@@ -32,6 +32,9 @@ import {ClientAssetsComponent} from "./client/client-assets/client.assets.compon
 import {ClientAssetComponent} from "./client/client-asset/client.asset.component";
 import {ClientStocksComponent} from "./client/client-stocks/client.stocks.component";
 import {ClientStockComponent} from "./client/client-stock/client.stock.component";
+import {ClientService} from "./services/client.service";
+import {AdminService} from "./services/admin.service";
+import {BrokerService} from "./services/broker.service";
 
 @NgModule({
     declarations: [
@@ -70,7 +73,10 @@ import {ClientStockComponent} from "./client/client-stock/client.stock.component
     ],
     providers: [
         DataService,
-        AuthService
+        AuthService,
+        AdminService,
+        BrokerService,
+        ClientService
     ],
     bootstrap: [AppComponent]
 })

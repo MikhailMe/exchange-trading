@@ -23,6 +23,6 @@ export class AuthService {
 
     signOut(id: number, personType: string) {
         const url = environment.signOut;
-        return this.http.post(url, {id, personType}).pipe();
+        return this.http.post(url, {id, personType});
     }
 }
