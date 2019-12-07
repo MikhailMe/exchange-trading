@@ -1,0 +1,7 @@
+label {
+    padding-right: 30px;
+}
+
+label:last-child {
+    padding-right: 0;
+}

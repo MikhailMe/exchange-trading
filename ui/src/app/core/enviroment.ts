@@ -1,26 +1,39 @@
 const baseUrl = 'http://localhost:8080/api/';
+const adminPrefix = 'admin/';
+const brokerPrefix = 'broker/';
+const clientPrefix = 'client/';
+const systemPrefix = 'system/';
 
 export function createEnv() {
     return {
-        getClientInfo: baseUrl + 'client/',
-        getClientRequests: baseUrl + 'client/requests/',
-        openBrokerageAccount: baseUrl + 'client/open-brokerage-account',
-        closeBrokerageAccount: baseUrl + 'client/close-brokerage-account',
-        createBrokerAgreement: baseUrl + 'client/create-broker-agreement',
-        extendBrokerAgreement: baseUrl + 'client/extend-broker-agreement',
-        breakBrokerAgreement: baseUrl + 'client/break-broker-agreement',
-        exchangeMoneyToStocks: baseUrl + 'client/exchange-m2s',
-        exchangeStocksToMoney: baseUrl + 'client/exchange-s2m',
+        getClientInfo: baseUrl + clientPrefix,
+        setClientPassport: baseUrl + clientPrefix + ':clientId/setPassport',
+        openBrokerageAccount: baseUrl + clientPrefix + 'openBrokerageAccount/:clientId',
+        closeBrokerageAccount: baseUrl + clientPrefix + 'closeBrokerageAccount/:clientId',
+        putMoneyToAccount: baseUrl + clientPrefix + ':clientId/putMoneyToAccount',
+        makeBrokerAgreement: baseUrl + clientPrefix + ':clientId/makeBrokerAgreement',
+        extendBrokerAgreement: baseUrl + clientPrefix + ':clientId/extendBrokerAgreement',
+        breakBrokerAgreement: baseUrl + clientPrefix + ':clientId/breakBrokerAgreement',
+        exchangeMoneyToStocks: baseUrl + clientPrefix + ':clientId/exchangeMoneyToStocks',
+        exchangeStocksToMoney: baseUrl + clientPrefix + ':clientId/exchangeStocksToMoney',
+        getClientTransactions: baseUrl + clientPrefix + ':clientId/getTransactions',
 
-        getBroker: baseUrl + 'broker/',
-        getBrokerRequests: baseUrl + 'broker/requests/',
+        getBroker: baseUrl + brokerPrefix,
+        checkBrokerRequests: baseUrl + brokerPrefix + ':brokerId/checkRequests',
+        validateClientRequest: baseUrl + brokerPrefix + ':brokerId/validateClientRequest',
+        approveClientRequest: baseUrl + brokerPrefix + ':brokerId/approveClientRequest',
+        declineClientRequest: baseUrl + brokerPrefix + ':brokerId/declineClientRequest',
 
-        getAdmin: baseUrl + 'admin/',
-        getAdminRequests: baseUrl + 'admin/requests/',
+        getAdmin: baseUrl + adminPrefix,
+        checkAdminRequests: baseUrl + adminPrefix +':adminId/checkRequests',
+        approveRequest: baseUrl + adminPrefix +':adminId/approveRequest',
+        declineRequest: baseUrl + adminPrefix +'declineRequest/:clientRequestId',
+        getRates: baseUrl + adminPrefix +'getRates',
+        getBankAssets: baseUrl + adminPrefix +'getBankAssets',
 
-        signIn: baseUrl + 'system/signIn',
-        signUp: baseUrl + 'system/signUp',
-        signOut: baseUrl + 'system/signOut',
+        signIn: baseUrl + systemPrefix + 'signIn',
+        signUp: baseUrl + systemPrefix + 'signUp',
+        signOut: baseUrl + systemPrefix + 'signOut',
     };
 }
 

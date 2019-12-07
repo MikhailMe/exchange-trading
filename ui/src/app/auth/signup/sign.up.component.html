@@ -1,30 +1,74 @@
 <div class="signup-container">
     <h2>Sign Up</h2>
     <div class="info-container">
-        <p><label for="login">Login</label>
-            <input type="text" placeholder="Enter Login" name="login" required></p>
+        <p>
+            <label for="login">Login</label>
+            <input [(ngModel)]="login"
+                   type="text"
+                   placeholder="Enter Login"
+                   name="login"
+                   id="login"
+                   required>
+        </p>
 
-        <p><label for="password">Password</label>
-            <input type="password" placeholder="Enter Password" name="password" required></p>
+        <p>
+            <label for="password">Password</label>
+            <input [(ngModel)]="password"
+                   type="password"
+                   placeholder="Enter Password"
+                   name="password"
+                   id="password"
+                   required>
+        </p>
 
-        <p><label for="psw-repeat">Repeat Password</label>
-            <input type="password" placeholder="Repeat Password" name="psw-repeat" required></p>
+        <p>
+            <label for="psw-repeat">Repeat Password</label>
+            <input [(ngModel)]="password_repeat"
+                   type="password"
+                   placeholder="Repeat Password"
+                   name="psw-repeat"
+                   id="psw-repeat"
+                   required>
+        </p>
 
-        <p><label for="name">Name</label>
-            <input type="text" placeholder="Enter Name" name="name" required></p>
+        <p>
+            <label for="name">Name</label>
+            <input [(ngModel)]="name"
+                   type="text"
+                   placeholder="Enter Name"
+                   name="name"
+                   id="name"
+                   required>
+        </p>
 
-        <p><label for="surname">Surname</label>
-            <input type="text" placeholder="Enter Surame" name="surname" required></p>
+        <p>
+            <label for="surname">Surname</label>
+            <input [(ngModel)]="surname"
+                   type="text"
+                   placeholder="Enter Surname"
+                   name="surname"
+                   id="surname"
+                   required>
+        </p>
 
-        <p><label for="personType">Person type</label>
-            <select name="personType">
+        <p>
+            <label for="personType">Person type</label>
+            <select [(ngModel)]="personType" name="personType" id="personType">
                 <option value="client">client</option>
                 <option value="broker">broker</option>
                 <option value="admin">admin</option>
-            </select></p>
+            </select>
+        </p>
     </div>
+
     <div class="button-container">
-        <p><button (click)="signUp()" class="button">Sign Up</button></p>
-        <p><button class="button">Back</button></p>
+        <p>
+            <button (click)="signUp()"
+                    class="button" name="signup">Sign Up
+            </button>
+        </p>
+        <p>
+            <button class="button">Back</button>
+        </p>
     </div>
 </div>

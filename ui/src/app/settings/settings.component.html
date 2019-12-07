@@ -1,21 +1,11 @@
-<style>
-    td {
-        padding-right: 30px;
-    }
-
-    td:last-child {
-        padding-right: 0;
-    }
-</style>
-
 <div class="client-requests-container">
     <h2>Client requests</h2>
 
     <tbody>
-    <tr *ngFor="let request of requests">
-        <td>{{request.id}}</td>
-        <td>{{request.requestType}}</td>
-    </tr>
+        <tr *ngFor="let request of requests">
+            <td>{{request.id}}</td>
+            <td>{{request.requestType}}</td>
+        </tr>
     </tbody>
 
     <br>
