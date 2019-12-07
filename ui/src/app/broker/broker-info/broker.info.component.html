@@ -1,0 +1,17 @@
+<h2>Broker information</h2>
+
+<div class="broker-info-container">
+    <div class="centerify"><span>Name: </span> {{broker.name}} </div>
+    <div class="centerify"><span>Surname: </span> {{broker.surname}} </div>
+    <div class="centerify"><span>Person type: </span> {{broker.personType}} </div>
+    <br>
+    <div class="centerify"><span>Credentials</span></div>
+    <div class="centerify"><span>Login: </span> {{brokerCredentials.login}} </div>
+    <div class="centerify"><span>Password: </span> {{brokerCredentials.password}} </div>
+    <br>
+    <div class="centerify"><span>Admin id</span> {{ broker.adminId }}</div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/broker/base'"><span>Back</span></button>
+    </div>
+</div>

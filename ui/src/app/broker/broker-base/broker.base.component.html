@@ -1,0 +1,16 @@
+<h2>Broker</h2>
+
+<div class="broker-common-container">
+    <div class="centerify">
+        <button [routerLink]="'/broker/info'">Broker information</button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/broker/requests'">Requests</button>
+        <button [routerLink]="'/broker/agreements'">Agreements</button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="''" (click)="signOut()"><span>Sign out</span></button>
+    </div>
+</div>

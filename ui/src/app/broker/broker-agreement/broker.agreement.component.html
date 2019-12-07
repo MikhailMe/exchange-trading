@@ -1,0 +1,15 @@
+<h2>Agreement</h2>
+
+<div class="broker-current-agreement-container">
+    <div class="centerify"><span>Client id: </span> {{brokerAgreement.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Broker id: </span> {{brokerAgreement.brokerId}} </div>
+    <br>
+    <div class="centerify"><span>Validity: </span> {{brokerAgreement.validity}} </div>
+    <br>
+    <div class="centerify"><span>Start date: </span> {{brokerAgreement.startDate}} </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/broker/agreements'"><span>Back</span></button>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<h2>Broker agreements</h2>
+
+<div class="broker-agreements-container">
+
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
+            <td>{{agreement.id}}</td>
+            <td>{{agreement.clientId}}</td>
+        </tr>
+        </tbody>
+    </div>
+
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/broker/base'"><span>Back</span></button>
+    </div>
+</div>

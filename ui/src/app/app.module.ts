@@ -35,6 +35,12 @@ import {ClientStockComponent} from "./client/client-stock/client.stock.component
 import {ClientService} from "./services/client.service";
 import {AdminService} from "./services/admin.service";
 import {BrokerService} from "./services/broker.service";
+import {BrokerBaseComponent} from "./broker/broker-base/broker.base.component";
+import {BrokerInfoComponent} from "./broker/broker-info/broker.info.component";
+import {BrokerRequestsComponent} from "./broker/broker-requests/broker.requests.component";
+import {BrokerRequestComponent} from "./broker/broker-request/broker.request.component";
+import {BrokerAgreementsComponent} from "./broker/broker-agreements/broker.agreements.component";
+import {BrokerAgreementComponent} from "./broker/broker-agreement/broker.agreement.component";
 
 @NgModule({
     declarations: [
@@ -62,7 +68,13 @@ import {BrokerService} from "./services/broker.service";
         ClientAssetsComponent,
         ClientAssetComponent,
         ClientStocksComponent,
-        ClientStockComponent
+        ClientStockComponent,
+        BrokerBaseComponent,
+        BrokerInfoComponent,
+        BrokerRequestsComponent,
+        BrokerRequestComponent,
+        BrokerAgreementsComponent,
+        BrokerAgreementComponent
     ],
     imports: [
         CommonModule,

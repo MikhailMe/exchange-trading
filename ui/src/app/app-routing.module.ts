@@ -24,6 +24,12 @@ import {ClientAssetsComponent} from "./client/client-assets/client.assets.compon
 import {ClientAssetComponent} from "./client/client-asset/client.asset.component";
 import {ClientStocksComponent} from "./client/client-stocks/client.stocks.component";
 import {ClientStockComponent} from "./client/client-stock/client.stock.component";
+import {BrokerBaseComponent} from "./broker/broker-base/broker.base.component";
+import {BrokerInfoComponent} from "./broker/broker-info/broker.info.component";
+import {BrokerRequestsComponent} from "./broker/broker-requests/broker.requests.component";
+import {BrokerRequestComponent} from "./broker/broker-request/broker.request.component";
+import {BrokerAgreementsComponent} from "./broker/broker-agreements/broker.agreements.component";
+import {BrokerAgreementComponent} from "./broker/broker-agreement/broker.agreement.component";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -50,6 +56,12 @@ const routes: Routes = [
     {path: 'client/asset/:id', component: ClientAssetComponent},
     {path: 'client/stocks', component: ClientStocksComponent},
     {path: 'client/stock/:id', component: ClientStockComponent},
+    {path: 'broker/base', component: BrokerBaseComponent},
+    {path: 'broker/info', component: BrokerInfoComponent},
+    {path: 'broker/requests', component: BrokerRequestsComponent},
+    {path: 'broker/request/:id', component: BrokerRequestComponent},
+    {path: 'broker/agreements', component: BrokerAgreementsComponent},
+    {path: 'broker/agreement/:id', component: BrokerAgreementComponent},
 ];
 
 @NgModule({

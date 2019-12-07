@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ClientRequest, Transaction} from "../models";
+import {Agreement, ClientRequest, Transaction} from "../models";
 
 @Injectable()
 export class DataService {
@@ -45,6 +45,20 @@ export class DataService {
             {clientId: 7, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type7'},
             {clientId: 8, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type8'},
             {clientId: 9, adminId: 1, asset: null, stock: null, date: null, id: 1, type: 'type9'},
+        ];
+    }
+
+    getAgreements(): Agreement[] {
+        return [
+            {id: 1, brokerId: 1, clientId: 1, startDate: null, validity: 'year'},
+            {id: 2, brokerId: 2, clientId: 2, startDate: null, validity: 'year'},
+            {id: 3, brokerId: 3, clientId: 3, startDate: null, validity: 'year'},
+            {id: 4, brokerId: 4, clientId: 4, startDate: null, validity: 'year'},
+            {id: 5, brokerId: 5, clientId: 5, startDate: null, validity: 'year'},
+            {id: 6, brokerId: 6, clientId: 6, startDate: null, validity: 'year'},
+            {id: 7, brokerId: 7, clientId: 7, startDate: null, validity: 'year'},
+            {id: 8, brokerId: 8, clientId: 8, startDate: null, validity: 'year'},
+            {id: 9, brokerId: 9, clientId: 9, startDate: null, validity: 'year'}
         ];
     }
 }
