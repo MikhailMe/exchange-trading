@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Agreement, ClientRequest, Transaction} from "../models";
+import {Agreement, BankRecord, Broker, ClientRequest, Rate, Transaction} from "../models";
 
 @Injectable()
 export class DataService {
@@ -59,6 +59,45 @@ export class DataService {
             {id: 7, brokerId: 7, clientId: 7, startDate: null, validity: 'year'},
             {id: 8, brokerId: 8, clientId: 8, startDate: null, validity: 'year'},
             {id: 9, brokerId: 9, clientId: 9, startDate: null, validity: 'year'}
+        ];
+    }
+
+    getBrokers(): Broker[] {
+        return [
+            {id: 1, credentials: null, name: 'lol', surname: 'lolov', adminId: 1, agreements: null, personType: 'broker', isAuthenticated: true},
+            {id: 2, credentials: null, name: 'lal', surname: 'lalov', adminId: 2, agreements: null, personType: 'broker', isAuthenticated: true},
+            {id: 3, credentials: null, name: 'lil', surname: 'lilov', adminId: 3, agreements: null, personType: 'broker', isAuthenticated: true},
+            {id: 4, credentials: null, name: 'lul', surname: 'lulov', adminId: 4, agreements: null, personType: 'broker', isAuthenticated: true},
+            {id: 5, credentials: null, name: 'lyl', surname: 'lylov', adminId: 5, agreements: null, personType: 'broker', isAuthenticated: true},
+            {id: 6, credentials: null, name: 'lel', surname: 'lelov', adminId: 6, agreements: null, personType: 'broker', isAuthenticated: true},
+        ];
+    }
+
+    getRates(): Rate[] {
+        return [
+            {id: 1, date: null, fromType: 'a', toType: 'b', rate: 101},
+            {id: 2, date: null, fromType: 'b', toType: 'c', rate: 102},
+            {id: 3, date: null, fromType: 'c', toType: 'd', rate: 103},
+            {id: 4, date: null, fromType: 'd', toType: 'e', rate: 104},
+            {id: 5, date: null, fromType: 'e', toType: 'f', rate: 105},
+            {id: 6, date: null, fromType: 'f', toType: 'g', rate: 106},
+            {id: 7, date: null, fromType: 'g', toType: 'h', rate: 107},
+            {id: 8, date: null, fromType: 'h', toType: 'i', rate: 108},
+            {id: 9, date: null, fromType: 'i', toType: 'j', rate: 109},
+        ];
+    }
+
+    getBankRecords(): BankRecord[] {
+        return [
+            {id: 1, type: 'a', quantity: 101},
+            {id: 2, type: 'b', quantity: 202},
+            {id: 3, type: 'c', quantity: 303},
+            {id: 4, type: 'd', quantity: 404},
+            {id: 5, type: 'e', quantity: 505},
+            {id: 6, type: 'f', quantity: 606},
+            {id: 7, type: 'g', quantity: 707},
+            {id: 8, type: 'h', quantity: 808},
+            {id: 9, type: 'i', quantity: 909},
         ];
     }
 }

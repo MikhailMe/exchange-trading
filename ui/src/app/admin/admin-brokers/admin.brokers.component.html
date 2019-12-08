@@ -1,0 +1,18 @@
+<h2>Admin brokers</h2>
+
+<div class="admin-brokers-container">
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let broker of admin.brokers">
+            <td>{{broker.id}}</td>
+            <td>{{broker.name}}</td>
+            <td>{{broker.surname}}</td>
+        </tr>
+        </tbody>
+    </div>
+
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/admin/base'"><span>Back</span></button>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<h2>Admin requests</h2>
+
+<div class="admin-requests-container">
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let request of adminRequests" (click)="onRequestClick(request)">
+            <td>{{request.id}}</td>
+            <td>{{request.date}}</td>
+        </tr>
+        </tbody>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/admin/base'"><span>Back</span></button>
+    </div>
+</div>

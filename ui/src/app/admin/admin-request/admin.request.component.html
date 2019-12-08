@@ -1,0 +1,28 @@
+<h2>Request</h2>
+
+<div class="admin-current-request-container">
+    <div class="centerify"><span>Date: </span> {{request.date}} </div>
+    <br>
+    <div class="centerify"><span>Type: </span> {{request.requestType}} </div>
+    <br>
+    <div class="centerify"><span>Broker id: </span> {{request.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Client id: </span> {{request.clientId}} </div>
+    <br>
+    <div class="centerify"><span>Quantity: </span> {{request.quantity}} </div>
+    <br>
+    <div class="centerify"><span>From: </span> {{request.fromType}} </div>
+    <br>
+    <div class="centerify"><span>To: </span> {{request.toType}} </div>
+    <br>
+    <div class="centerify"><span>Status: </span> {{request.status}} </div>
+    <br>
+    <div class="centerify">
+        <button (click)="approve()"><span>Approve</span></button>
+        <button (click)="decline()"><span>Decline</span></button>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/admin/requests'"><span>Back</span></button>
+    </div>
+</div>

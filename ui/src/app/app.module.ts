@@ -41,6 +41,13 @@ import {BrokerRequestsComponent} from "./broker/broker-requests/broker.requests.
 import {BrokerRequestComponent} from "./broker/broker-request/broker.request.component";
 import {BrokerAgreementsComponent} from "./broker/broker-agreements/broker.agreements.component";
 import {BrokerAgreementComponent} from "./broker/broker-agreement/broker.agreement.component";
+import {AdminBaseComponent} from "./admin/admin-base/admin.base.component";
+import {AdminInfoComponent} from "./admin/admin-info/admin.info.component";
+import {AdminBrokersComponent} from "./admin/admin-brokers/admin.brokers.component";
+import {AdminRequestsComponent} from "./admin/admin-requests/admin.requests.component";
+import {AdminRequestComponent} from "./admin/admin-request/admin.request.component";
+import {AdminRatesComponent} from "./admin/admin-rates/admin.rates.component";
+import {AdminBankComponent} from "./admin/admin-bank/admin.bank.component";
 
 @NgModule({
     declarations: [
@@ -74,7 +81,14 @@ import {BrokerAgreementComponent} from "./broker/broker-agreement/broker.agreeme
         BrokerRequestsComponent,
         BrokerRequestComponent,
         BrokerAgreementsComponent,
-        BrokerAgreementComponent
+        BrokerAgreementComponent,
+        AdminBaseComponent,
+        AdminInfoComponent,
+        AdminBrokersComponent,
+        AdminRequestsComponent,
+        AdminRequestComponent,
+        AdminRatesComponent,
+        AdminBankComponent
     ],
     imports: [
         CommonModule,

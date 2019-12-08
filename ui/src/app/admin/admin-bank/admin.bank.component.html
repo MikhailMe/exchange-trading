@@ -1,0 +1,16 @@
+<h2>Bank</h2>
+
+<div class="admin-bank-container">
+    <div class="centerify">
+        <tbody>
+        <tr *ngFor="let bankRecord of bank">
+            <td>{{bankRecord.type}}</td>
+            <td>{{bankRecord.quantity}}</td>
+        </tr>
+        </tbody>
+    </div>
+    <br>
+    <div class="centerify">
+        <button [routerLink]="'/admin/base'"><span>Back</span></button>
+    </div>
+</div>

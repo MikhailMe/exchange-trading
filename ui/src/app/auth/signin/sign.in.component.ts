@@ -24,7 +24,14 @@ export class SignInComponent implements OnInit {
         if (this.login.length == 0 || this.password.length == 0 || this.personType.length == 0) {
             alert("You must fill all fields")
         }
-        this.router.navigateByUrl('/client/base');
+        if (this.personType === 'client') {
+            this.router.navigateByUrl('/client/base');
+        } else if (this.personType === 'broker') {
+            this.router.navigateByUrl('/broker/base');
+        } else if (this.personType === 'admin') {
+            this.router.navigateByUrl('/admin/base');
+        }
+
         /*this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
                 this.person = <Client> data
