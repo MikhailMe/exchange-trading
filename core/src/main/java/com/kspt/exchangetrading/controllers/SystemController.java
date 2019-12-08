@@ -28,7 +28,7 @@ public final class SystemController {
 
     // contract: personType, login, password
     @PostMapping("signIn")
-    public boolean signIn(@RequestBody final Map<String, Object> data) {
+    public Person signIn(@RequestBody final Map<String, Object> data) {
         return service.signIn(data);
     }
 

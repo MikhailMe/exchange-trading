@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {SettingsComponent} from './settings/settings.component';
 import {SignInComponent} from './auth/signin/sign.in.component';
 import {SignUpComponent} from './auth/signup/sign.up.component';
 import {ClientBaseComponent} from "./client/client-base/client.base.component";
@@ -40,7 +39,6 @@ import {AdminBankComponent} from "./admin/admin-bank/admin.bank.component";
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'setting', component: SettingsComponent},
     {path: 'signin', component: SignInComponent},
     {path: 'signup', component: SignUpComponent},
     {path: 'client/base', component: ClientBaseComponent},

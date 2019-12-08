@@ -78,7 +78,7 @@ public class SystemService {
         }
     }
 
-    public boolean signIn(@NotNull final Map<String, Object> data) {
+    public Person signIn(@NotNull final Map<String, Object> data) {
         final String login = data.get("login").toString();
         final String password = data.get("password").toString();
         final Credentials credentialsWithoutId = new Credentials(login, password);
@@ -93,8 +93,7 @@ public class SystemService {
                         Client client = clientRepository.findByCredentials(credentials).orElse(null);
                         if (client != null) {
                             client.setIsAuthenticated(true);
-                            clientRepository.save(client);
-                            return true;
+                            return clientRepository.save(client);
                         }
                         break;
                     }
@@ -102,8 +101,7 @@ public class SystemService {
                         Broker broker = brokerRepository.findByCredentials(credentials).orElse(null);
                         if (broker != null) {
                             broker.setIsAuthenticated(true);
-                            brokerRepository.save(broker);
-                            return true;
+                            return brokerRepository.save(broker);
                         }
                         break;
                     }
@@ -111,8 +109,7 @@ public class SystemService {
                         Admin admin = adminRepository.findByCredentials(credentials).orElse(null);
                         if (admin != null) {
                             admin.setIsAuthenticated(true);
-                            adminRepository.save(admin);
-                            return true;
+                            return adminRepository.save(admin);
                         }
                         break;
                     }
@@ -120,7 +117,7 @@ public class SystemService {
             } catch (Exception ignored) {
             }
         }
-        return false;
+        return null;
     }
 
     public boolean signOut(@NotNull final Map<String, Object> data) {

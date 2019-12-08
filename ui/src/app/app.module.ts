@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {CommonModule} from '@angular/common';
-import {SettingsComponent} from './settings/settings.component';
 import {DataService} from './services/data.service';
 import {HomeComponent} from "./home/home.component";
 import {SignInComponent} from './auth/signin/sign.in.component';
@@ -52,7 +51,6 @@ import {AdminBankComponent} from "./admin/admin-bank/admin.bank.component";
 @NgModule({
     declarations: [
         AppComponent,
-        SettingsComponent,
         HomeComponent,
         SignInComponent,
         SignUpComponent,
