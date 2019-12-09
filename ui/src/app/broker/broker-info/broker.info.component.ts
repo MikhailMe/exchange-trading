@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Broker, Credentials} from "../../models";
+import {Broker, Credentials} from '../../models';
+import {UserService} from '../../services/user.service';
 
 @Component({
     templateUrl: './broker.info.component.html'
@@ -8,17 +9,8 @@ export class BrokerInfoComponent implements OnInit {
     protected broker: Broker;
     protected brokerCredentials: Credentials;
 
-    constructor() {
-        this.broker = new class implements Broker {
-            adminId: number;
-            agreements: null;
-            credentials: Credentials;
-            id: number;
-            isAuthenticated: boolean;
-            name: string;
-            personType: string;
-            surname: string;
-        };
+    constructor(private userService: UserService) {
+        this.broker = userService.getUser() as Broker;
         this.brokerCredentials = this.broker.credentials;
     }
 

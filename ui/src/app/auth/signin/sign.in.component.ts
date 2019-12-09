@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {Client, Person} from "../../models";
-import {Router} from "@angular/router";
+import {Admin, Broker, Client, Person} from '../../models';
+import {Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
 
 @Component({
-    templateUrl: './sign.in.component.html'
+    templateUrl: './sign.in.component.html',
 })
 export class SignInComponent implements OnInit {
     public login: string;
@@ -13,7 +14,7 @@ export class SignInComponent implements OnInit {
     public person: Person;
     protected readonly authService: AuthService;
 
-    constructor(private router: Router, authService: AuthService) {
+    constructor(private router: Router, authService: AuthService, private userService: UserService) {
         this.authService = authService;
     }
 
@@ -21,25 +22,18 @@ export class SignInComponent implements OnInit {
     }
 
     signIn() {
-        if (this.login.length == 0 || this.password.length == 0 || this.personType.length == 0) {
-            alert("You must fill all fields")
-        }
-        if (this.personType === 'client') {
-            this.router.navigateByUrl('/client/base');
-        } else if (this.personType === 'broker') {
-            this.router.navigateByUrl('/broker/base');
-        } else if (this.personType === 'admin') {
-            this.router.navigateByUrl('/admin/base');
+        if (this.login.length === 0 || this.password.length === 0 || this.personType.length === 0) {
+            alert('You must fill all fields');
         }
 
-        /*this.authService.signIn(this.login, this.password, this.personType).subscribe(
+        this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
-                this.person = <Client> data
+                this.userService.setUser(data);
+                switch (this.personType) {
+                    case 'client': this.person = data as Client; this.router.navigateByUrl('/client/base'); break;
+                    case 'broker': this.person = data as Broker; this.router.navigateByUrl('/broker/base', { state: {data: this.person}}); break;
+                    case 'admin': this.person = data as Admin; this.router.navigateByUrl('/admin/base'); break;
+                }
             }, error => console.error(error));
-
-        if (this.person) {
-            console.log(this.person.name);
-            this.router.navigateByUrl('/client/base');
-        }*/
     }
 }

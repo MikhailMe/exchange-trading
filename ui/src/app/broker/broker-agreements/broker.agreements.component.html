@@ -1,14 +1,17 @@
-<h2>Broker agreements</h2>
-
 <div class="broker-agreements-container">
 
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
-            <td>{{agreement.id}}</td>
-            <td>{{agreement.clientId}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <caption>Broker agreements</caption>
+            <tr>
+                <th>ID</th>
+                <th>Client ID</th>
+            </tr>
+            <tr class="data-row" *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
+                <td>{{agreement.id}}</td>
+                <td>{{agreement.clientId}}</td>
+            </tr>
+        </table>
     </div>
 
     <br>

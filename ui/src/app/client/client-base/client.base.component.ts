@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
+import {Client} from '../../models';
 
 @Component({
     templateUrl: './client.base.component.html',
@@ -7,6 +8,9 @@ import {AuthService} from "../../services/auth.service";
 })
 export class ClientBaseComponent implements OnInit {
     protected readonly authService: AuthService;
+
+    @Input()
+    protected client: Client;
 
     constructor(authService: AuthService) {
         this.authService = authService;

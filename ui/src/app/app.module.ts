@@ -47,6 +47,7 @@ import {AdminRequestsComponent} from "./admin/admin-requests/admin.requests.comp
 import {AdminRequestComponent} from "./admin/admin-request/admin.request.component";
 import {AdminRatesComponent} from "./admin/admin-rates/admin.rates.component";
 import {AdminBankComponent} from "./admin/admin-bank/admin.bank.component";
+import {UserService} from './services/user.service';
 
 @NgModule({
     declarations: [
@@ -100,7 +101,8 @@ import {AdminBankComponent} from "./admin/admin-bank/admin.bank.component";
         AuthService,
         AdminService,
         BrokerService,
-        ClientService
+        ClientService,
+        UserService
     ],
     bootstrap: [AppComponent]
 })

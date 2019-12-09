@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {Person} from "../../models";
-import {Router} from "@angular/router";
-import {Client} from "../../models/actors/client.model";
+import {Admin, Broker, Person} from '../../models';
+import {Router} from '@angular/router';
+import {Client} from '../../models/actors/client.model';
 
 @Component({
     templateUrl: './sign.up.component.html',
@@ -26,21 +26,20 @@ export class SignUpComponent implements OnInit {
     }
 
     signUp() {
-        if (this.password != this.password_repeat) {
-            alert("passwords don't match");
+        if (this.password !== this.password_repeat) {
+            alert('passwords don\'t match');
         } else {
-            this.router.navigateByUrl('/signin');
-            /*this.authService.signUp(this.login, this.password, this.personType, this.name, this.surname).subscribe(
+
+            this.authService.signUp(this.login, this.password, this.personType, this.name, this.surname).subscribe(
                 data => {
-                    if (this.personType == 'client') {
-                        this.person = <Client> data;
+                    switch (this.personType) {
+                        case 'client': this.person = data as Client; break;
+                        case 'broker': this.person = data as Broker; break;
+                        case 'admin': this.person = data as Admin; break;
                     }
                 }, error => console.error(error)
             );
-            if (this.person) {
-                console.log(this.person.name);
-                this.router.navigateByUrl('/signin');
-            }*/
+            this.router.navigateByUrl('/signin');
         }
     }
 

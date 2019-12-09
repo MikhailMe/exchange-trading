@@ -12,6 +12,10 @@ export class BrokerAgreementComponent implements OnInit {
 
     constructor(private brokerService: BrokerService,
                 private router: Router) {
+        this.brokerAgreement = {
+            brokerId: 0, clientId: 0, id: 0, validity: 'month',
+            startDate: new Date()
+        };
     }
 
     ngOnInit() {
