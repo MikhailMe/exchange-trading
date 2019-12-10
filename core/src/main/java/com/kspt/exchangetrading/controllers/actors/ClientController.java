@@ -21,7 +21,7 @@ public final class ClientController extends CrudController<Client, ClientService
         super(clientService);
     }
 
-    // contract: series, passport
+    // contract: series, number
     @PostMapping("{clientId}/setPassport")
     public Client setPassport(@PathVariable final Long clientId,
                               @RequestBody final Map<String, String> data) {

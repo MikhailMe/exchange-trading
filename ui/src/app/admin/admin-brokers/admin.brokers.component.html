@@ -2,13 +2,18 @@
 
 <div class="admin-brokers-container">
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let broker of admin.brokers">
-            <td>{{broker.id}}</td>
-            <td>{{broker.name}}</td>
-            <td>{{broker.surname}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+            </tr>
+            <tr *ngFor="let broker of admin.brokers">
+                <td>{{broker.id}}</td>
+                <td>{{broker.name}}</td>
+                <td>{{broker.surname}}</td>
+            </tr>
+        </table>
     </div>
 
     <br>

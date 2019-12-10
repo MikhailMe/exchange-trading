@@ -116,7 +116,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
 
     public boolean putMoneyToAccount(@NotNull final Long clientId,
                                      @NotNull final Map<String, String> data) {
-        final long money = Long.parseLong(data.get("money"));
+        final double money = Double.parseDouble(data.get("money"));
         final String currency = data.get("currency");
 
         Client client = repository.findById(clientId).orElse(null);
@@ -135,11 +135,14 @@ public class ClientService extends CrudService<Client, ClientRepository> {
                         Double currentBalance = asset.getQuantity();
                         asset.setQuantity(currentBalance + money);
                         assets.add(asset);
-                        brokerageAccount.setAssets(assets);
-                        client.setBrokerageAccount(brokerageAccount);
-                        this.update(clientId, client);
-                        return true;
+                    } else {
+                        Asset newAsset = assetRepository.save(new Asset(clientId, currency, money));
+                        assets.add(newAsset);
                     }
+                    brokerageAccount.setAssets(assets);
+                    client.setBrokerageAccount(brokerageAccount);
+                    this.update(clientId, client);
+                    return true;
                 }
             }
         }

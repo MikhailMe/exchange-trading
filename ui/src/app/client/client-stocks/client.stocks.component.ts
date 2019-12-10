@@ -1,22 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {BrokerageAccount, Stock, Transaction} from "../../models";
+import {Client, Stock} from "../../models";
 import {Router} from "@angular/router";
+import {StoreService} from "../../services/store.service";
 
 @Component({
     templateUrl: './client.stocks.component.html'
 })
 export class ClientStocksComponent implements OnInit {
-    protected brokerageAccount: BrokerageAccount;
+    protected client: Client;
 
-    constructor(private router: Router) {
-        this.brokerageAccount = new BrokerageAccount();
+    constructor(private router: Router,
+                private storeService: StoreService) {
+        this.client = storeService.getPerson() as Client;
     }
 
     ngOnInit() {
     }
 
     onStockClicked(stock: Stock) {
-        this.router.navigateByUrl('/client/stock/1')
+        this.storeService.setStock(stock);
+        this.router.navigateByUrl(`/client/stock/${stock.id}`)
     }
 
 }

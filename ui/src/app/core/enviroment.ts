@@ -7,6 +7,7 @@ const systemPrefix = 'system/';
 export function createEnv() {
     return {
         getClientInfo: baseUrl + clientPrefix,
+        getClientById: baseUrl + clientPrefix + 'get/:clientId',
         setClientPassport: baseUrl + clientPrefix + ':clientId/setPassport',
         openBrokerageAccount: baseUrl + clientPrefix + 'openBrokerageAccount/:clientId',
         closeBrokerageAccount: baseUrl + clientPrefix + 'closeBrokerageAccount/:clientId',

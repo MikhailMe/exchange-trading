@@ -3,12 +3,16 @@
 <div class="broker-requests-container">
 
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let request of brokerRequests" (click)="onRequestClick(request)">
-            <td>{{request.id}}</td>
-            <td>{{request.date}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+            </tr>
+            <tr *ngFor="let request of brokerRequests" (click)="onRequestClick(request)">
+                <td>{{request.id}}</td>
+                <td>{{request.date}}</td>
+            </tr>
+        </table>
     </div>
 
     <br>

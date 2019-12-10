@@ -3,8 +3,8 @@
 <div class="client-passports-container">
     <div class="centerify">
         <label for="series">series</label>
-        <input [ngModel]="series"
-               type="text"
+        <input [(ngModel)]="series"
+               type="number"
                placeholder="Enter series"
                id="series"
                required>
@@ -12,8 +12,8 @@
     <br>
     <div class="centerify">
         <label for="number">number</label>
-        <input [ngModel]="number"
-               type="text"
+        <input [(ngModel)]="number"
+               type="number"
                placeholder="Enter number"
                id="number"
                required>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Stock} from "../../models";
+import {StoreService} from "../../services/store.service";
 
 @Component({
     templateUrl: './client.stock.component.html'
@@ -7,7 +8,8 @@ import {Stock} from "../../models";
 export class ClientStockComponent implements OnInit {
     protected stock: Stock;
 
-    constructor() {
+    constructor(private storeService: StoreService) {
+        this.stock = storeService.getStock();
     }
 
     ngOnInit() {

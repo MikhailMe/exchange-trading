@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {Broker} from '../../models';
-import {UserService} from '../../services/user.service';
+import {StoreService} from '../../services/store.service';
 
 @Component({
     templateUrl: './broker.base.component.html'
@@ -13,12 +13,12 @@ export class BrokerBaseComponent implements OnInit {
 
     constructor(authService: AuthService,
                 public activatedRoute: ActivatedRoute,
-                private userService: UserService) {
+                private userService: StoreService) {
         this.authService = authService;
     }
 
     ngOnInit() {
-        this.broker = this.userService.getUser() as Broker;
+        this.broker = this.userService.getPerson() as Broker;
     }
 
     signOut() {

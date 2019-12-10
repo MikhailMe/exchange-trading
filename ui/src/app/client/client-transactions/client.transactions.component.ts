@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Client, Transaction} from "../../models";
-import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
+import {StoreService} from "../../services/store.service";
 
 @Component({
     templateUrl: './client.transactions.component.html'
@@ -9,28 +9,17 @@ import {Router} from "@angular/router";
 export class ClientTransactionsComponent implements OnInit {
     protected client: Client;
 
-    constructor(private dataService: DataService, private router: Router) {
-        this.client = new class implements Client {
-            agreement: null;
-            brokerageAccount: null;
-            credentials: null;
-            id: number;
-            isAuthenticated: boolean;
-            name: string;
-            passport: null;
-            personType: string;
-            requests: null;
-            surname: string;
-            transactions: Transaction[];
-        };
-        this.client.transactions = dataService.getTransactions();
+    constructor(private router: Router,
+                private storeService: StoreService) {
+        this.client = storeService.getPerson() as Client;
     }
 
     ngOnInit() {
     }
 
     onTransactionClicked(transaction: Transaction) {
-        this.router.navigateByUrl('/client/transaction/1')
+        this.storeService.setTransaction(transaction);
+        this.router.navigateByUrl(`/client/transaction/${transaction.id}`)
     }
 
 }

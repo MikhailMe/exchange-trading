@@ -3,12 +3,16 @@
 <div class="client-transactions-container">
 
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let transaction of client.transactions" (click)="onTransactionClicked(transaction)">
-            <td>{{transaction.id}}</td>
-            <td>{{transaction.type}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+            </tr>
+            <tr *ngFor="let transaction of client.transactions" (click)="onTransactionClicked(transaction)">
+                <td>{{transaction.id}}</td>
+                <td>{{transaction.type}}</td>
+            </tr>
+        </table>
     </div>
     <br>
     <div class="centerify">

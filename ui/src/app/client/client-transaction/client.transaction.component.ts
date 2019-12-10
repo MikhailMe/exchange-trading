@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Transaction} from "../../models";
+import {StoreService} from "../../services/store.service";
 
 @Component({
     templateUrl: './client.transaction.component.html'
@@ -7,7 +8,8 @@ import {Transaction} from "../../models";
 export class ClientTransactionComponent implements OnInit {
     protected clientTransaction: Transaction;
 
-    constructor() {
+    constructor(private storeService: StoreService) {
+        this.clientTransaction = storeService.getTransaction();
     }
 
     ngOnInit() {

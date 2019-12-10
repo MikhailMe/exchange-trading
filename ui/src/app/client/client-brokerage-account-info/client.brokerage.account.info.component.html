@@ -2,8 +2,8 @@
 
 <div class="client-brokerage-account-open-container">
     <div class="info">
-        <p><span>Client passport: </span> {{clientPassport.series}} {{clientPassport.number}}</p>
-        <p><span>Creation date: </span> {{brokerageAccount.creationDate}}</p>
+        <p><span>Client passport: </span> {{client.passport.series}} {{client.passport.number}}</p>
+        <p><span>Creation date: </span> {{client.brokerageAccount.creationDate}}</p>
     </div>
     <div class="centerify">
         <button [routerLink]="'/client/assets'"><span>Assets</span></button>
@@ -11,10 +11,10 @@
     </div>
     <br>
     <div class="centerify">
-        <button (click)="putMoneyToBrokerageAccount()"><span>Put money</span></button>
+        <button [routerLink]="'/client/putMoney'"><span>Put money</span></button>
     </div>
     <div class="centerify">
-        <button (click)="closeBrokerageAccount()"><span>Close brokerage account</span></button>
+        <button [routerLink]="'/client/base'"><span>Close brokerage account</span></button>
     </div>
     <div class="centerify">
         <button [routerLink]="'/client/base'"><span>Back</span></button>

@@ -7,7 +7,7 @@
                 <button [routerLink]="'/client/info'"><span>Client information</span></button>
             </p>
             <p>
-                <button [routerLink]="'/client/brokerageAccount'"><span>Brokerage account</span></button>
+                <button (click)="brokerageAccount()"><span>Brokerage account</span></button>
             </p>
         </div>
         <div class="centerify">
@@ -27,7 +27,7 @@
             </p>
         </div>
         <p>
-            <button [routerLink]="''" (click)="signOut()"><span>Sign out</span></button>
+            <button (click)="signOut()"><span>Sign out</span></button>
         </p>
     </div>
 </div>

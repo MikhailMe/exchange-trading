@@ -7,7 +7,7 @@
                 <th>ID</th>
                 <th>Client ID</th>
             </tr>
-            <tr class="data-row" *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
+            <tr *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
                 <td>{{agreement.id}}</td>
                 <td>{{agreement.clientId}}</td>
             </tr>

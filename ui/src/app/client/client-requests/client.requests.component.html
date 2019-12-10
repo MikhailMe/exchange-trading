@@ -3,12 +3,16 @@
 <div class="client-requests-container">
 
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let request of client.requests" (click)="onRequestClicked(request)">
-            <td>{{request.id}}</td>
-            <td>{{request.requestType}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Request type</th>
+            </tr>
+            <tr *ngFor="let request of client.requests" (click)="onRequestClicked(request)">
+                <td>{{request.id}}</td>
+                <td>{{request.requestType}}</td>
+            </tr>
+        </table>
     </div>
 
     <br>

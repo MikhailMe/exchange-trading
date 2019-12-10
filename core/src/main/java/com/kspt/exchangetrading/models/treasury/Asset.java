@@ -29,6 +29,12 @@ public final class Asset extends AbstractEntity {
     @Column(name = "quantity")
     private Double quantity;
 
+    public Asset(@NotNull final String type,
+                 @NotNull final Double quantity) {
+        this.type = type;
+        this.quantity = quantity;
+    }
+
     public Asset(@NotNull final Long clientId,
                  @NotNull final String type) {
         this.clientId = clientId;

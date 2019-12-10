@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Admin, Broker, Client, Person} from '../../models';
 import {Router} from '@angular/router';
-import {UserService} from '../../services/user.service';
+import {StoreService} from '../../services/store.service';
 
 @Component({
     templateUrl: './sign.in.component.html',
@@ -14,7 +14,7 @@ export class SignInComponent implements OnInit {
     public person: Person;
     protected readonly authService: AuthService;
 
-    constructor(private router: Router, authService: AuthService, private userService: UserService) {
+    constructor(private router: Router, authService: AuthService, private userService: StoreService) {
         this.authService = authService;
     }
 
@@ -28,11 +28,11 @@ export class SignInComponent implements OnInit {
 
         this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
-                this.userService.setUser(data);
+                this.userService.setPerson(data);
                 switch (this.personType) {
-                    case 'client': this.person = data as Client; this.router.navigateByUrl('/client/base'); break;
-                    case 'broker': this.person = data as Broker; this.router.navigateByUrl('/broker/base', { state: {data: this.person}}); break;
-                    case 'admin': this.person = data as Admin; this.router.navigateByUrl('/admin/base'); break;
+                    case 'client': this.router.navigateByUrl('/client/base'); break;
+                    case 'broker': this.router.navigateByUrl('/broker/base'); break;
+                    case 'admin': this.router.navigateByUrl('/admin/base'); break;
                 }
             }, error => console.error(error));
     }

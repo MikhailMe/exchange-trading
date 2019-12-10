@@ -2,12 +2,16 @@
 
 <div class="admin-bank-container">
     <div class="centerify">
-        <tbody>
-        <tr *ngFor="let bankRecord of bank">
-            <td>{{bankRecord.type}}</td>
-            <td>{{bankRecord.quantity}}</td>
-        </tr>
-        </tbody>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Quantity</th>
+            </tr>
+            <tr *ngFor="let bankRecord of bank">
+                <td>{{bankRecord.type}}</td>
+                <td>{{bankRecord.quantity}}</td>
+            </tr>
+        </table>
     </div>
     <br>
     <div class="centerify">
