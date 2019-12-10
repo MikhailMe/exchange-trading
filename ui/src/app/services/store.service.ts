@@ -4,6 +4,10 @@ import {Asset, Person, Stock, Transaction} from '../models';
 @Injectable()
 export class StoreService {
 
+    private id: number;
+    private propertyId: number;
+
+
     private asset: Asset;
     private stock: Stock;
     private person: Person;
@@ -11,6 +15,23 @@ export class StoreService {
 
     constructor() {
     }
+
+    getId() {
+        return this.id;
+    }
+
+    setId(id: number) {
+        this.id = id;
+    }
+
+    getPropertyId() {
+        return this.propertyId;
+    }
+
+    setPropertyId(propertyId: number) {
+        this.propertyId = propertyId;
+    }
+
 
     getAsset() {
         return this.asset;

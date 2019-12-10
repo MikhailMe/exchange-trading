@@ -1,8 +1,10 @@
 <h2>Brokerage account information</h2>
 
-<div class="client-brokerage-account-open-container">
+<div *ngIf="client.brokerageAccount" class="client-brokerage-account-open-container">
     <div class="info">
-        <p><span>Client passport: </span> {{client.passport.series}} {{client.passport.number}}</p>
+        <p><span>Client passport: </span>
+        <p><span>Series: </span> {{client.passport.series}} </p>
+        <p><span>Number: </span> {{client.passport.number}} </p>
         <p><span>Creation date: </span> {{client.brokerageAccount.creationDate}}</p>
     </div>
     <div class="centerify">
@@ -14,7 +16,7 @@
         <button [routerLink]="'/client/putMoney'"><span>Put money</span></button>
     </div>
     <div class="centerify">
-        <button [routerLink]="'/client/base'"><span>Close brokerage account</span></button>
+        <button (click)="closeBrokerageAccount()"><span>Close brokerage account</span></button>
     </div>
     <div class="centerify">
         <button [routerLink]="'/client/base'"><span>Back</span></button>

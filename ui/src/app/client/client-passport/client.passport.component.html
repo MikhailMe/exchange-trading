@@ -1,9 +1,9 @@
 <h2>Client passport</h2>
 
-<div class="client-passports-container">
+<div *ngIf="client" class="client-passports-container">
     <div class="centerify">
         <label for="series">series</label>
-        <input [(ngModel)]="series"
+        <input [(ngModel)]="client.passport.series"
                type="number"
                placeholder="Enter series"
                id="series"
@@ -12,7 +12,7 @@
     <br>
     <div class="centerify">
         <label for="number">number</label>
-        <input [(ngModel)]="number"
+        <input [(ngModel)]="client.passport.number"
                type="number"
                placeholder="Enter number"
                id="number"

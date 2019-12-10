@@ -17,7 +17,7 @@ export class ClientService {
     }
 
     public setClientPassport(clientId: number, series: number, number: number) {
-        const url = this.urlWithId(environment.setClientPassport, clientId);
+        const url = `${environment.getClientInfo}${clientId}/${environment.setClientPassport}`;
         return this.http.post<Client>(url, {series, number});
     }
 
@@ -67,6 +67,6 @@ export class ClientService {
     }
 
     private urlWithId(urlWithoutId: string, clientId: number): string {
-        return urlWithoutId.replace(':clientId', `${clientId}`)
+        return urlWithoutId.replace(':clientId', `${clientId}`);
     }
 }

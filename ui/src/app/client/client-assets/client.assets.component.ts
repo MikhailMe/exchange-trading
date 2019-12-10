@@ -1,28 +1,33 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
-import {Asset, Client} from "../../models";
-import {Router} from "@angular/router";
-import {StoreService} from "../../services/store.service";
+import {Component, OnInit} from '@angular/core';
+import {Asset, Client} from '../../models';
+import {Router} from '@angular/router';
+import {StoreService} from '../../services/store.service';
+import {ClientService} from '../../services/client.service';
 
 @Component({
     templateUrl: './client.assets.component.html',
 })
-export class ClientAssetsComponent implements OnInit, DoCheck {
-    protected client: Client;
+export class ClientAssetsComponent implements OnInit {
+    private id: number;
+    private client: Client;
 
     constructor(private router: Router,
+                private clientService: ClientService,
                 private storeService: StoreService) {
-        this.client = storeService.getPerson() as Client;
+        this.id = this.storeService.getId();
+        this.getClient();
     }
 
     ngOnInit() {
     }
 
-    ngDoCheck() {
-        this.client = this.storeService.getPerson() as Client;
+    onAssetClicked(asset: Asset) {
+        this.storeService.setPropertyId(asset.id);
+        return this.router.navigateByUrl(`/client/asset/${asset.id}`);
     }
 
-    onAssetClicked(asset: Asset) {
-        this.storeService.setAsset(asset);
-        return this.router.navigateByUrl(`/client/asset/${asset.id}`);
+    getClient() {
+        this.clientService.getById(this.id)
+            .subscribe(data => this.client = data as Client, error => console.log(error));
     }
 }

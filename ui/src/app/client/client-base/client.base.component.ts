@@ -1,38 +1,39 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {BrokerageAccount, Client} from '../../models';
-import {Router} from "@angular/router";
-import {StoreService} from "../../services/store.service";
-import {ClientService} from "../../services/client.service";
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {Client} from '../../models';
+import {Router} from '@angular/router';
+import {StoreService} from '../../services/store.service';
+import {ClientService} from '../../services/client.service';
 
 @Component({
     templateUrl: './client.base.component.html',
     styleUrls: ['./client.base.component.css']
 })
-export class ClientBaseComponent implements OnInit, DoCheck {
-
+export class ClientBaseComponent implements OnInit {
+    private id: number;
     private client: Client;
+    private screenType: string;
 
     constructor(private router: Router,
-                private storeService: StoreService,
                 private authService: AuthService,
+                private storeService: StoreService,
                 private clientService: ClientService) {
-        this.authService = authService;
-        this.client = storeService.getPerson() as Client;
+        this.id = this.storeService.getId();
+        this.getClient();
     }
 
     ngOnInit() {
+        this.screenType = 'base';
     }
 
-    ngDoCheck() {
-        this.client = this.storeService.getPerson() as Client;
+    getClient() {
+        this.clientService.getById(this.id)
+            .subscribe(data => this.client = data as Client);
     }
 
     signOut() {
-        this.authService
-            .signOut(this.client.id, this.client.personType)
-            .subscribe(data => console.log(data), error => console.log(error));
-        this.router.navigateByUrl('/')
+        this.authService.signOut(this.client.id, this.client.personType)
+            .subscribe(() => this.router.navigateByUrl('/'));
     }
 
     brokerageAccount() {

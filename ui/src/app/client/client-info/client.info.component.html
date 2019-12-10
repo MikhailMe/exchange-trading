@@ -1,36 +1,43 @@
-<h2>Client information</h2>
+<div *ngIf="!editMode">
+    <h2>Client information</h2>
 
-<div class="client-info-container">
-    <div class="info">
-        <p>
-            <span><b>Name: </b></span> {{client.name}}
-        </p>
-        <p>
-            <span><b>Surname: </b></span> {{client.surname}}
-        </p>
-        <p>
-            <span><b>Person type: </b></span> {{client.personType}}
-        </p>
-        <br>
-        <p>
-            <span><b>Series: </b></span> {{client.passport.series}}
-        </p>
-        <p>
-            <span><b>Number: </b></span> {{client.passport.number}}
-        </p>
-    </div>
+    <div class="client-info-container">
+        <div *ngIf="client" class="info">
+            <p>
+                <span><b>Name: </b></span> {{client.name}}
+            </p>
+            <p>
+                <span><b>Surname: </b></span> {{client.surname}}
+            </p>
+            <p>
+                <span><b>Person type: </b></span> {{client.personType}}
+            </p>
+            <br>
+            <div *ngIf="client.passport">
+                <span>Passport</span>
+                <p>
+                    <span><b>Series: </b></span> {{client.passport.series}}
+                </p>
+                <p>
+                    <span><b>Number: </b></span> {{client.passport.number}}
+                </p>
+            </div>
+        </div>
 
-    <div class="centerify">
-        <p>
-            <button [routerLink]="'/client/passport'">
-                <span>Change passport</span>
-            </button>
-        </p>
-        <br>
-        <p>
-            <button [routerLink]="'/client/base'">
-                <span>Back</span>
-            </button>
-        </p>
+        <div class="centerify">
+            <p>
+                <button (click)="editMode = true">
+                    <span>Change passport</span>
+                </button>
+            </p>
+            <br>
+            <p>
+                <button [routerLink]="'/client/base'">
+                    <span>Back</span>
+                </button>
+            </p>
+        </div>
     </div>
 </div>
+
+<client-passport *ngIf="editMode" [client]="client" (passportChanged)="editMode=false"></client-passport>

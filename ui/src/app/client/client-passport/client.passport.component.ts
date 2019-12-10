@@ -1,34 +1,33 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {StoreService} from '../../services/store.service';
 import {Client} from '../../models';
 import {ClientService} from '../../services/client.service';
 
 @Component({
+    selector: 'client-passport',
     templateUrl: './client.passport.component.html'
 })
 export class ClientPassportComponent implements OnInit {
-    protected client: Client;
-    @Input() protected series: number;
-    @Input() protected number: number;
+    @Input() client: Client;
+    @Output() passportChanged = new EventEmitter();
 
     constructor(private router: Router,
-                private clientService: ClientService,
-                private userService: StoreService) {
-        this.client = userService.getPerson() as Client;
-        if (this.client.passport) {
-            this.series = this.client.passport.series;
-            this.number = this.client.passport.number;
-        }
+                private clientService: ClientService) {
     }
 
     ngOnInit() {
+        if (!this.client.passport) {
+            this.client.passport = {series: 0, number: 0, id: undefined};
+        } else {
+            // tslint:disable-next-line:no-unused-expression
+            !this.client.passport.series && (this.client.passport.series = 0);
+            // tslint:disable-next-line:no-unused-expression
+            !this.client.passport.number && (this.client.passport.number = 0);
+        }
     }
 
     updatePassport() {
-        this.clientService
-            .setClientPassport(this.client.id, this.series, this.number)
-            .subscribe(data => this.userService.setPerson(data as Client), error => console.log(error));
-        return this.router.navigateByUrl('/client/info')
+        this.clientService.setClientPassport(this.client.id, this.client.passport.series, this.client.passport.number)
+            .subscribe(() => this.passportChanged.emit());
     }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {Admin, Broker, Client, Person} from '../../models';
+import {Client, Person} from '../../models';
 import {Router} from '@angular/router';
 import {StoreService} from '../../services/store.service';
 
@@ -12,9 +12,10 @@ export class SignInComponent implements OnInit {
     public password: string;
     public personType: string;
     public person: Person;
-    protected readonly authService: AuthService;
 
-    constructor(private router: Router, authService: AuthService, private userService: StoreService) {
+    constructor(private router: Router,
+                private authService: AuthService,
+                private storeService: StoreService) {
         this.authService = authService;
     }
 
@@ -28,7 +29,9 @@ export class SignInComponent implements OnInit {
 
         this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
-                this.userService.setPerson(data);
+                const client = data as Client;
+                this.storeService.setPerson(client);
+                this.storeService.setId(client.id);
                 switch (this.personType) {
                     case 'client': this.router.navigateByUrl('/client/base'); break;
                     case 'broker': this.router.navigateByUrl('/broker/base'); break;

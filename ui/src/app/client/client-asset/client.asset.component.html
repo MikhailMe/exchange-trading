@@ -1,6 +1,6 @@
 <h2>Asset</h2>
 
-<div class="client-current-asset-container">
+<div *ngIf="asset" class="client-current-asset-container">
     <div class="centerify"><span>ClientId: </span> {{asset.clientId}} </div>
     <br>
     <div class="centerify"><span>Type: </span> {{asset.type}} </div>
