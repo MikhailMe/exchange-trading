@@ -11,7 +11,11 @@
     </div>
     <br>
     <div class="centerify"><label for="currency">Currency</label>
-        <select class="select-css" [(ngModel)]="currency" name="currency" id="currency">
+        <select class="select-css"
+                [(ngModel)]="currency"
+                name="currency"
+                id="currency"
+                required>
             <option value="ruble">ruble</option>
             <option value="dollar">dollar</option>
             <option value="euro">euro</option>

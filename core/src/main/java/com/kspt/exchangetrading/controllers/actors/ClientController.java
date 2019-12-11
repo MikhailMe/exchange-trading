@@ -82,4 +82,21 @@ public final class ClientController extends CrudController<Client, ClientService
     public List<Transaction> getTransactions(@PathVariable final Long clientId) {
         return service.getTransactions(clientId);
     }
+
+    @GetMapping("{clientId}/transactions/{transactionId}")
+    public Transaction getTransactionById(@PathVariable final Long clientId,
+                                          @PathVariable final Long transactionId) {
+        return service.getTransactionById(clientId, transactionId);
+    }
+
+    @GetMapping("{clientId}/getRequests")
+    public List<ClientRequest> getRequests(@PathVariable final Long clientId) {
+        return service.getRequests(clientId);
+    }
+
+    @GetMapping("{clientId}/requests/{requestId}")
+    public ClientRequest getRequestById(@PathVariable final Long clientId,
+                                        @PathVariable final Long requestId) {
+        return service.getRequestById(clientId, requestId);
+    }
 }

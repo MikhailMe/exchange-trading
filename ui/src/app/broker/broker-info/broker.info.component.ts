@@ -10,7 +10,7 @@ export class BrokerInfoComponent implements OnInit {
     protected brokerCredentials: Credentials;
 
     constructor(private userService: StoreService) {
-        this.broker = userService.getPerson() as Broker;
+
         this.brokerCredentials = this.broker.credentials;
     }
 

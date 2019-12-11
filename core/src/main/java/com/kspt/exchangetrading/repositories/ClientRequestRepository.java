@@ -13,4 +13,8 @@ public interface ClientRequestRepository extends CommonRepository<ClientRequest>
 
     List<ClientRequest> findByStatus(@NotNull final String status);
 
+    List<ClientRequest> findByClientId(@NotNull final Long clientId);
+
+    ClientRequest findByIdAndClientId(@NotNull final Long id, @NotNull final Long clientId);
+
 }

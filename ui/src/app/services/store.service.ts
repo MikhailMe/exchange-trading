@@ -7,12 +7,6 @@ export class StoreService {
     private id: number;
     private propertyId: number;
 
-
-    private asset: Asset;
-    private stock: Stock;
-    private person: Person;
-    private transaction: Transaction;
-
     constructor() {
     }
 
@@ -32,36 +26,4 @@ export class StoreService {
         this.propertyId = propertyId;
     }
 
-
-    getAsset() {
-        return this.asset;
-    }
-
-    setAsset(asset: Asset) {
-        this.asset = asset;
-    }
-
-    getStock() {
-        return this.stock;
-    }
-
-    setStock(stock: Stock) {
-        this.stock = stock;
-    }
-
-    getPerson(): Person {
-        return this.person;
-    }
-
-    setPerson(user: Person) {
-        this.person = user;
-    }
-
-    getTransaction() {
-        return this.transaction;
-    }
-
-    setTransaction(transaction: Transaction) {
-        this.transaction = transaction;
-    }
 }

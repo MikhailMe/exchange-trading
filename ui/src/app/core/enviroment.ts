@@ -19,6 +19,9 @@ export function createEnv() {
         exchangeMoneyToStocks: clientPrefix + ':clientId/exchangeMoneyToStocks',
         exchangeStocksToMoney: clientPrefix + ':clientId/exchangeStocksToMoney',
         getClientTransactions: clientPrefix + ':clientId/getTransactions',
+        getClientTransactionById: clientPrefix + ':clientId/transactions/:id',
+        getClientRequests: clientPrefix + ':clientId/getRequests',
+        getClientRequestById: clientPrefix + ':clientId/requests/:id',
 
         getBroker: brokerPrefix,
         checkBrokerRequests: brokerPrefix + ':brokerId/checkRequests',

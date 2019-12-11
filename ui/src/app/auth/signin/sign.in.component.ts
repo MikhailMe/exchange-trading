@@ -30,7 +30,6 @@ export class SignInComponent implements OnInit {
         this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
                 const client = data as Client;
-                this.storeService.setPerson(client);
                 this.storeService.setId(client.id);
                 switch (this.personType) {
                     case 'client': this.router.navigateByUrl('/client/base'); break;

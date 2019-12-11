@@ -18,7 +18,7 @@ export class BrokerBaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.broker = this.userService.getPerson() as Broker;
+
     }
 
     signOut() {

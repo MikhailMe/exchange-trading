@@ -12,7 +12,6 @@ import {ClientService} from '../../services/client.service';
 export class ClientBaseComponent implements OnInit {
     private id: number;
     private client: Client;
-    private screenType: string;
 
     constructor(private router: Router,
                 private authService: AuthService,
@@ -23,7 +22,6 @@ export class ClientBaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.screenType = 'base';
     }
 
     getClient() {
@@ -41,6 +39,14 @@ export class ClientBaseComponent implements OnInit {
             this.router.navigateByUrl('/client/brokerageAccount/info');
         } else {
             this.router.navigateByUrl('/client/brokerageAccount');
+        }
+    }
+
+    agreement() {
+        if (this.client.agreement) {
+            this.router.navigateByUrl('/client/agreement/info');
+        } else {
+            this.router.navigateByUrl('/client/agreement');
         }
     }
 }

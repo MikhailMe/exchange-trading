@@ -3,10 +3,14 @@
 <div class="client-agreement-extend-container">
     <div class="centerify">
         <label for="validity"><span>Agreement validity</span></label>
-        <select class="select-css" [ngModel]="validity" name="validity" id="validity">
-            <option value="ruble">month</option>
-            <option value="dollar">half year</option>
-            <option value="euro">year</option>
+        <select class="select-css"
+                [(ngModel)]="validity"
+                name="validity"
+                id="validity"
+                required>
+            <option value="month">month</option>
+            <option value="half year">half year</option>
+            <option value="year">year</option>
         </select>
     </div>
     <br>

@@ -2,6 +2,21 @@
 
 <div class="client-agreement-container">
     <div class="centerify">Now you don't have a agreement with any broker</div>
+    <br>
+    <div class="centerify">
+        <label for="validity"><span>Agreement validity</span></label>
+        <select class="select-css"
+                [(ngModel)]="validity"
+                name="validity"
+                id="validity"
+                required>
+            <option value="month">month</option>
+            <option value="half year">half year</option>
+            <option value="year">year</option>
+        </select>
+    </div>
+    <br>
     <div class="centerify"><button (click)="makeBrokerAgreement()"><span>Make broker agreement</span></button></div>
+    <br>
     <div class="centerify"><button [routerLink]="'/client/base'"><span>Back</span></button></div>
 </div>

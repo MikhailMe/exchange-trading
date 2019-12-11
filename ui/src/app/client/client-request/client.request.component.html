@@ -1,6 +1,6 @@
 <h2>Request</h2>
 
-<div class="client-current-request-container">
+<div *ngIf="clientRequest" class="client-current-request-container">
 
     <div class="centerify"><span>Type: </span> {{clientRequest.requestType}} </div>
     <br>

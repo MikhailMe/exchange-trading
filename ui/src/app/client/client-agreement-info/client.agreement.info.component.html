@@ -3,15 +3,15 @@
 <div class="client-agreement-open-container">
 
     <div class="info">
-        <p><span>Client id: </span> {{clientAgreement.clientId}}</p>
-        <p><span>Broker id: </span> {{clientAgreement.brokerId}}</p>
-        <p><span>Validity: </span> {{clientAgreement.validity}}</p>
-        <p><span>Start date: </span> {{clientAgreement.startDate}}</p>
+        <p><span>Client id: </span> {{client.agreement.clientId}}</p>
+        <p><span>Broker id: </span> {{client.agreement.brokerId}}</p>
+        <p><span>Validity: </span> {{client.agreement.validity}}</p>
+        <p><span>Start date: </span> {{client.agreement.startDate}}</p>
     </div>
     <br>
     <div class="centerify">
         <button (click)="breakBrokerAgreement()"><span>Break broker agreement</span></button>
-        <button (click)="extendBrokerAgreement()"><span>Extend broker agreement</span></button>
+        <button [routerLink]="'/client/agreement/extend'"><span>Extend broker agreement</span></button>
     </div>
     <br>
     <div class="centerify">

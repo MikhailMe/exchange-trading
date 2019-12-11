@@ -1,6 +1,6 @@
 <h2>Client requests</h2>
 
-<div class="client-requests-container">
+<div *ngIf="requests" class="client-requests-container">
 
     <div class="centerify">
         <table>
@@ -8,7 +8,7 @@
                 <th>Id</th>
                 <th>Request type</th>
             </tr>
-            <tr *ngFor="let request of client.requests" (click)="onRequestClicked(request)">
+            <tr *ngFor="let request of requests" (click)="onRequestClicked(request)">
                 <td>{{request.id}}</td>
                 <td>{{request.requestType}}</td>
             </tr>

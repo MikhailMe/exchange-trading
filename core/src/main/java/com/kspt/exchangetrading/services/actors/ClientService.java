@@ -251,6 +251,30 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return transactionRepository.findByClientId(clientId);
     }
 
+    public Transaction getTransactionById(@NotNull final Long clientId,
+                                          @NotNull final Long transactionId) {
+        Transaction transaction = null;
+        Client client = repository.findById(clientId).orElse(null);
+        if (client != null) {
+            transaction = transactionRepository.findByIdAndClientId(transactionId, clientId);
+        }
+        return transaction;
+    }
+
+    public List<ClientRequest> getRequests(@NotNull final Long clientId) {
+        return clientRequestRepository.findByClientId(clientId);
+    }
+
+    public ClientRequest getRequestById(@NotNull final Long clientId,
+                                        @NotNull final Long requestId) {
+        ClientRequest clientRequest = null;
+        Client client = repository.findById(clientId).orElse(null);
+        if (client != null) {
+            clientRequest = clientRequestRepository.findByIdAndClientId(requestId, clientId);
+        }
+        return clientRequest;
+    }
+
     private boolean checkAgreement(@NotNull final Long clientId) {
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {

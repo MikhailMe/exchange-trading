@@ -11,4 +11,6 @@ import java.util.List;
 public interface TransactionRepository extends CommonRepository<Transaction> {
 
     List<Transaction> findByClientId(@NotNull final Long id);
+
+    Transaction findByIdAndClientId(@NotNull final Long id, @NotNull final Long clientId);
 }

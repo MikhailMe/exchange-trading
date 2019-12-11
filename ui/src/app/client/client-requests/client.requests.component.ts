@@ -1,35 +1,29 @@
 import {Component, OnInit} from '@angular/core';
-import {Client, ClientRequest} from "../../models";
-import {DataService} from "../../services/data.service";
-import {Router} from "@angular/router";
+import {ClientRequest} from '../../models';
+import {Router} from '@angular/router';
+import {ClientService} from '../../services/client.service';
+import {StoreService} from '../../services/store.service';
 
 @Component({
     templateUrl: './client.requests.component.html'
 })
 export class ClientRequestsComponent implements OnInit {
-    protected client: Client;
+    private clientId: number;
+    private requests: ClientRequest[];
 
-    constructor(private dataService: DataService, private router: Router) {
-        this.client = new class implements Client {
-            agreement: null;
-            brokerageAccount: null;
-            credentials: null;
-            id: number;
-            isAuthenticated: boolean;
-            name: string;
-            passport: null;
-            personType: string;
-            requests: null;
-            surname: string;
-            transactions: null[];
-        };
-        this.client.requests = dataService.getRequests();
+    constructor(private router: Router,
+                private storeService: StoreService,
+                private clientService: ClientService) {
+        this.clientId = this.storeService.getId();
+        clientService.getRequests(this.clientId).subscribe(data => this.requests = data);
     }
 
     ngOnInit() {
     }
 
     onRequestClicked(request: ClientRequest) {
-        this.router.navigateByUrl('/client/request/1')
+        this.storeService.setPropertyId(request.id);
+        return this.router.navigateByUrl(`/client/request/${request.id}`);
     }
+
 }
