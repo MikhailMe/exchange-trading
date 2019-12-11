@@ -6,6 +6,8 @@ import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.system.Agreement;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
+import com.kspt.exchangetrading.models.treasury.Asset;
+import com.kspt.exchangetrading.models.treasury.Stock;
 import com.kspt.exchangetrading.models.treasury.Transaction;
 import com.kspt.exchangetrading.services.actors.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -83,7 +85,7 @@ public final class ClientController extends CrudController<Client, ClientService
         return service.getTransactions(clientId);
     }
 
-    @GetMapping("{clientId}/transactions/{transactionId}")
+    @GetMapping("{clientId}/transaction/{transactionId}")
     public Transaction getTransactionById(@PathVariable final Long clientId,
                                           @PathVariable final Long transactionId) {
         return service.getTransactionById(clientId, transactionId);
@@ -94,9 +96,31 @@ public final class ClientController extends CrudController<Client, ClientService
         return service.getRequests(clientId);
     }
 
-    @GetMapping("{clientId}/requests/{requestId}")
+    @GetMapping("{clientId}/request/{requestId}")
     public ClientRequest getRequestById(@PathVariable final Long clientId,
                                         @PathVariable final Long requestId) {
         return service.getRequestById(clientId, requestId);
+    }
+
+    @GetMapping("{clientId}/getAssets")
+    public List<Asset> getAssets(@PathVariable final Long clientId) {
+        return service.getAssets(clientId);
+    }
+
+    @GetMapping("{clientId}/asset/{assetId}")
+    public Asset getAssetById(@PathVariable final Long clientId,
+                              @PathVariable final Long assetId) {
+        return service.getAssetById(clientId, assetId);
+    }
+
+    @GetMapping("{clientId}/getStocks")
+    public List<Stock> getStocks(@PathVariable final Long clientId) {
+        return service.getStocks(clientId);
+    }
+
+    @GetMapping("{clientId}/stock/{stockId}")
+    public Stock getStockById(@PathVariable final Long clientId,
+                              @PathVariable final Long stockId) {
+        return service.getStockById(clientId, stockId);
     }
 }

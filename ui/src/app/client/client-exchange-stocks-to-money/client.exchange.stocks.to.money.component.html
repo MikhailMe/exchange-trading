@@ -3,7 +3,11 @@
 <div class="client-exchange-s2m-container">
 
     <div class="centerify"><label for="fromType">From stock type</label>
-        <select class="select-css" [ngModel]="fromType" name="toCurrency" id="fromType">
+        <select class="select-css"
+                [(ngModel)]="fromType"
+                name="toCurrency"
+                id="fromType"
+                required>
             <option value="mishcoin">mishcoin</option>
             <option value="realtyincome">realty income</option>
             <option value="cloudflare">cloud flare</option>
@@ -11,7 +15,11 @@
     </div>
     <br>
     <div class="centerify"><label for="toType">To currency</label>
-        <select class="select-css" [ngModel]="toType" name="fromCurrency" id="toType">
+        <select class="select-css"
+                [(ngModel)]="toType"
+                name="fromCurrency"
+                id="toType"
+                required>
             <option value="ruble">ruble</option>
             <option value="dollar">dollar</option>
             <option value="euro">euro</option>
@@ -19,7 +27,12 @@
     </div>
     <br>
     <div class="centerify"><label for="quantity">Quatity</label>
-        <input [ngModel]="quantity" type="number" min="0" placeholder="Enter quantity" id="quantity" required>
+        <input [(ngModel)]="quantity"
+               type="number"
+               min="0"
+               placeholder="Enter quantity"
+               id="quantity"
+               required>
     </div>
     <br>
     <div class="centerify">

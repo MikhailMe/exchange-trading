@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {Client, Person} from '../../models';
+import {Person} from '../../models';
 import {Router} from '@angular/router';
 import {StoreService} from '../../services/store.service';
 
@@ -29,13 +29,16 @@ export class SignInComponent implements OnInit {
 
         this.authService.signIn(this.login, this.password, this.personType).subscribe(
             data => {
-                const client = data as Client;
-                this.storeService.setId(client.id);
-                switch (this.personType) {
-                    case 'client': this.router.navigateByUrl('/client/base'); break;
-                    case 'broker': this.router.navigateByUrl('/broker/base'); break;
-                    case 'admin': this.router.navigateByUrl('/admin/base'); break;
+                if (!data) {
+                    alert(`No ${this.personType} with your credentials`);
+                } else {
+                    this.storeService.setId(data.id);
+                    switch (this.personType) {
+                        case 'client': this.router.navigateByUrl('/client/base'); break;
+                        case 'broker': this.router.navigateByUrl('/broker/base'); break;
+                        case 'admin': this.router.navigateByUrl('/admin/base'); break;
+                    }
                 }
-            }, error => console.error(error));
+            });
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {Agreement, BrokerageAccount, Client, ClientRequest, Transaction} from '../models';
+import {Agreement, Asset, BrokerageAccount, Client, ClientRequest, Stock, Transaction} from '../models';
 
 @Injectable()
 export class ClientService {
@@ -79,6 +79,26 @@ export class ClientService {
     getRequestById(clientId: number, requestId: number) {
         const url = this.urlWithClientIdAndPropertyId(environment.getClientRequestById, clientId, requestId);
         return this.http.get<ClientRequest>(url);
+    }
+
+    getAssets(clientId: number) {
+        const url = this.urlWithClientId(environment.getClientAssets, clientId);
+        return this.http.get<Asset[]>(url);
+    }
+
+    getAssetById(clientId: number, assetId: number) {
+        const url = this.urlWithClientIdAndPropertyId(environment.getClientAssetById, clientId, assetId);
+        return this.http.get<Asset>(url);
+    }
+
+    getStocks(clientId: number) {
+        const url = this.urlWithClientId(environment.getClientStocks, clientId);
+        return this.http.get<Stock[]>(url);
+    }
+
+    getStockById(clientId: number, stockId: number) {
+        const url = this.urlWithClientIdAndPropertyId(environment.getClientStockById, clientId, stockId);
+        return this.http.get<Stock>(url);
     }
 
     private urlWithClientId(urlWithoutId: string, clientId: number): string {

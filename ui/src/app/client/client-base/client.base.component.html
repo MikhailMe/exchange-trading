@@ -1,33 +1,40 @@
 <h2>Client</h2>
 
 <div class="client-base-container">
-    <div class="buttons">
+    <div *ngIf="client" class="buttons">
         <div class="centerify">
-            <p>
-                <button [routerLink]="'/client/info'"><span>Client information</span></button>
-            </p>
-            <p>
-                <button (click)="brokerageAccount()"><span>Brokerage account</span></button>
-            </p>
+            <button [routerLink]="'/client/info'"><span>Client information</span></button>
+            <button [class.disabled]="!client.passport"
+                    (click)="brokerageAccount()">
+                <span>Brokerage account</span>
+            </button>
         </div>
+        <br>
         <div class="centerify">
-            <p>
-                <button (click)="agreement()"><span>Agreement</span></button>
-            </p>
-            <p>
-                <button [routerLink]="'/client/exchange'"><span>Exchange</span></button>
-            </p>
+            <button [class.disabled]="!client.brokerageAccount"
+                    (click)="agreement()">
+                <span>Agreement</span>
+            </button>
+
+            <button [class.disabled]="!client.agreement"
+                    [routerLink]="'/client/exchange'">
+                <span>Exchange</span>
+            </button>
         </div>
+        <br>
         <div class="centerify">
-            <p>
-                <button [routerLink]="'/client/requests'"><span>Requests</span></button>
-            </p>
-            <p>
-                <button [routerLink]="'/client/transactions'"><span>Completed transactions</span></button>
-            </p>
+            <button [class.disabled]="!client.agreement"
+                    [routerLink]="'/client/requests'">
+                <span>Requests</span>
+            </button>
+            <button [class.disabled]="!client.agreement"
+                    [routerLink]="'/client/transactions'">
+                <span>Completed transactions</span>
+            </button>
         </div>
-        <p>
+        <br>
+        <div class="centerify">
             <button (click)="signOut()"><span>Sign out</span></button>
-        </p>
+        </div>
     </div>
 </div>

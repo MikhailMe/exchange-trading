@@ -1,12 +1,20 @@
 <h2>Client agreement information</h2>
-
-<div class="client-agreement-open-container">
-
-    <div class="info">
-        <p><span>Client id: </span> {{client.agreement.clientId}}</p>
-        <p><span>Broker id: </span> {{client.agreement.brokerId}}</p>
-        <p><span>Validity: </span> {{client.agreement.validity}}</p>
-        <p><span>Start date: </span> {{client.agreement.startDate}}</p>
+<div *ngIf="agreement" class="client-agreement-open-container">
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Client id</th>
+                <th>Broker id</th>
+                <th>Validity</th>
+                <th>Start date</th>
+            </tr>
+            <tr>
+                <td>{{agreement.clientId}}</td>
+                <td>{{agreement.brokerId}}</td>
+                <td>{{agreement.validity}}</td>
+                <td>{{agreement.startDate}}</td>
+            </tr>
+        </table>
     </div>
     <br>
     <div class="centerify">

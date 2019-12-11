@@ -1,6 +1,6 @@
 <h2>Client stocks</h2>
 
-<div class="client-stocks-container">
+<div *ngIf="stocks" class="client-stocks-container">
 
     <div class="centerify">
         <table>
@@ -8,7 +8,7 @@
                 <th>Id</th>
                 <th>Stock type</th>
             </tr>
-            <tr *ngFor="let stock of client.brokerageAccount.stocks" (click)="onStockClicked(stock)">
+            <tr *ngFor="let stock of stocks" (click)="onStockClicked(stock)">
                 <td>{{stock.id}}</td>
                 <td>{{stock.stockType}}</td>
             </tr>

@@ -15,11 +15,13 @@ public interface CommonRepository<T extends AbstractEntity> extends CrudReposito
     long count();
 
     @Override
-    boolean existsById(final Long id);
+    boolean existsById(@NotNull final Long id);
 
+    @NotNull
     @Override
     List<T> findAll();
 
+    @NotNull
     @Override
     Optional<T> findById(final Long id);
 
@@ -27,8 +29,9 @@ public interface CommonRepository<T extends AbstractEntity> extends CrudReposito
     void deleteAll();
 
     @Override
-    void deleteById(Long id);
+    void deleteById(@NotNull Long id);
 
+    @NotNull
     @Override
     <S extends T> S save (@NotNull final S entity);
 

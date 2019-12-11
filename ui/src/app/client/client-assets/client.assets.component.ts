@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Asset, Client} from '../../models';
+import {Asset} from '../../models';
 import {Router} from '@angular/router';
 import {StoreService} from '../../services/store.service';
 import {ClientService} from '../../services/client.service';
@@ -8,14 +8,14 @@ import {ClientService} from '../../services/client.service';
     templateUrl: './client.assets.component.html',
 })
 export class ClientAssetsComponent implements OnInit {
-    private id: number;
-    private client: Client;
+    private clientId: number;
+    private assets: Asset[];
 
     constructor(private router: Router,
-                private clientService: ClientService,
-                private storeService: StoreService) {
-        this.id = this.storeService.getId();
-        this.getClient();
+                private storeService: StoreService,
+                private clientService: ClientService) {
+        this.clientId = this.storeService.getId();
+        this.clientService.getAssets(this.clientId).subscribe(data => this.assets = data);
     }
 
     ngOnInit() {
@@ -24,10 +24,5 @@ export class ClientAssetsComponent implements OnInit {
     onAssetClicked(asset: Asset) {
         this.storeService.setPropertyId(asset.id);
         return this.router.navigateByUrl(`/client/asset/${asset.id}`);
-    }
-
-    getClient() {
-        this.clientService.getById(this.id)
-            .subscribe(data => this.client = data as Client, error => console.log(error));
     }
 }

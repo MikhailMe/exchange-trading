@@ -15,7 +15,7 @@ export class ClientBrokerageAccountComponent implements OnInit {
                 private storeService: StoreService,
                 private clientService: ClientService) {
         this.id = this.storeService.getId();
-        this.getClient();
+        this.clientService.getById(this.id).subscribe(data => this.client = data);
     }
 
     ngOnInit() {
@@ -24,9 +24,5 @@ export class ClientBrokerageAccountComponent implements OnInit {
     openBrokerageAccount() {
         this.clientService.openBrokerageAccount(this.client.id)
             .subscribe(() => this.router.navigateByUrl('/client/brokerageAccount/info'));
-    }
-
-    getClient() {
-        this.clientService.getById(this.id).subscribe(data => this.client = data);
     }
 }

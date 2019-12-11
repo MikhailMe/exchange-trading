@@ -1,16 +1,26 @@
 <h2>Transaction</h2>
 
-<div class="client-current-transaction-container">
+<div *ngIf="clientTransaction" class="client-current-transaction-container">
 
-    <div class="centerify"><span>Date: </span> {{clientTransaction.date}} </div>
-    <br>
-    <div class="centerify"><span>Admin id: </span> {{clientTransaction.adminId}} </div>
-    <br>
-    <div class="centerify"><span>Client id: </span> {{clientTransaction.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Asset: </span> {{clientTransaction.asset}} </div>
-    <br>
-    <div class="centerify"><span>Stock: </span> {{clientTransaction.stock}} </div>
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Admin id</th>
+                <th>Client id</th>
+                <th>Asset type</th>
+                <th>Stock type</th>
+            </tr>
+            <tr>
+                <td>{{clientTransaction.date}}</td>
+                <td>{{clientTransaction.date}}</td>
+                <td>{{clientTransaction.adminId}}</td>
+                <td>{{clientTransaction.clientId}}</td>
+                <td>{{clientTransaction.asset.type}}</td>
+                <td>{{clientTransaction.stock.stockType}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
         <button [routerLink]="'/client/transactions'"><span>Back</span></button>

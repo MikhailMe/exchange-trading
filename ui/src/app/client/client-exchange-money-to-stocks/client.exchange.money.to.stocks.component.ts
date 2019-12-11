@@ -7,7 +7,7 @@ import {ClientService} from '../../services/client.service';
     templateUrl: './client.exchange.money.to.stocks.component.html'
 })
 export class ClientExchangeMoneyToStocksComponent implements OnInit {
-    private id: number;
+    private clientId: number;
     private fromType: string;
     private toType: string;
     private quantity: number;
@@ -15,7 +15,7 @@ export class ClientExchangeMoneyToStocksComponent implements OnInit {
     constructor(private router: Router,
                 private storeService: StoreService,
                 private clientService: ClientService) {
-        this.id = this.storeService.getId();
+        this.clientId = this.storeService.getId();
     }
 
     ngOnInit() {
@@ -23,7 +23,7 @@ export class ClientExchangeMoneyToStocksComponent implements OnInit {
 
     sendRequest() {
         if (this.quantity && this.fromType && this.toType) {
-            this.clientService.exchangeMoneyForStocks(this.id, this.quantity, this.fromType, this.toType)
+            this.clientService.exchangeMoneyForStocks(this.clientId, this.quantity, this.fromType, this.toType)
                 .subscribe(() => this.router.navigateByUrl('/client/requests'));
         } else {
             alert('Enter currency, stock type and quantity for exchange please');

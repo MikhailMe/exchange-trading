@@ -18,11 +18,8 @@ export class ClientInfoComponent implements OnInit {
     constructor(private storeService: StoreService,
                 private clientService: ClientService) {
         this.id = this.storeService.getId();
-        this.getClient();
-    }
-
-    getClient() {
-        this.clientService.getById(this.id).subscribe(data => this.client = data as Client, error => console.log(error));
+        this.clientService.getById(this.id)
+            .subscribe(data => this.client = data as Client);
     }
 
     ngOnInit() {

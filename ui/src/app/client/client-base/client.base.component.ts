@@ -18,15 +18,10 @@ export class ClientBaseComponent implements OnInit {
                 private storeService: StoreService,
                 private clientService: ClientService) {
         this.id = this.storeService.getId();
-        this.getClient();
+        this.clientService.getById(this.id).subscribe(data => this.client = data);
     }
 
     ngOnInit() {
-    }
-
-    getClient() {
-        this.clientService.getById(this.id)
-            .subscribe(data => this.client = data as Client);
     }
 
     signOut() {

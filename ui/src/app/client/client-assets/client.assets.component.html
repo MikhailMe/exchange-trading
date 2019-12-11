@@ -1,13 +1,13 @@
 <h2>Client assets</h2>
 
-<div *ngIf="client.brokerageAccount" class="client-assets-container">
+<div *ngIf="assets" class="client-assets-container">
     <div class="centerify">
         <table>
             <tr>
                 <th>Id</th>
                 <th>Type</th>
             </tr>
-            <tr *ngFor="let asset of client.brokerageAccount.assets" (click)="onAssetClicked(asset)">
+            <tr *ngFor="let asset of assets" (click)="onAssetClicked(asset)">
                 <td>{{asset.id}}</td>
                 <td>{{asset.type}}</td>
             </tr>

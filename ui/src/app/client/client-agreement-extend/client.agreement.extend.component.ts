@@ -20,7 +20,11 @@ export class ClientAgreementExtendComponent implements OnInit {
     }
 
     extendBrokerAgreement() {
-        this.clientService.extendBrokerAgreement(this.id, this.validity)
-            .subscribe(() => this.router.navigateByUrl('/client/agreement/info'));
+        if (this.validity) {
+            this.clientService.extendBrokerAgreement(this.id, this.validity)
+                .subscribe(() => this.router.navigateByUrl('/client/agreement/info'));
+        } else {
+            alert('Enter agreement validity please');
+        }
     }
 }

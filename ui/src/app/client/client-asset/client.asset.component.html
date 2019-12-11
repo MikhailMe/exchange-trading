@@ -1,11 +1,21 @@
 <h2>Asset</h2>
 
 <div *ngIf="asset" class="client-current-asset-container">
-    <div class="centerify"><span>ClientId: </span> {{asset.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Type: </span> {{asset.type}} </div>
-    <br>
-    <div class="centerify"><span>Quantity: </span> {{asset.quantity}} </div>
+
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Client id</th>
+                <th>Currency</th>
+                <th>Quantity</th>
+            </tr>
+            <tr>
+                <td>{{asset.clientId}}</td>
+                <td>{{asset.type}}</td>
+                <td>{{asset.quantity}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
         <button [routerLink]="'/client/assets'"><span>Back</span></button>

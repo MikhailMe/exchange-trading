@@ -1,6 +1,6 @@
 <h2>Client transactions</h2>
 
-<div class="client-transactions-container">
+<div *ngIf="transactions" class="client-transactions-container">
 
     <div class="centerify">
         <table>
@@ -8,7 +8,7 @@
                 <th>Id</th>
                 <th>Type</th>
             </tr>
-            <tr *ngFor="let transaction of client.transactions" (click)="onTransactionClicked(transaction)">
+            <tr *ngFor="let transaction of transactions" (click)="onTransactionClicked(transaction)">
                 <td>{{transaction.id}}</td>
                 <td>{{transaction.type}}</td>
             </tr>

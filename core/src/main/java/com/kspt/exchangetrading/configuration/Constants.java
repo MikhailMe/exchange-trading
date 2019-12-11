@@ -53,8 +53,8 @@ public class Constants {
     }
 
     public static class Exchange {
-        public static final String MONEY_TO_STOCKS = "moneyToStocks";
-        public static final String STOCKS_TO_MONEY = "stocksToMoney";
+        public static final String MONEY_TO_STOCKS = "money to stocks";
+        public static final String STOCKS_TO_MONEY = "stocks to money";
     }
 
     public static class System {

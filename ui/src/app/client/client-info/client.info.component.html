@@ -2,40 +2,52 @@
     <h2>Client information</h2>
 
     <div class="client-info-container">
-        <div *ngIf="client" class="info">
-            <p>
-                <span><b>Name: </b></span> {{client.name}}
-            </p>
-            <p>
-                <span><b>Surname: </b></span> {{client.surname}}
-            </p>
-            <p>
-                <span><b>Person type: </b></span> {{client.personType}}
-            </p>
+
+        <div *ngIf="client" class="centerify">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Person type</th>
+                </tr>
+                <tr>
+                    <td>{{client.name}}</td>
+                    <td>{{client.surname}}</td>
+                    <td>{{client.personType}}</td>
+                </tr>
+            </table>
             <br>
-            <div *ngIf="client.passport">
-                <span>Passport</span>
-                <p>
-                    <span><b>Series: </b></span> {{client.passport.series}}
-                </p>
-                <p>
-                    <span><b>Number: </b></span> {{client.passport.number}}
-                </p>
+        </div>
+        <br>
+        <div *ngIf="client.passport">
+            <div class="centerify">
+                <b>Passport</b>
+            </div>
+            <br>
+            <div class="centerify">
+                <table>
+                    <tr>
+                        <th>Series</th>
+                        <th>Number</th>
+                    </tr>
+                    <tr>
+                        <td>{{client.passport.series}}</td>
+                        <td>{{client.passport.number}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
-
+        <br>
         <div class="centerify">
-            <p>
-                <button (click)="editMode = true">
-                    <span>Change passport</span>
-                </button>
-            </p>
-            <br>
-            <p>
-                <button [routerLink]="'/client/base'">
-                    <span>Back</span>
-                </button>
-            </p>
+            <button (click)="editMode = true">
+                <span>Change passport</span>
+            </button>
+        </div>
+        <br>
+        <div class="centerify">
+            <button [routerLink]="'/client/base'">
+                <span>Back</span>
+            </button>
         </div>
     </div>
 </div>

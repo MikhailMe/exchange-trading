@@ -6,6 +6,7 @@ import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.system.*;
 import com.kspt.exchangetrading.models.treasury.Asset;
+import com.kspt.exchangetrading.models.treasury.Stock;
 import com.kspt.exchangetrading.models.treasury.Transaction;
 import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
@@ -14,11 +15,13 @@ import com.kspt.exchangetrading.repositories.system.AgreementRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
 import com.kspt.exchangetrading.repositories.system.PassportRepository;
 import com.kspt.exchangetrading.repositories.treasury.AssetRepository;
+import com.kspt.exchangetrading.repositories.treasury.StockRepository;
 import com.kspt.exchangetrading.repositories.treasury.TransactionRepository;
 import com.kspt.exchangetrading.services.CrudService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 public class ClientService extends CrudService<Client, ClientRepository> {
 
     private final AssetRepository assetRepository;
+    private final StockRepository stockRepository;
     private final BrokerRepository brokerRepository;
     private final PassportRepository passportRepository;
     private final AgreementRepository agreementRepository;
@@ -36,6 +40,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
     private final BrokerageAccountRepository brokerageAccountRepository;
 
     public ClientService(@NotNull final AssetRepository assetRepository,
+                         @NotNull final StockRepository stockRepository,
                          @NotNull final BrokerRepository brokerRepository,
                          @NotNull final ClientRepository clientRepository,
                          @NotNull final PassportRepository passportRepository,
@@ -45,6 +50,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
                          @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
         super(clientRepository);
         this.assetRepository = assetRepository;
+        this.stockRepository = stockRepository;
         this.brokerRepository = brokerRepository;
         this.passportRepository = passportRepository;
         this.agreementRepository = agreementRepository;
@@ -98,15 +104,20 @@ public class ClientService extends CrudService<Client, ClientRepository> {
         return brokerageAccount;
     }
 
+    @Transactional
     public boolean closeBrokerageAccount(@NotNull final Long clientId) {
         Client client = repository.findById(clientId).orElse(null);
         if (client != null) {
             if (client.getIsAuthenticated() && client.getAgreement() == null) {
                 BrokerageAccount brokerageAccount = client.getBrokerageAccount();
                 if (brokerageAccountRepository.existsById(brokerageAccount.getId())) {
-                    brokerageAccountRepository.deleteById(brokerageAccount.getId());
                     client.setBrokerageAccount(null);
                     repository.save(client);
+                    brokerageAccountRepository.delete(brokerageAccount);
+                    for (Asset asset: brokerageAccount.getAssets()) assetRepository.delete(asset);
+                    brokerageAccount.setAssets(null);
+                    for (Stock stock: brokerageAccount.getStocks()) stockRepository.delete(stock);
+                    brokerageAccount.setStocks(null);
                     return true;
                 }
             }
@@ -273,6 +284,34 @@ public class ClientService extends CrudService<Client, ClientRepository> {
             clientRequest = clientRequestRepository.findByIdAndClientId(requestId, clientId);
         }
         return clientRequest;
+    }
+
+    public List<Asset> getAssets(@NotNull final Long clientId) {
+        return assetRepository.findByClientId(clientId);
+    }
+
+    public Asset getAssetById(@NotNull final Long clientId,
+                              @NotNull final Long requestId) {
+        Asset asset = null;
+        Client client = repository.findById(clientId).orElse(null);
+        if (client != null) {
+            asset = assetRepository.findByIdAndClientId(requestId, clientId);
+        }
+        return asset;
+    }
+
+    public List<Stock> getStocks(@NotNull final Long clientId) {
+        return stockRepository.findByClientId(clientId);
+    }
+
+    public Stock getStockById(@NotNull final Long clientId,
+                              @NotNull final Long requestId) {
+        Stock stock = null;
+        Client client = repository.findById(clientId).orElse(null);
+        if (client != null) {
+            stock = stockRepository.findByIdAndClientId(requestId, clientId);
+        }
+        return stock;
     }
 
     private boolean checkAgreement(@NotNull final Long clientId) {
