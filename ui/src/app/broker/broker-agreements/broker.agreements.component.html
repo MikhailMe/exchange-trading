@@ -1,19 +1,18 @@
 <div class="broker-agreements-container">
-
-    <div class="centerify">
+    <div *ngIf="brokerAgreements" class="centerify">
         <table>
             <caption>Broker agreements</caption>
             <tr>
-                <th>ID</th>
-                <th>Client ID</th>
+                <th>Id</th>
+                <th>Client Id</th>
             </tr>
-            <tr *ngFor="let agreement of brokerAgreements" (click)="onAgreementClick(agreement)">
+            <tr *ngFor="let agreement of brokerAgreements"
+                (click)="onAgreementClick(agreement)">
                 <td>{{agreement.id}}</td>
                 <td>{{agreement.clientId}}</td>
             </tr>
         </table>
     </div>
-
     <br>
     <div class="centerify">
         <button [routerLink]="'/broker/base'"><span>Back</span></button>

@@ -5,7 +5,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {CommonModule} from '@angular/common';
-import {DataService} from './services/data.service';
 import {HomeComponent} from "./home/home.component";
 import {SignInComponent} from './auth/signin/sign.in.component';
 import {SignUpComponent} from './auth/signup/sign.up.component';
@@ -97,7 +96,6 @@ import {StoreService} from './services/store.service';
         FormsModule
     ],
     providers: [
-        DataService,
         AuthService,
         AdminService,
         BrokerService,

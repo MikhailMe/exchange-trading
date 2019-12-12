@@ -33,53 +33,51 @@ public class TreasuryService {
     public void bankTransfer(@NotNull final String requestType,
                              @NotNull final Transaction transaction) {
         List<BankRecord> bankRecords = bankRecordRepository.findAll();
-        if (bankRecords != null) {
-            Asset asset = transaction.getAsset();
-            Stock stock = transaction.getStock();
-            switch (requestType) {
-                case Constants.Exchange.MONEY_TO_STOCKS: {
-                    int counter = 0;
-                    for (BankRecord record : bankRecords) {
-                        if (counter == 2) {
-                            break;
-                        }
-                        final Double currentBalance = record.getQuantity();
-                        if (record.getType().equals(asset.getType())) {
-                            final Double exchangeBalance = asset.getQuantity();
-                            final Double newBalance = currentBalance + exchangeBalance;
-                            record.setQuantity(newBalance);
-                            bankRecordRepository.save(record);
-                            counter++;
-                        } else if (record.getType().equals(stock.getStockType())) {
-                            final Double newBalance = currentBalance + stock.getQuantity();
-                            record.setQuantity(newBalance);
-                            bankRecordRepository.save(record);
-                            counter++;
-                        }
+        Asset asset = transaction.getAsset();
+        Stock stock = transaction.getStock();
+        switch (requestType) {
+            case Constants.Exchange.MONEY_TO_STOCKS: {
+                int counter = 0;
+                for (BankRecord record : bankRecords) {
+                    if (counter == 2) {
+                        break;
                     }
-                    break;
-                }
-                case Constants.Exchange.STOCKS_TO_MONEY: {
-                    int counter = 0;
-                    for (BankRecord record : bankRecords) {
-                        if (counter == 2) {
-                            break;
-                        }
-                        final Double currentBalance = record.getQuantity();
-                        if (record.getType().equals(stock.getStockType())) {
-                            final Double newBalance = currentBalance + stock.getQuantity();
-                            record.setQuantity(newBalance);
-                            bankRecordRepository.save(record);
-                            counter++;
-                        } else if (record.getType().equals(asset.getType())) {
-                            final Double newBalance = currentBalance + asset.getQuantity();
-                            record.setQuantity(newBalance);
-                            bankRecordRepository.save(record);
-                            counter++;
-                        }
+                    final Double currentBalance = record.getQuantity();
+                    if (record.getType().equals(asset.getType())) {
+                        final Double exchangeBalance = asset.getQuantity();
+                        final Double newBalance = currentBalance + exchangeBalance;
+                        record.setQuantity(newBalance);
+                        bankRecordRepository.save(record);
+                        counter++;
+                    } else if (record.getType().equals(stock.getStockType())) {
+                        final Double newBalance = currentBalance + stock.getQuantity();
+                        record.setQuantity(newBalance);
+                        bankRecordRepository.save(record);
+                        counter++;
                     }
-                    break;
                 }
+                break;
+            }
+            case Constants.Exchange.STOCKS_TO_MONEY: {
+                int counter = 0;
+                for (BankRecord record : bankRecords) {
+                    if (counter == 2) {
+                        break;
+                    }
+                    final Double currentBalance = record.getQuantity();
+                    if (record.getType().equals(stock.getStockType())) {
+                        final Double newBalance = currentBalance + stock.getQuantity();
+                        record.setQuantity(newBalance);
+                        bankRecordRepository.save(record);
+                        counter++;
+                    } else if (record.getType().equals(asset.getType())) {
+                        final Double newBalance = currentBalance + asset.getQuantity();
+                        record.setQuantity(newBalance);
+                        bankRecordRepository.save(record);
+                        counter++;
+                    }
+                }
+                break;
             }
         }
     }
@@ -89,12 +87,10 @@ public class TreasuryService {
                                         @NotNull final Stock stock) {
         List<Rate> rates = rateRepository.findAll();
         double stockQuantity = 0d;
-        if (rates != null) {
-            for (Rate rate : rates) {
-                if (rate.getFromType().equals(asset.getType()) && rate.getToType().equals(stock.getStockType())) {
-                    stockQuantity = Math.abs(asset.getQuantity()) / Math.abs(rate.getRate());
-                    break;
-                }
+        for (Rate rate : rates) {
+            if (rate.getFromType().equals(asset.getType()) && rate.getToType().equals(stock.getStockType())) {
+                stockQuantity = Math.abs(asset.getQuantity()) / Math.abs(rate.getRate());
+                break;
             }
         }
         return stockQuantity;
@@ -105,12 +101,10 @@ public class TreasuryService {
                                         @NotNull final Stock stock) {
         List<Rate> rates = rateRepository.findAll();
         double assetQuantity = 0d;
-        if (rates != null) {
-            for (Rate rate : rates) {
-                if (rate.getFromType().equals(stock.getStockType()) && rate.getToType().equals(asset.getType())) {
-                    assetQuantity = Math.abs(stock.getQuantity()) / Math.abs(rate.getRate());
-                    break;
-                }
+        for (Rate rate : rates) {
+            if (rate.getFromType().equals(stock.getStockType()) && rate.getToType().equals(asset.getType())) {
+                assetQuantity = Math.abs(stock.getQuantity()) / Math.abs(rate.getRate());
+                break;
             }
         }
         return assetQuantity;

@@ -1,6 +1,6 @@
 <h2>Admin</h2>
 
-<div class="admin-base-container">
+<div *ngIf="adminId" class="admin-base-container">
     <div class="centerify">
         <button [routerLink]="'/admin/info'"><span>Admin information</span></button>
     </div>

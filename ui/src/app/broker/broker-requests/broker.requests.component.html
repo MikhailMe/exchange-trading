@@ -1,7 +1,6 @@
 <h2>Broker requests</h2>
 
-<div class="broker-requests-container">
-
+<div *ngIf="brokerRequests" class="broker-requests-container">
     <div class="centerify">
         <table>
             <tr>
@@ -14,7 +13,6 @@
             </tr>
         </table>
     </div>
-
     <br>
     <div class="centerify">
         <button [routerLink]="'/broker/base'"><span>Back</span></button>

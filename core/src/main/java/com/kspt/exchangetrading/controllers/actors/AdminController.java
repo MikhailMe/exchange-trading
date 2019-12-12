@@ -4,6 +4,7 @@ import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.controllers.CrudController;
 import com.kspt.exchangetrading.models.actors.Admin;
 import com.kspt.exchangetrading.models.ClientRequest;
+import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.treasury.BankRecord;
 import com.kspt.exchangetrading.models.treasury.Rate;
 import com.kspt.exchangetrading.models.treasury.Transaction;
@@ -36,8 +37,8 @@ public final class AdminController extends CrudController<Admin, AdminService> {
 
     // clientRequestId
     @PostMapping("declineRequest/{clientRequestId}")
-    public String declineRequest(@PathVariable final Long clientRequestId) {
-        return service.declineRequest(clientRequestId);
+    public void declineRequest(@PathVariable final Long clientRequestId) {
+        service.declineRequest(clientRequestId);
     }
 
     @GetMapping("getRates")
@@ -48,5 +49,10 @@ public final class AdminController extends CrudController<Admin, AdminService> {
     @GetMapping("getBankAssets")
     public List<BankRecord> getBankMoney() {
         return service.getBankMoney();
+    }
+
+    @GetMapping("{adminId}/getBrokers")
+    public List<Broker> getBrokers(@PathVariable final Long adminId) {
+        return service.getBrokers(adminId);
     }
 }

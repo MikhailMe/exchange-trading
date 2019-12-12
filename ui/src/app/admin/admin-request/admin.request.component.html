@@ -1,21 +1,30 @@
 <h2>Request</h2>
 
-<div class="admin-current-request-container">
-    <div class="centerify"><span>Date: </span> {{request.date}} </div>
-    <br>
-    <div class="centerify"><span>Type: </span> {{request.requestType}} </div>
-    <br>
-    <div class="centerify"><span>Broker id: </span> {{request.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Client id: </span> {{request.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Quantity: </span> {{request.quantity}} </div>
-    <br>
-    <div class="centerify"><span>From: </span> {{request.fromType}} </div>
-    <br>
-    <div class="centerify"><span>To: </span> {{request.toType}} </div>
-    <br>
-    <div class="centerify"><span>Status: </span> {{request.status}} </div>
+<div *ngIf="request" class="admin-current-request-container">
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Request type</th>
+                <th>Broker id</th>
+                <th>Client id</th>
+                <th>Quantity</th>
+                <th>From type</th>
+                <th>From</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>{{request.date}}</td>
+                <td>{{request.requestType}}</td>
+                <td>{{request.brokerId}}</td>
+                <td>{{request.clientId}}</td>
+                <td>{{request.quantity}}</td>
+                <td>{{request.fromType}}</td>
+                <td>{{request.toType}}</td>
+                <td>{{request.status}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
         <button (click)="approve()"><span>Approve</span></button>

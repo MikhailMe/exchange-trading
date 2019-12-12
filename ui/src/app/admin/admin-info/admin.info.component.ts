@@ -1,25 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {Admin, Broker, Credentials} from '../../models';
+import {Admin} from '../../models';
+import {StoreService} from "../../services/store.service";
+import {AdminService} from "../../services/admin.service";
 
 @Component({
     templateUrl: './admin.info.component.html'
 })
 export class AdminInfoComponent implements OnInit {
-    protected admin: Admin;
-    protected adminCredentials: Credentials;
+    private adminId: number;
+    private admin: Admin;
 
-    constructor() {
-        this.admin = new class implements Admin {
-            brokers: Broker[];
-            credentials: Credentials;
-            id: number;
-            isAuthenticated: boolean;
-            name: string;
-            personType: string;
-            surname: string;
-            transactions: null;
-        };
-        this.adminCredentials = this.admin.credentials;
+    constructor(private storeService: StoreService,
+                private adminService: AdminService) {
+        this.adminId = this.storeService.getId();
+        this.adminService.getById(this.adminId).subscribe(data => this.admin = data);
     }
 
     ngOnInit() {

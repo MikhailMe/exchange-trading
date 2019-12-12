@@ -1,29 +1,28 @@
 import {Component, OnInit} from '@angular/core';
-import {Broker, ClientRequest} from "../../models";
-import {BrokerService} from "../../services/broker.service";
-import {DataService} from "../../services/data.service";
-import {Router} from "@angular/router";
+import {ClientRequest} from '../../models';
+import {BrokerService} from '../../services/broker.service';
+import {Router} from '@angular/router';
+import {StoreService} from '../../services/store.service';
 
 @Component({
     templateUrl: './broker.requests.component.html'
 })
 export class BrokerRequestsComponent implements OnInit {
-    protected broker: Broker;
+    protected brokerId: number;
     protected brokerRequests: ClientRequest[];
 
-    constructor(private brokerService: BrokerService,
-                private dataService: DataService,
-                private router: Router) {
-        this.brokerRequests = dataService.getRequests();
-        /*brokerService.checkRequests(this.broker.id).subscribe(
-            data => this.brokerRequests = data, error => console.log(error)
-        );*/
+    constructor(private router: Router,
+                private storeService: StoreService,
+                private brokerService: BrokerService) {
+        this.brokerId = this.storeService.getId();
+        this.brokerService.checkRequests(this.brokerId).subscribe(data => this.brokerRequests = data);
     }
 
     ngOnInit() {
     }
 
     onRequestClick(request: ClientRequest) {
-        this.router.navigateByUrl('/broker/request/1');
+        this.storeService.setPropertyId(request.id);
+        return this.router.navigateByUrl(`/broker/request/${request.id}`);
     }
 }

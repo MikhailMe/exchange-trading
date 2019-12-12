@@ -3,6 +3,12 @@ html, body {
     background: lavender;
 }
 
+.disabled {
+    background-color: grey;
+    pointer-events: none;
+    cursor: default;
+}
+
 .centerify {
     display: flex;
     align-items: center;

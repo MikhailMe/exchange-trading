@@ -1,13 +1,14 @@
 <h2>Admin requests</h2>
 
-<div class="admin-requests-container">
+<div *ngIf="adminRequests" class="admin-requests-container">
     <div class="centerify">
         <table>
             <tr>
                 <th>Id</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let request of adminRequests" (click)="onRequestClick(request)">
+            <tr *ngFor="let request of adminRequests"
+                (click)="onRequestClick(request)">
                 <td>{{request.id}}</td>
                 <td>{{request.date}}</td>
             </tr>

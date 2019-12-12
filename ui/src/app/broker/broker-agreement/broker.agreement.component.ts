@@ -1,21 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {Agreement, Broker} from "../../models";
+import {Agreement} from "../../models";
 import {BrokerService} from "../../services/broker.service";
-import {Router} from "@angular/router";
+import {StoreService} from "../../services/store.service";
 
 @Component({
     templateUrl: './broker.agreement.component.html'
 })
 export class BrokerAgreementComponent implements OnInit {
-    protected broker: Broker;
+    protected brokerId: number;
+    protected agreementId: number;
     protected brokerAgreement: Agreement;
 
-    constructor(private brokerService: BrokerService,
-                private router: Router) {
-        this.brokerAgreement = {
-            brokerId: 0, clientId: 0, id: 0, validity: 'month',
-            startDate: new Date()
-        };
+    constructor(private storeService: StoreService,
+                private brokerService: BrokerService) {
+        this.brokerId = this.storeService.getId();
+        this.agreementId = this.storeService.getPropertyId();
+        this.brokerService.getById(this.brokerId).subscribe(data => {
+            this.brokerAgreement = data.agreements.find(x => x.id === this.agreementId);
+        });
     }
 
     ngOnInit() {

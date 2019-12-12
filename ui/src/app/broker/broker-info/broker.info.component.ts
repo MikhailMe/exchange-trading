@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {Broker, Credentials} from '../../models';
+import {Broker} from '../../models';
 import {StoreService} from '../../services/store.service';
+import {BrokerService} from "../../services/broker.service";
 
 @Component({
     templateUrl: './broker.info.component.html'
 })
 export class BrokerInfoComponent implements OnInit {
-    protected broker: Broker;
-    protected brokerCredentials: Credentials;
+    private brokerId: number;
+    private broker: Broker;
 
-    constructor(private userService: StoreService) {
-
-        this.brokerCredentials = this.broker.credentials;
+    constructor(private storeService: StoreService,
+                private brokerService: BrokerService) {
+        this.brokerId = this.storeService.getId();
+        this.brokerService.getById(this.brokerId).subscribe(data => this.broker = data);
     }
 
     ngOnInit() {

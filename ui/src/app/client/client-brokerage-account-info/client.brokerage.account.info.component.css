@@ -2,9 +2,3 @@
     width: 20%;
     margin: 0 auto;
 }
-
-.disabled {
-    background-color: grey;
-    pointer-events: none;
-    cursor: default;
-}

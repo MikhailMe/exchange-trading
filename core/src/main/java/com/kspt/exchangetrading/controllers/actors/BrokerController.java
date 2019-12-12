@@ -33,16 +33,16 @@ public final class BrokerController extends CrudController<Broker, BrokerService
 
     // contract: clientRequestId
     @PostMapping("{brokerId}/approveClientRequest")
-    public String approveClientRequest(@PathVariable final Long brokerId,
-                                       @RequestBody final Map<String, Long> data) {
-        return service.approveOrDeclineClientRequest(brokerId, data, true);
+    public void approveClientRequest(@PathVariable final Long brokerId,
+                                     @RequestBody final Map<String, Long> data) {
+        service.approveOrDeclineClientRequest(brokerId, data, true);
     }
 
     // contract: clientRequestId
     @PostMapping("{brokerId}/declineClientRequest")
-    public String declineClientRequest(@PathVariable final Long brokerId,
-                                       @RequestBody final Map<String, Long> data) {
-        return service.approveOrDeclineClientRequest(brokerId, data, false);
+    public void declineClientRequest(@PathVariable final Long brokerId,
+                                     @RequestBody final Map<String, Long> data) {
+        service.approveOrDeclineClientRequest(brokerId, data, false);
     }
 
 }

@@ -28,12 +28,15 @@ export function createEnv() {
         getClientStockById: clientPrefix + ':clientId/stock/:id',
 
         getBroker: brokerPrefix,
+        getBrokerById: brokerPrefix + 'get/:brokerId',
         checkBrokerRequests: brokerPrefix + ':brokerId/checkRequests',
         validateClientRequest: brokerPrefix + ':brokerId/validateClientRequest',
         approveClientRequest: brokerPrefix + ':brokerId/approveClientRequest',
         declineClientRequest: brokerPrefix + ':brokerId/declineClientRequest',
 
         getAdmin: adminPrefix,
+        getAdminById: adminPrefix + 'get/:adminId',
+        getAdminBrokers: adminPrefix + ':adminId/getBrokers',
         checkAdminRequests: adminPrefix + ':adminId/checkRequests',
         approveRequest: adminPrefix + ':adminId/approveRequest',
         declineRequest: adminPrefix + 'declineRequest/:clientRequestId',

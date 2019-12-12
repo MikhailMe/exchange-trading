@@ -2,12 +2,14 @@ package com.kspt.exchangetrading.services.actors;
 
 import com.kspt.exchangetrading.configuration.Constants;
 import com.kspt.exchangetrading.models.actors.Admin;
+import com.kspt.exchangetrading.models.actors.Broker;
 import com.kspt.exchangetrading.models.actors.Client;
 import com.kspt.exchangetrading.models.ClientRequest;
 import com.kspt.exchangetrading.models.treasury.*;
 import com.kspt.exchangetrading.models.system.BrokerageAccount;
 import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.AdminRepository;
+import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
 import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
 import com.kspt.exchangetrading.services.CrudService;
@@ -16,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,17 +27,20 @@ import java.util.stream.Collectors;
 public class AdminService extends CrudService<Admin, AdminRepository> {
 
     private final TreasuryService treasuryService;
+    private final BrokerRepository brokerRepository;
     private final ClientRepository clientRepository;
     private final ClientRequestRepository clientRequestRepository;
     private final BrokerageAccountRepository brokerageAccountRepository;
 
     public AdminService(@NotNull final AdminRepository repository,
                         @NotNull final TreasuryService treasuryService,
+                        @NotNull final BrokerRepository brokerRepository,
                         @NotNull final ClientRepository clientRepository,
                         @NotNull final ClientRequestRepository clientRequestRepository,
                         @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
         super(repository);
         this.treasuryService = treasuryService;
+        this.brokerRepository = brokerRepository;
         this.clientRepository = clientRepository;
         this.clientRequestRepository = clientRequestRepository;
         this.brokerageAccountRepository = brokerageAccountRepository;
@@ -52,14 +58,12 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
                 : null;
     }
 
-    public String declineRequest(@NotNull final Long clientRequestId) {
+    public void declineRequest(@NotNull final Long clientRequestId) {
         ClientRequest clientRequest = clientRequestRepository.findById(clientRequestId).orElse(null);
         if (clientRequest != null) {
             clientRequest.setStatus(Constants.ClientRequestStatus.DECLINED);
             clientRequestRepository.save(clientRequest);
-            return Constants.Status.SUCCESS;
         }
-        return Constants.Status.FAILURE;
     }
 
     @Transactional
@@ -83,13 +87,10 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
             // update client
             Client client = clientRepository.findById(clientRequest.getClientId()).orElse(null);
             if (client != null) {
-                BrokerageAccount newBrokerageAccount = transfer(
-                        transaction,
-                        client.getBrokerageAccount());
+                transfer(transaction, client.getBrokerageAccount());
                 List<Long> transactions = client.getTransactions();
                 transactions.add(transaction.getId());
                 client.setTransactions(transactions);
-                client.setBrokerageAccount(newBrokerageAccount);
                 clientRepository.save(client);
             }
 
@@ -112,6 +113,20 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
 
     public List<BankRecord> getBankMoney() {
         return treasuryService.getBankMoney();
+    }
+
+    public List<Broker> getBrokers(@NotNull final Long adminId) {
+        List<Broker> brokers = new ArrayList<>();
+        final Admin admin = repository.findById(adminId).orElse(null);
+        if (admin != null) {
+            admin.getBrokers().forEach(brokerId -> {
+                Broker broker = brokerRepository.findById(brokerId).orElse(null);
+                if (broker != null) {
+                    brokers.add(broker);
+                }
+            });
+        }
+        return brokers;
     }
 
     @NotNull
@@ -146,8 +161,8 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
         return transaction;
     }
 
-    private BrokerageAccount transfer(@NotNull final Transaction transaction,
-                                      @NotNull final BrokerageAccount brokerageAccount) {
+    private void transfer(@NotNull final Transaction transaction,
+                          @NotNull final BrokerageAccount brokerageAccount) {
         final Asset transactionAsset = transaction.getAsset();
         final Stock transactionStock = transaction.getStock();
 
@@ -158,21 +173,15 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
                 .filter(x -> x.getType().equals(transactionAsset.getType()))
                 .findFirst().orElse(null);
         if (asset != null) {
-            assets.remove(asset);
-            treasuryService.assetRepository.delete(asset);
             final Double currentBalance = asset.getQuantity();
             final Double newCurrentBalance = currentBalance + transactionAsset.getQuantity();
             asset.setQuantity(newCurrentBalance);
-            final Asset savedAsset = treasuryService
-                    .assetRepository
-                    .save(new Asset(asset.getClientId(), asset.getType(), newCurrentBalance));
-            assets.add(savedAsset);
         } else {
-            final Asset newAsset = treasuryService.assetRepository.save(new Asset(
+            final Asset newAsset = new Asset(
                     transaction.getClientId(),
                     transaction.getAsset().getType(),
                     transaction.getAsset().getQuantity()
-            ));
+            );
             assets.add(newAsset);
         }
         brokerageAccount.setAssets(assets);
@@ -184,23 +193,19 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
                 .filter(x -> x.getStockType().equals(transactionStock.getStockType()))
                 .findFirst().orElse(null);
         if (stock != null) {
-            stocks.remove(stock);
             final Double currentBalance = stock.getQuantity();
             final Double newCurrentBalance = currentBalance + transactionStock.getQuantity();
             stock.setQuantity(newCurrentBalance);
-            treasuryService.stockRepository.save(stock);
-            stocks.add(stock);
         } else {
-            final Stock newStock = treasuryService.stockRepository.save(new Stock(
+            final Stock newStock = new Stock(
                     transaction.getClientId(),
                     transaction.getStock().getStockType(),
-                    transactionStock.getQuantity()));
+                    transactionStock.getQuantity());
             stocks.add(newStock);
         }
         brokerageAccount.setStocks(stocks);
 
         // update brokerageAccount table
         brokerageAccountRepository.save(brokerageAccount);
-        return brokerageAccount;
     }
 }

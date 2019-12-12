@@ -1,6 +1,6 @@
 <h2>Admin brokers</h2>
 
-<div class="admin-brokers-container">
+<div *ngIf="adminBrokers" class="admin-brokers-container">
     <div class="centerify">
         <table>
             <tr>
@@ -8,7 +8,7 @@
                 <th>Name</th>
                 <th>Surname</th>
             </tr>
-            <tr *ngFor="let broker of admin.brokers">
+            <tr *ngFor="let broker of adminBrokers">
                 <td>{{broker.id}}</td>
                 <td>{{broker.name}}</td>
                 <td>{{broker.surname}}</td>

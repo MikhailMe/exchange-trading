@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {BankRecord, ClientRequest, Rate, Transaction} from "../models";
+import {Admin, BankRecord, ClientRequest, Rate, Transaction} from '../models';
+import {Broker} from '../models';
 
 @Injectable()
 export class AdminService {
@@ -12,18 +13,18 @@ export class AdminService {
     }
 
     checkRequests(adminId: number) {
-        const url = `${adminId}/` + environment.checkAdminRequests;
+        const url = this.urlWithAdminId(environment.checkAdminRequests, adminId);
         return this.http.get<ClientRequest[]>(url);
     }
 
     approveRequest(adminId: number, clientRequestId: number) {
-        const url = `${adminId}/` + environment.approveRequest;
+        let url = this.urlWithAdminId(environment.approveRequest, adminId);
         return this.http.post<Transaction>(url, {clientRequestId});
     }
 
     declineRequest(clientRequestId: number) {
-        const url = environment.declineRequest + `${clientRequestId}`;
-        return this.http.post<string>(url, {});
+        const url = this.urlWithRequestId(environment.declineRequest, clientRequestId);
+        return this.http.post(url, {});
     }
 
     getRates() {
@@ -34,5 +35,23 @@ export class AdminService {
     getBankMoney() {
         const url = environment.getBankAssets;
         return this.http.get<BankRecord[]>(url);
+    }
+
+    getById(adminId: number) {
+        const url = this.urlWithAdminId(environment.getAdminById, adminId);
+        return this.http.get<Admin>(url);
+    }
+
+    getBrokers(adminId: number) {
+        const url = this.urlWithAdminId(environment.getAdminBrokers, adminId);
+        return this.http.get<Broker[]>(url);
+    }
+
+    private urlWithAdminId(urlWithoutId: string, adminId: number): string {
+        return urlWithoutId.replace(':adminId', `${adminId}`);
+    }
+
+    private urlWithRequestId(urlWithoutId: string, clientRequestId: number): string {
+        return urlWithoutId.replace(':clientRequestId', `${clientRequestId}`);
     }
 }

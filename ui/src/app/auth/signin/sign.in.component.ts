@@ -34,9 +34,9 @@ export class SignInComponent implements OnInit {
                 } else {
                     this.storeService.setId(data.id);
                     switch (this.personType) {
-                        case 'client': this.router.navigateByUrl('/client/base'); break;
-                        case 'broker': this.router.navigateByUrl('/broker/base'); break;
-                        case 'admin': this.router.navigateByUrl('/admin/base'); break;
+                        case 'client': return this.router.navigateByUrl('/client/base');
+                        case 'broker': return this.router.navigateByUrl('/broker/base');
+                        case 'admin': return this.router.navigateByUrl('/admin/base');
                     }
                 }
             });

@@ -1,17 +1,20 @@
 <h2>Admin information</h2>
 
-<div class="admin-info-container">
-    <div class="centerify"><span>Name: </span> {{admin.name}} </div>
-    <br>
-    <div class="centerify"><span>Surname: </span> {{admin.surname}} </div>
-    <br>
-    <div class="centerify"><span>Person type: </span> {{admin.personType}} </div>
-    <br>
-    <div class="centerify"><span>Credentials</span></div>
-    <br>
-    <div class="centerify"><span>Login: </span> {{adminCredentials.login}} </div>
-    <br>
-    <div class="centerify"><span>Password: </span> {{adminCredentials.password}} </div>
+<div *ngIf="admin" class="admin-info-container">
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Person type</th>
+            </tr>
+            <tr>
+                <td>{{admin.name}}</td>
+                <td>{{admin.surname}}</td>
+                <td>{{admin.personType}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
         <button [routerLink]="'/admin/base'"><span>Back</span></button>

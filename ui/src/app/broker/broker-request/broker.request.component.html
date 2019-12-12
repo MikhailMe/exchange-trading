@@ -1,25 +1,51 @@
-<div class="broker-current-request-container">
-    <h2>Request</h2>
+<h2>Request</h2>
 
-    <div class="centerify"><span>Type: </span> {{clientRequest.requestType}} </div>
-    <br>
-    <div class="centerify"><span>Date: </span> {{clientRequest.date}} </div>
-    <br>
-    <div class="centerify"><span>Client id: </span> {{clientRequest.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Quantity: </span> {{clientRequest.quantity}} </div>
-    <br>
-    <div class="centerify"><span>From: </span> {{clientRequest.fromType}} </div>
-    <br>
-    <div class="centerify"><span>To: </span> {{clientRequest.toType}} </div>
-    <br>
-    <div class="centerify"><span>Status: </span> {{clientRequest.status}} </div>
+<div *ngIf="clientRequest" class="broker-current-request-container">
+    <div class="centerify">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Request type</th>
+                <th>Date</th>
+                <th>Client id</th>
+                <th>Quantity</th>
+                <th>From type</th>
+                <th>To type</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>{{clientRequest.id}}</td>
+                <td>{{clientRequest.requestType}}</td>
+                <td>{{clientRequest.date}}</td>
+                <td>{{clientRequest.clientId}}</td>
+                <td>{{clientRequest.quantity}}</td>
+                <td>{{clientRequest.fromType}}</td>
+                <td>{{clientRequest.toType}}</td>
+                <td>{{clientRequest.status}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
-        <button (click)="approve()"><span>Approve</span></button>
-        <button (click)="decline()"><span>Decline</span></button>
+        <button (click)="validate()"
+                [class.approve]="isValid === 1"
+                [class.decline]="isValid === 2">
+            <span>Validate</span>
+        </button>
     </div>
-
+    <div class="centerify">
+        <button [class.disabled]="!isValidated"
+                [class.approve]="isValidated"
+                (click)="approve()">
+            <span>Approve</span>
+        </button>
+        <button [class.disabled]="!isValidated"
+                [class.decline]="isValidated"
+                class="decline"
+                (click)="decline()">
+            <span>Decline</span>
+        </button>
+    </div>
     <br>
     <div class="centerify">
         <button [routerLink]="'/broker/requests'"><span>Back</span></button>

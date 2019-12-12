@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Asset, Person, Stock, Transaction} from '../models';
 
 @Injectable()
 export class StoreService {

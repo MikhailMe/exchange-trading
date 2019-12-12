@@ -1,13 +1,23 @@
 <h2>Agreement</h2>
 
 <div class="broker-current-agreement-container">
-    <div class="centerify"><span>Client id: </span> {{brokerAgreement.clientId}} </div>
-    <br>
-    <div class="centerify"><span>Broker id: </span> {{brokerAgreement.brokerId}} </div>
-    <br>
-    <div class="centerify"><span>Validity: </span> {{brokerAgreement.validity}} </div>
-    <br>
-    <div class="centerify"><span>Start date: </span> {{brokerAgreement.startDate}}  </div>
+    <div *ngIf="brokerAgreement" class="centerify">
+        <table>
+            <caption>Broker agreements</caption>
+            <tr>
+                <th>Client Id</th>
+                <th>Broker Id</th>
+                <th>Validity</th>
+                <th>Start date</th>
+            </tr>
+            <tr>
+                <td>{{brokerAgreement.clientId}}</td>
+                <td>{{brokerAgreement.brokerId}}</td>
+                <td>{{brokerAgreement.validity}}</td>
+                <td>{{brokerAgreement.startDate}}</td>
+            </tr>
+        </table>
+    </div>
     <br>
     <div class="centerify">
         <button [routerLink]="'/broker/agreements'"><span>Back</span></button>

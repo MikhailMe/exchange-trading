@@ -71,9 +71,9 @@ public class BrokerService extends CrudService<Broker, BrokerRepository> {
         return false;
     }
 
-    public String approveOrDeclineClientRequest(@NotNull final Long brokerId,
-                                                @NotNull final Map<String, Long> data,
-                                                final boolean isApproved) {
+    public void approveOrDeclineClientRequest(@NotNull final Long brokerId,
+                                              @NotNull final Map<String, Long> data,
+                                              final boolean isApproved) {
         final long clientRequestId = Long.parseLong(data.get("clientRequestId").toString());
         ClientRequest clientRequest = clientRequestRepository.findById(clientRequestId).orElse(null);
         if (clientRequest != null) {
@@ -83,16 +83,12 @@ public class BrokerService extends CrudService<Broker, BrokerRepository> {
                 if (broker != null && broker.getIsAuthenticated()) {
                     clientRequest.setAdminId(broker.getAdminId());
                 } else {
-                    return Constants.Status.FAILURE;
+                    return;
                 }
             } else {
                 clientRequest.setStatus(Constants.ClientRequestStatus.DECLINED);
             }
-            ClientRequest savedClientRequest = clientRequestRepository.save(clientRequest);
-            if (savedClientRequest != null) {
-                return Constants.Status.SUCCESS;
-            }
+            clientRequestRepository.save(clientRequest);
         }
-        return Constants.Status.FAILURE;
     }
 }
