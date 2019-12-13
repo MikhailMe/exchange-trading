@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -34,12 +32,10 @@ public final class Transaction extends AbstractEntity {
     private Instant date;
 
     @JoinColumn(name = "assetId")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Asset asset;
 
     @JoinColumn(name = "stockId")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Stock stock;
 

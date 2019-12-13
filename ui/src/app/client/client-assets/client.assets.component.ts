@@ -15,7 +15,7 @@ export class ClientAssetsComponent implements OnInit {
                 private storeService: StoreService,
                 private clientService: ClientService) {
         this.clientId = this.storeService.getId();
-        this.clientService.getAssets(this.clientId).subscribe(data => this.assets = data);
+        this.clientService.getById(this.clientId).subscribe(data => this.assets = data.brokerageAccount.assets);
     }
 
     ngOnInit() {

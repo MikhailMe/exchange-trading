@@ -7,15 +7,17 @@ import {ClientService} from '../../services/client.service';
     templateUrl: './client.asset.component.html'
 })
 export class ClientAssetComponent implements OnInit {
-    private clientId: number;
-    private assetId: number;
+    private readonly clientId: number;
+    private readonly assetId: number;
     private asset: Asset;
 
     constructor(private storeService: StoreService,
                 private clientService: ClientService) {
         this.clientId = this.storeService.getId();
         this.assetId = this.storeService.getPropertyId();
-        this.clientService.getAssetById(this.clientId, this.assetId).subscribe(data => this.asset = data);
+        this.clientService.getById(this.clientId)
+            .subscribe(data => this.asset = data.brokerageAccount.assets
+                .find(asset => asset.id === this.assetId));
     }
 
     ngOnInit() {

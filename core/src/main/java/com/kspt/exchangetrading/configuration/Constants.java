@@ -41,7 +41,6 @@ public class Constants {
     }
 
     public static final class Request {
-        public static final String ADMIN_REQUEST = "admin_request";
         public static final String CLIENT_REQUEST = "client_request";
     }
 
@@ -59,15 +58,9 @@ public class Constants {
 
     public static class System {
         public static final String PASSPORT = "passport";
-        public static final String CURRENCY = "currency";
         public static final String AGREEMENT = "agreement";
         public static final String CREDENTIALS = "credentials";
         public static final String BROKERAGE_ACCOUNT = "brokerage_account";
-    }
-
-    public static class Status {
-        public static final String SUCCESS = "success";
-        public static final String FAILURE = "failure";
     }
 
 }

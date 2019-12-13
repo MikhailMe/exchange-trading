@@ -11,7 +11,6 @@ import com.kspt.exchangetrading.repositories.ClientRequestRepository;
 import com.kspt.exchangetrading.repositories.actors.AdminRepository;
 import com.kspt.exchangetrading.repositories.actors.BrokerRepository;
 import com.kspt.exchangetrading.repositories.actors.ClientRepository;
-import com.kspt.exchangetrading.repositories.system.BrokerageAccountRepository;
 import com.kspt.exchangetrading.services.CrudService;
 import com.kspt.exchangetrading.services.TreasuryService;
 import org.jetbrains.annotations.NotNull;
@@ -30,20 +29,17 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
     private final BrokerRepository brokerRepository;
     private final ClientRepository clientRepository;
     private final ClientRequestRepository clientRequestRepository;
-    private final BrokerageAccountRepository brokerageAccountRepository;
 
     public AdminService(@NotNull final AdminRepository repository,
                         @NotNull final TreasuryService treasuryService,
                         @NotNull final BrokerRepository brokerRepository,
                         @NotNull final ClientRepository clientRepository,
-                        @NotNull final ClientRequestRepository clientRequestRepository,
-                        @NotNull final BrokerageAccountRepository brokerageAccountRepository) {
+                        @NotNull final ClientRequestRepository clientRequestRepository) {
         super(repository);
         this.treasuryService = treasuryService;
         this.brokerRepository = brokerRepository;
         this.clientRepository = clientRepository;
         this.clientRequestRepository = clientRequestRepository;
-        this.brokerageAccountRepository = brokerageAccountRepository;
     }
 
     public List<ClientRequest> checkApprovedByBrokerRequests(@NotNull final Long adminId) {
@@ -88,7 +84,7 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
             Client client = clientRepository.findById(clientRequest.getClientId()).orElse(null);
             if (client != null) {
                 transfer(transaction, client.getBrokerageAccount());
-                List<Long> transactions = client.getTransactions();
+                final List<Long> transactions = client.getTransactions();
                 transactions.add(transaction.getId());
                 client.setTransactions(transactions);
                 clientRepository.save(client);
@@ -117,15 +113,9 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
 
     public List<Broker> getBrokers(@NotNull final Long adminId) {
         List<Broker> brokers = new ArrayList<>();
-        final Admin admin = repository.findById(adminId).orElse(null);
-        if (admin != null) {
-            admin.getBrokers().forEach(brokerId -> {
-                Broker broker = brokerRepository.findById(brokerId).orElse(null);
-                if (broker != null) {
-                    brokers.add(broker);
-                }
-            });
-        }
+        repository.findById(adminId).ifPresent(admin -> admin.getBrokers().forEach(brokerId -> {
+            brokerRepository.findById(brokerId).ifPresent(brokers::add);
+        }));
         return brokers;
     }
 
@@ -182,7 +172,7 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
                     transaction.getAsset().getType(),
                     transaction.getAsset().getQuantity()
             );
-            assets.add(newAsset);
+            assets.add(treasuryService.assetRepository.save(newAsset));
         }
         brokerageAccount.setAssets(assets);
 
@@ -201,11 +191,8 @@ public class AdminService extends CrudService<Admin, AdminRepository> {
                     transaction.getClientId(),
                     transaction.getStock().getStockType(),
                     transactionStock.getQuantity());
-            stocks.add(newStock);
+            stocks.add(treasuryService.stockRepository.save(newStock));
         }
         brokerageAccount.setStocks(stocks);
-
-        // update brokerageAccount table
-        brokerageAccountRepository.save(brokerageAccount);
     }
 }

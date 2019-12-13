@@ -45,12 +45,12 @@ public class TreasuryService {
                     final Double currentBalance = record.getQuantity();
                     if (record.getType().equals(asset.getType())) {
                         final Double exchangeBalance = asset.getQuantity();
-                        final Double newBalance = currentBalance + exchangeBalance;
+                        final Double newBalance = currentBalance + Math.abs(exchangeBalance);
                         record.setQuantity(newBalance);
                         bankRecordRepository.save(record);
                         counter++;
                     } else if (record.getType().equals(stock.getStockType())) {
-                        final Double newBalance = currentBalance + stock.getQuantity();
+                        final Double newBalance = currentBalance - stock.getQuantity();
                         record.setQuantity(newBalance);
                         bankRecordRepository.save(record);
                         counter++;
@@ -66,12 +66,12 @@ public class TreasuryService {
                     }
                     final Double currentBalance = record.getQuantity();
                     if (record.getType().equals(stock.getStockType())) {
-                        final Double newBalance = currentBalance + stock.getQuantity();
+                        final Double newBalance = currentBalance + Math.abs(stock.getQuantity());
                         record.setQuantity(newBalance);
                         bankRecordRepository.save(record);
                         counter++;
                     } else if (record.getType().equals(asset.getType())) {
-                        final Double newBalance = currentBalance + asset.getQuantity();
+                        final Double newBalance = currentBalance - asset.getQuantity();
                         record.setQuantity(newBalance);
                         bankRecordRepository.save(record);
                         counter++;

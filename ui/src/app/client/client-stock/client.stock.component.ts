@@ -15,7 +15,9 @@ export class ClientStockComponent implements OnInit {
                 private clientService: ClientService) {
         this.clientId = this.storeService.getId();
         this.stockId = this.storeService.getPropertyId();
-        this.clientService.getStockById(this.clientId, this.stockId).subscribe(data => this.stock = data);
+        this.clientService.getById(this.clientId)
+            .subscribe(data => this.stock = data.brokerageAccount.stocks
+                .find(stock => stock.id === this.stockId));
     }
 
     ngOnInit() {

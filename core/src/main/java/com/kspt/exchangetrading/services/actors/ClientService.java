@@ -97,7 +97,7 @@ public class ClientService extends CrudService<Client, ClientRepository> {
                     brokerageAccount.setAssets(assets);
                     brokerageAccount.setClientPassportId(client.getPassport().getId());
                     client.setBrokerageAccount(brokerageAccount);
-                    repository.save(client);
+                    brokerageAccount = repository.save(client).getBrokerageAccount();
                 }
             }
         }
@@ -284,34 +284,6 @@ public class ClientService extends CrudService<Client, ClientRepository> {
             clientRequest = clientRequestRepository.findByIdAndClientId(requestId, clientId);
         }
         return clientRequest;
-    }
-
-    public List<Asset> getAssets(@NotNull final Long clientId) {
-        return assetRepository.findByClientId(clientId);
-    }
-
-    public Asset getAssetById(@NotNull final Long clientId,
-                              @NotNull final Long requestId) {
-        Asset asset = null;
-        Client client = repository.findById(clientId).orElse(null);
-        if (client != null) {
-            asset = assetRepository.findByIdAndClientId(requestId, clientId);
-        }
-        return asset;
-    }
-
-    public List<Stock> getStocks(@NotNull final Long clientId) {
-        return stockRepository.findByClientId(clientId);
-    }
-
-    public Stock getStockById(@NotNull final Long clientId,
-                              @NotNull final Long requestId) {
-        Stock stock = null;
-        Client client = repository.findById(clientId).orElse(null);
-        if (client != null) {
-            stock = stockRepository.findByIdAndClientId(requestId, clientId);
-        }
-        return stock;
     }
 
     private boolean checkAgreement(@NotNull final Long clientId) {

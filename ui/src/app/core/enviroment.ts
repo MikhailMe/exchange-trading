@@ -22,10 +22,6 @@ export function createEnv() {
         getClientTransactionById: clientPrefix + ':clientId/transaction/:id',
         getClientRequests: clientPrefix + ':clientId/getRequests',
         getClientRequestById: clientPrefix + ':clientId/request/:id',
-        getClientAssets: clientPrefix + ':clientId/getAssets',
-        getClientAssetById: clientPrefix + ':clientId/asset/:id',
-        getClientStocks: clientPrefix + ':clientId/getStocks',
-        getClientStockById: clientPrefix + ':clientId/stock/:id',
 
         getBroker: brokerPrefix,
         getBrokerById: brokerPrefix + 'get/:brokerId',
